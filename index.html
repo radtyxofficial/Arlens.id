@@ -692,4 +692,669 @@
             color: var(--text-cream);
             margin-bottom: 10px;
             display: flex;
-            al
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-benefits li i {
+            color: var(--accent-gold);
+        }
+
+        /* --- CONTACT & MESSAGE SECTION --- */
+        .contact-section {
+            padding: 100px 8%;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 50px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-decoration: none;
+            color: var(--text-cream);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateX(6px);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(229, 172, 49, 0.15);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--accent-gold);
+            font-size: 1.4rem;
+        }
+
+        .contact-details h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .contact-details p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Message Form */
+        .contact-form {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 32px;
+            border-radius: 18px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-cream);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-card-solid);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-cream);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-gold);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--bg-card-solid);
+            border-top: 1px solid var(--border-color);
+            padding: 60px 8% 30px 8%;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-cream);
+            margin-bottom: 12px;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .footer-col h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 18px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-gold);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 25px;
+            text-align: center;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 992px) {
+            .hero, .about-section, .contact-container, .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero {
+                text-align: center;
+                padding-top: 120px;
+            }
+            .hero-text p {
+                margin: 0 auto 30px auto;
+            }
+            .hero-cta {
+                justify-content: center;
+            }
+            nav {
+                display: none; /* simple dynamic hide or wrap for mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="intro-overlay">
+        <div class="intro-welcome">WELCOME TO</div>
+        <div class="intro-brand">
+            <img src="https://lh3.googleusercontent.com/d/1z34mnwgFn74_oFYpuCgQn9ifQKTnm2v7" alt="Logo Arlens" class="intro-logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x100/121d21/e5ac31?text=ARLENS.ID';">
+            <p class="intro-tagline">"Rayakan Setiap Moment Bahagia Bersama Kami"</p>
+        </div>
+        <button class="skip-btn" onclick="closeIntro()">Skip Intro <i class="fa-solid fa-forward"></i></button>
+    </div>
+
+    <header>
+        <a href="#home" class="logo-container">
+            <img src="https://lh3.googleusercontent.com/d/105fMhSHZ8e7VKuVcLDYq5RjXR4Uy0YgF" alt="ARLENS 2D Logo" class="logo-2d" onerror="this.onerror=null; this.src='https://via.placeholder.com/40/e5ac31/121d21?text=A';">
+            <span class="brand-name">ARLENS<span>.ID</span></span>
+        </a>
+
+        <nav>
+            <ul>
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#pricelist">Pricelist</a></li>
+                <li><a href="#contacts">Contacts</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggleBtn" title="Ganti Mode Tema">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <h1>RAYAKAN SETIAP MOMENT BAHAGIA BERSAMA <span>ARLENS.ID</span></h1>
+            <p>
+                Abadikan setiap momen berharga Anda menjadi karya seni visual yang natural dan elegan. Melalui layanan Dokumentasi, Photobooth, dan Undangan Digital, kami menghadirkan pengalaman unik yang dirancang penuh presisi untuk merayakan hari spesial Anda.
+            </p>
+            <div class="hero-cta">
+                <a href="#products" class="btn btn-primary"><i class="fa-solid fa-camera"></i> Lihat Layanan Kami</a>
+                <a href="https://wa.me/6285604613503" target="_blank" class="btn btn-secondary"><i class="fa-brands fa-whatsapp"></i> Hubungi ARLENS.ID Sekarang</a>
+            </div>
+        </div>
+
+        <div class="hero-visual" id="heroVisual">
+            <div class="phone-mockup-wrap" id="phone3d">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <div class="invitation-preview">
+                        <div class="inv-title">Undangan Digital</div>
+                        <div>
+                            <div class="inv-names">Romeo & Juliet</div>
+                            <div class="inv-date">26 . 12 . 2026</div>
+                        </div>
+                        <div class="inv-badge"><i class="fa-solid fa-envelope-open-text"></i> Live Preview GIF</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="about-3d-logo-wrap">
+            <div class="logo-3d-box" id="logo3d">
+                <img src="https://lh3.googleusercontent.com/d/1z34mnwgFn74_oFYpuCgQn9ifQKTnm2v7" alt="Logo Arlens 3D" onerror="this.onerror=null; this.src='https://via.placeholder.com/170/2a3338/e5ac31?text=ARLENS+3D';">
+            </div>
+        </div>
+
+        <div class="about-content">
+            <div class="section-title" style="text-align: left; margin-bottom: 25px;">
+                <p>Mengenal Kami</p>
+                <h2>Tentang ARLENS.ID</h2>
+            </div>
+            <p>
+                Setiap acara memiliki ceritanya sendiri, dan kami di ARLENS.ID percaya bahwa momen terbaik layak dikenang selamanya. Kami adalah tim kreatif profesional yang berdedikasi untuk menangkap emosi, tawa, dan kehangatan di setiap perayaan Anda.
+            </p>
+            <p>
+                Berawal dari kecintaan pada seni visual, ARLENS.ID kini telah dipercaya untuk menangani berbagai acara mulai dari pernikahan, lamaran, ulang tahun, hingga acara perusahaan. Pendekatan kami tidak hanya sekadar memotret, tetapi juga menceritakan kisah Anda melalui bingkai foto dan video yang jujur, estetik, dan tak lekang oleh waktu.
+            </p>
+        </div>
+    </section>
+
+    <section class="products-section" id="products">
+        <div class="section-title">
+            <p>Pilihan Paket Terbaik</p>
+            <h2 id="pricelist">Layanan & Price List</h2>
+        </div>
+
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="switchTab('dokumentasi', this)">Dokumentasi</button>
+            <button class="tab-btn" onclick="switchTab('photobooth', this)">Photobooth</button>
+            <button class="tab-btn" onclick="switchTab('undangan', this)">Undangan Digital</button>
+        </div>
+
+        <div class="cards-grid" id="cardsGrid">
+            </div>
+    </section>
+
+    <section class="contact-section" id="contacts">
+        <div class="section-title">
+            <p>Mari Berkolaborasi</p>
+            <h2>Hubungi Kami</h2>
+        </div>
+
+        <div class="contact-container">
+            <div class="contact-info">
+                <a href="https://wa.me/6285604613503" target="_blank" class="contact-card">
+                    <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                    <div class="contact-details">
+                        <h4>WhatsApp Direct</h4>
+                        <p>+62 856-0461-3503</p>
+                    </div>
+                </a>
+
+                <a href="mailto:arlens.photobooth@gmail.com" class="contact-card">
+                    <div class="contact-icon"><i class="fa-regular fa-envelope"></i></div>
+                    <div class="contact-details">
+                        <h4>Email Support</h4>
+                        <p>arlens.photobooth@gmail.com</p>
+                    </div>
+                </a>
+
+                <div class="contact-card" style="cursor: default;">
+                    <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="contact-details">
+                        <h4>Lokasi Utama</h4>
+                        <p>Base in Jombang, Jawa Timur</p>
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form" id="contactForm" onsubmit="sendToWhatsApp(event)">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" class="form-control" placeholder="Masukkan nama Anda" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="alamat">Alamat / Kota</label>
+                    <input type="text" id="alamat" class="form-control" placeholder="Contoh: Jombang, Jawa Timur" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pilihanPaket">Pilihan Paket / Layanan</label>
+                    <select id="pilihanPaket" class="form-control" required>
+                        <option value="Dokumentasi">Dokumentasi</option>
+                        <option value="Photobooth">Photobooth</option>
+                        <option value="Undangan Digital">Undangan Digital</option>
+                        <option value="Other">Other (Saran / Kerjasama / Pertanyaan)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="pesan">Tujuan Pesan / Isi Pesan</label>
+                    <textarea id="pesan" class="form-control" placeholder="Tuliskan pesan, saran, atau ajakan kerja sama Anda di sini..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="fa-brands fa-whatsapp"></i> Kirim Pesan ke WhatsApp</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>ARLENS.ID</h3>
+                <p>Abadikan setiap momen berharga Anda menjadi karya seni visual yang natural, estetik, dan tak lekang oleh waktu.</p>
+                <p style="margin-top: 12px; color: var(--accent-gold); font-weight: 600;">Base in Jombang, Jawa Timur</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Menu Navigasi</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#pricelist">Pricelist</a></li>
+                    <li><a href="#contacts">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Layanan Kami</h4>
+                <ul>
+                    <li><a href="#products" onclick="switchTab('dokumentasi')">Dokumentasi</a></li>
+                    <li><a href="#products" onclick="switchTab('photobooth')">Photobooth</a></li>
+                    <li><a href="#products" onclick="switchTab('undangan')">Undangan Digital</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 ARLENS.ID. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="packageModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-title" id="modalTitle">Nama Paket</div>
+            <div class="modal-price" id="modalPrice">Harga Paket</div>
+            <ul class="modal-benefits" id="modalBenefits">
+                </ul>
+            <a href="https://wa.me/6285604613503" target="_blank" class="btn btn-primary" style="width: 100%; text-align: center;">Pesan Paket Ini Sekarang</a>
+        </div>
+    </div>
+
+    <script>
+        // 1. AUTO CLOSE INTRO / SKIP INTRO
+        const introOverlay = document.getElementById('intro-overlay');
+        function closeIntro() {
+            introOverlay.style.opacity = '0';
+            introOverlay.style.visibility = 'hidden';
+        }
+        // Auto close after 5 seconds if not skipped
+        setTimeout(() => {
+            closeIntro();
+        }, 5000);
+
+        // 2. DARK MODE & LIGHT MODE TOGGLE
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const htmlElement = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlElement.setAttribute('data-theme', newTheme);
+            themeToggleBtn.innerHTML = newTheme === 'dark' 
+                ? '<i class="fa-solid fa-moon"></i>' 
+                : '<i class="fa-solid fa-sun"></i>';
+        });
+
+        // 3. 3D INTERACTIVE HERO PHONE MOCKUP
+        const heroVisual = document.getElementById('heroVisual');
+        const phone3d = document.getElementById('phone3d');
+
+        heroVisual.addEventListener('mousemove', (e) => {
+            const rect = heroVisual.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            const rotateX = (-y / rect.height) * 30;
+            const rotateY = (x / rect.width) * 30;
+
+            phone3d.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        heroVisual.addEventListener('mouseleave', () => {
+            phone3d.style.transform = `rotateX(0deg) rotateY(0deg)`;
+        });
+
+        // 4. 3D INTERACTIVE ABOUT LOGO
+        const logo3d = document.getElementById('logo3d');
+        const aboutWrap = document.querySelector('.about-3d-logo-wrap');
+
+        aboutWrap.addEventListener('mousemove', (e) => {
+            const rect = aboutWrap.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            logo3d.style.transform = `rotateX(${(-y/rect.height)*35}deg) rotateY(${(x/rect.width)*35}deg)`;
+        });
+
+        aboutWrap.addEventListener('mouseleave', () => {
+            logo3d.style.transform = `rotateX(0deg) rotateY(0deg)`;
+        });
+
+        // 5. DATA PAKET & SHOWCASE DATA
+        const packageData = {
+            dokumentasi: [
+                {
+                    name: 'Premium',
+                    price: 'Sesuai Kebutuhan',
+                    img: 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        '1 Photographer Utama',
+                        'Cakupan Acara hingga 4 Jam',
+                        'Unlimited Photos Softcopy',
+                        'Editing Foto Pilihan (50 Foto)',
+                        'Flashdisk 16GB Exclusive Box'
+                    ]
+                },
+                {
+                    name: 'Ekslusif',
+                    price: 'Sesuai Kebutuhan',
+                    img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        '2 Photographers + 1 Videographer',
+                        'Cakupan Acara Full Day (s.d. 8 Jam)',
+                        'Cinematic Highlight Video (2-3 Menit)',
+                        '1 Cetak Album Magnetic 20 Hal',
+                        'Editing All Best Photos',
+                        'Flashdisk 32GB Exclusive Box'
+                    ]
+                },
+                {
+                    name: 'Ultimate',
+                    price: 'Sesuai Kebutuhan',
+                    img: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Full Team (3 Photo + 2 Video + Drone operator)',
+                        'Cakupan Acara Multiday / Unlimited',
+                        'Cinematic Video Teaser (1 Min) & Full Movie',
+                        '2 Custom Hardcover Magazine Album',
+                        'Cetak Bingkai Frameless 40x60cm',
+                        'Semua File HD via Google Drive & USB'
+                    ]
+                }
+            ],
+            photobooth: [
+                {
+                    name: 'Photobooth QR',
+                    price: 'Disesuaikan Jam Ops.',
+                    img: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Sistem Softcopy Instant QR Code Dynamic',
+                        'Pilihan Frame Overlay Custom Logo/Event',
+                        'Lighting Professional Studio Set',
+                        'Fun Fun Props & Aksesoris Foto',
+                        '1 Operator & 1 Photographer'
+                    ]
+                },
+                {
+                    name: 'Photobooth Print Limited',
+                    price: 'Disesuaikan Jam & Kertas Print',
+                    img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Cetak Cepat High Quality Thermal Printer',
+                        'Kuota Cetak Sesuai Pilihan (100 / 200 / 300 lembar)',
+                        'Free Custom Frame Layout & Overlay',
+                        'Lighting Studio & Props Lengkap',
+                        'Softcopy Scan QR Code untuk Tamu'
+                    ]
+                },
+                {
+                    name: 'Photobooth Unlimited Print',
+                    price: 'Disesuaikan Durasi Jam',
+                    img: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Cetak Cetak Sepuasnya (Unlimited) Dalam Durasi Jam',
+                        'High Speed Thermal Photo Printer',
+                        'Custom Border Design Bertema Event',
+                        'Operator & Photographer Ramah',
+                        'File Digital All High-Res via Cloud'
+                    ]
+                }
+            ],
+            undangan: [
+                {
+                    name: 'Silver',
+                    price: 'Sesuai Kebutuhan',
+                    img: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Tampilan Responsive Mobile-Friendly',
+                        'Hitung Mundur / Countdown Acara',
+                        'Navigasi Lokasi Google Maps Direct',
+                        'Fitur RSVP & Ucapan Tamu',
+                        'Masa Aktif Undangan 6 Bulan'
+                    ]
+                },
+                {
+                    name: 'Gold',
+                    price: 'Sesuai Kebutuhan',
+                    img: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Semua Fitur Paket Silver',
+                        'Galeri Foto (Up to 10 Foto)',
+                        'Integrasi Background Music / Audio Player',
+                        'Fitur Amplop Digital / Rekening / QRIS',
+                        'Kirim Nama Tamu Tanpa Batas (Nama Tamu kustom)'
+                    ]
+                },
+                {
+                    name: 'Diamond',
+                    price: 'Sesuai Kebutuhan',
+                    img: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Semua Fitur Paket Gold',
+                        'Fitur Video Prewedding Embed',
+                        'Love Story Timeline Section',
+                        'Filter Instagram Custom Frame Event',
+                        'Pengingat Kalender Google / Apple'
+                    ]
+                },
+                {
+                    name: 'Ultimate',
+                    price: 'Sesuai Kebutuhan',
+                    img: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Desain Custom Exclusively Sesuai Wish Request',
+                        'Sistem QR Code Check-in Tamu di Lokasi (Buku Tamu Digital)',
+                        'Domain Kustom Web (.com / .id)',
+                        'Masa Aktif Undangan Selamanya / 1 Tahun+',
+                        'Prioritas Support & Revision'
+                    ]
+                }
+            ]
+        };
+
+        const cardsGrid = document.getElementById('cardsGrid');
+
+        function renderTabContent(category) {
+            cardsGrid.innerHTML = '';
+            const items = packageData[category];
+
+            items.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}" class="card-img">
+                    <div class="card-category">${category.toUpperCase()}</div>
+                    <div class="card-title">${item.name}</div>
+                    <div class="card-price">${item.price}</div>
+                    <button class="card-btn" onclick="openModal('${category}', ${index})">
+                        View Details for Benefit <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                `;
+                cardsGrid.appendChild(card);
+            });
+        }
+
+        function switchTab(category, btnElement) {
+            if (btnElement) {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btnElement.classList.add('active');
+            }
+            renderTabContent(category);
+        }
+
+        // Initialize First Tab
+        renderTabContent('dokumentasi');
+
+        // 6. MODAL FUNCTIONS
+        const modalOverlay = document.getElementById('packageModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalBenefits = document.getElementById('modalBenefits');
+
+        function openModal(category, index) {
+            const data = packageData[category][index];
+            modalTitle.innerText = `Paket ${data.name}`;
+            modalPrice.innerText = `Estimasi Harga: ${data.price}`;
+
+            modalBenefits.innerHTML = '';
+            data.benefits.forEach(benefit => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${benefit}`;
+                modalBenefits.appendChild(li);
+            });
+
+            modalOverlay.classList.add('active');
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+        }
+
+        // 7. WHATSAPP FORM SUBMISSION
+        function sendToWhatsApp(e) {
+            e.preventDefault();
+            const nama = document.getElementById('nama').value;
+            const alamat = document.getElementById('alamat').value;
+            const pilihanPaket = document.getElementById('pilihanPaket').value;
+            const pesan = document.getElementById('pesan').value;
+
+            const whatsappNumber = '6285604613503';
+            
+            const formattedText = `Halo ARLENS.ID,%0A%0ASaya ingin mengajukan pertanyaan / pemesanan dengan detail berikut:%0A- *Nama*: ${encodeURIComponent(nama)}%0A- *Alamat*: ${encodeURIComponent(alamat)}%0A- *Pilihan Paket*: ${encodeURIComponent(pilihanPaket)}%0A- *Isi Pesan*: ${encodeURIComponent(pesan)}%0A%0AMohon info lebih lanjut. Terima kasih!`;
+
+            window.open(`https://wa.me/${whatsappNumber}?text=${formattedText}`, '_blank');
+        }
+    </script>
+</body>
+</html>

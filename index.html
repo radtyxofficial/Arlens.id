@@ -172,27 +172,15 @@
             display: flex;
             align-items: center;
             text-decoration: none;
-            gap: 12px;
             z-index: 1001;
         }
 
         .logo-2d {
-            height: 42px;
+            height: 40px;
             width: auto;
             object-fit: contain;
             filter: drop-shadow(0 2px 5px var(--glow-color));
             transition: all 0.3s ease;
-        }
-
-        .brand-name {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--text-cream);
-            letter-spacing: 1px;
-        }
-
-        .brand-name span {
-            color: var(--accent-gold);
         }
 
         nav ul {
@@ -778,12 +766,10 @@
         <button class="skip-btn" onclick="closeIntro()">Skip Intro <i class="fa-solid fa-forward"></i></button>
     </div>
 
-    <!-- 2. HEADER MINIMALIS + HAMBURGER MENU (Logo 2D diberikan ID headerLogo2D untuk transisi JS) -->
+    <!-- 2. HEADER MINIMALIS + HAMBURGER MENU (Teks ARLENS.ID dihilangkan, menyisakan Logo Saja) -->
     <header>
         <a href="#home" class="logo-container">
-            <!-- Secara default kita panggil logo Dark Mode (karena tema bawaan dark) -->
             <img src="https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw" id="headerLogo2D" alt="ARLENS 2D Logo" class="logo-2d" onerror="this.onerror=null; this.src='https://via.placeholder.com/40/e5ac31/121d21?text=A';">
-            <span class="brand-name">ARLENS<span>.ID</span></span>
         </a>
 
         <nav id="navbar">
@@ -1020,15 +1006,13 @@
             });
         });
 
-        // 3. DARK MODE & LIGHT MODE TOGGLE (DENGAN PERUBAHAN LOGO)
+        // 3. DARK MODE & LIGHT MODE TOGGLE
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const htmlElement = document.documentElement;
         
-        // Element Logo Header
         const headerLogo2D = document.getElementById('headerLogo2D');
-        // Link Logo
-        const darkLogoUrl = 'https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw'; // Logo Putih
-        const lightLogoUrl = 'https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG'; // Logo Hitam
+        const darkLogoUrl = 'https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw'; // Logo Putih (Dark Mode)
+        const lightLogoUrl = 'https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG'; // Logo Hitam (Light Mode)
 
         themeToggleBtn.addEventListener('click', () => {
             const currentTheme = htmlElement.getAttribute('data-theme');
@@ -1038,7 +1022,6 @@
                 ? '<i class="fa-solid fa-moon"></i>' 
                 : '<i class="fa-solid fa-sun"></i>';
             
-            // Ganti Logo berdasarkan tema yang aktif
             headerLogo2D.src = newTheme === 'dark' ? darkLogoUrl : lightLogoUrl;
         });
 

@@ -559,9 +559,71 @@
             width: 100%;
         }
 
+        /* --- HASIL PHOTOBOOTH PORTFOLIO SECTION --- */
+        .portfolio-section {
+            padding: 80px 8%;
+        }
+
+        .event-album-container {
+            margin-bottom: 50px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(8px);
+        }
+
+        .event-album-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-cream);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .event-album-title i {
+            color: var(--accent-gold);
+        }
+
+        .photo-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: var(--bg-card-solid);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px var(--shadow-subtle);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-gold);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+
         /* --- CONTACT & MESSAGE SECTION --- */
         .contact-section {
             padding: 80px 8%;
+            background: rgba(0, 0, 0, 0.15);
         }
 
         .contact-container {
@@ -712,6 +774,11 @@
             .hero-cta { justify-content: center; }
             .about-section, .contact-container, .footer-grid { grid-template-columns: 1fr; }
             .about-3d-logo-wrap { order: -1; }
+            .photo-row { grid-template-columns: 1fr; }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .photo-row { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 768px) {
@@ -728,6 +795,8 @@
             .about-content p { font-size: 0.9rem; }
             .products-section { padding: 60px 5%; }
             .cards-grid { grid-template-columns: 1fr; }
+            .portfolio-section { padding: 60px 5%; }
+            .photo-row { grid-template-columns: 1fr; }
             .contact-section { padding: 60px 5%; }
             footer { padding: 50px 5% 30px 5%; }
         }
@@ -805,6 +874,7 @@
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#products" class="nav-link">Products</a></li>
                 <li><a href="#pricelist" class="nav-link">Pricelist</a></li>
+                <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
                 <li><a href="#contacts" class="nav-link">Contacts</a></li>
             </ul>
         </nav>
@@ -888,7 +958,45 @@
         </div>
     </section>
 
-    <!-- 6. CONTACT & MESSAGE SECTION -->
+    <!-- 6. HASIL PHOTOBOOTH (PORTFOLIO ALBUM SECTION) -->
+    <section class="portfolio-section" id="portfolio">
+        <div class="section-title">
+            <p>Galeri Dokumentasi & Event</p>
+            <h2>Hasil Photobooth Kami</h2>
+        </div>
+
+        <!-- Album Event 1: MPLS SMAN 1 Sukawati -->
+        <div class="event-album-container">
+            <div class="event-album-title">
+                <i class="fa-solid fa-camera-retro"></i> MPLS SMAN 1 Sukawati
+            </div>
+            <div class="photo-row">
+                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1hssNsQHPSLovqGlTq0VpnkqTRNFL7Urb" alt="MPLS SMAN 1 Sukawati 1" loading="lazy"></div>
+                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1Onf2Uo4ec_UdX_08_5bsovwj87wT7PHU" alt="MPLS SMAN 1 Sukawati 2" loading="lazy"></div>
+                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1nZM47UZZ_3kxeuTb7dQBKCuGbbDNL62r" alt="MPLS SMAN 1 Sukawati 3" loading="lazy"></div>
+                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1ltYqNj1SoaOxmCmRj1tGNGL2Xu7Fd0Qq" alt="MPLS SMAN 1 Sukawati 4" loading="lazy"></div>
+                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1K1oMhqCkkNNuwBab3aPnLLZB5eswAcYM" alt="MPLS SMAN 1 Sukawati 5" loading="lazy"></div>
+                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1OpSmhcQALMdL4K8WHA-KnJ_SI6CNBx6j" alt="MPLS SMAN 1 Sukawati 6" loading="lazy"></div>
+            </div>
+        </div>
+
+        <!-- Album Event 2: Jegeg Bagus SMAN 1 Sukawati -->
+        <div class="event-album-container">
+            <div class="event-album-title">
+                <i class="fa-solid fa-award"></i> Jegeg Bagus SMAN 1 Sukawati
+            </div>
+            <div class="photo-row">
+                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1yQT_5vR9RtysBbQIm9yPvAnlWOopRueH" alt="Jegeg Bagus SMAN 1 Sukawati 1" loading="lazy"></div>
+                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1GF-neiFIolz0CsJmzOSJDjn79KC3CwSg" alt="Jegeg Bagus SMAN 1 Sukawati 2" loading="lazy"></div>
+                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/12ZBPCAmMbd3QXitinNa9qClkVdbyKLR6" alt="Jegeg Bagus SMAN 1 Sukawati 3" loading="lazy"></div>
+                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1rmKPkjRJarlPTelRq_VsxMpv3HRXhEmJ" alt="Jegeg Bagus SMAN 1 Sukawati 4" loading="lazy"></div>
+                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1c-UrY33soXT9BLFDfolzhHpuH0XmazFL" alt="Jegeg Bagus SMAN 1 Sukawati 5" loading="lazy"></div>
+                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1Ox7qR96JCAffIMuBHDqy3WFktOXisr3s" alt="Jegeg Bagus SMAN 1 Sukawati 6" loading="lazy"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. CONTACT & MESSAGE SECTION -->
     <section class="contact-section" id="contacts">
         <div class="section-title">
             <p>Mari Berkolaborasi</p>
@@ -909,7 +1017,7 @@
                     <div class="contact-icon"><i class="fa-brands fa-instagram"></i></div>
                     <div class="contact-details">
                         <h4>Instagram</h4>
-                        <p>@arlens.photobooth</p>
+                        <p>@arlens.photoboot</p>
                     </div>
                 </a>
 
@@ -961,7 +1069,7 @@
         </div>
     </section>
 
-    <!-- 7. FOOTER -->
+    <!-- 8. FOOTER -->
     <footer>
         <div class="footer-grid">
             <div class="footer-brand">
@@ -977,6 +1085,7 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#products">Products</a></li>
                     <li><a href="#pricelist">Pricelist</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
                 </ul>
             </div>
 

@@ -342,7 +342,6 @@
             z-index: 10;
         }
 
-        /* Aesthetic Invitation Image inside Phone */
         .invitation-preview {
             width: 100%;
             height: 100%;
@@ -766,7 +765,7 @@
         <button class="skip-btn" onclick="closeIntro()">Skip Intro <i class="fa-solid fa-forward"></i></button>
     </div>
 
-    <!-- 2. HEADER MINIMALIS + HAMBURGER MENU (Teks ARLENS.ID dihilangkan, menyisakan Logo Saja) -->
+    <!-- 2. HEADER MINIMALIS + HAMBURGER MENU -->
     <header>
         <a href="#home" class="logo-container">
             <img src="https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw" id="headerLogo2D" alt="ARLENS 2D Logo" class="logo-2d" onerror="this.onerror=null; this.src='https://via.placeholder.com/40/e5ac31/121d21?text=A';">
@@ -851,7 +850,7 @@
         </div>
 
         <div class="tab-navigation">
-            <button class="tab-btn active" onclick="switchTab('dokumentasi', this)">Dokumentasi</button>
+            <button class="tab-btn active" onclick="switchTab('dokumentasi', this)">Dokumentasi (Photo Only)</button>
             <button class="tab-btn" onclick="switchTab('photobooth', this)">Photobooth</button>
             <button class="tab-btn" onclick="switchTab('undangan', this)">Undangan Digital</button>
         </div>
@@ -1049,23 +1048,33 @@
             aboutWrap.addEventListener('mouseleave', () => logo3d.style.transform = `rotateX(0deg) rotateY(0deg)`);
         }
 
-        // 5. DATA PAKET & SHOWCASE DATA
+        // 5. DATA PAKET & SHOWCASE DATA (DIPERBARUI DENGAN PRICELIST BARU)
         const packageData = {
             dokumentasi: [
                 {
-                    name: 'Premium', price: 'Sesuai Kebutuhan',
+                    name: 'PREMIUM', price: 'Rp. 400.000,00',
                     img: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=600&q=80',
-                    benefits: ['1 Photographer Utama', 'Cakupan Acara s/d 4 Jam', 'Unlimited Photos Softcopy', 'Editing 50 Foto', 'Flashdisk 16GB Exclusive']
+                    benefits: ['All file original', '30 File Edit (Retouch)', '4 Jam kerja']
                 },
                 {
-                    name: 'Ekslusif', price: 'Sesuai Kebutuhan',
+                    name: 'EKSLUSIF', price: 'Rp. 500.000,00',
                     img: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80',
-                    benefits: ['2 Photographers + 1 Videographer', 'Cakupan Acara Full Day', 'Cinematic Highlight Video', '1 Cetak Album Magnetic 20 Hal', 'Flashdisk 32GB']
+                    benefits: ['All file foto edit (color correction)', '25 File Edit (Retouch)', '4 Jam kerja (Max)']
                 },
                 {
-                    name: 'Ultimate', price: 'Sesuai Kebutuhan',
+                    name: 'ULTIMATE', price: 'Rp. 600.000,00',
                     img: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80',
-                    benefits: ['Full Team + Drone', 'Unlimited / Multiday', 'Cinematic Teaser & Full Movie', '2 Custom Hardcover Magazine', 'Cetak Bingkai Frameless']
+                    benefits: ['All file foto edit (color correction)', '30 File Edit (Retouch)', '10 Jam kerja (Max)']
+                },
+                {
+                    name: 'Flash Disk (Add-on)', price: 'Rp. 120.000,00',
+                    img: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&q=80',
+                    benefits: ['Flash Disk Custom', 'Isi: Foto Frame + File Original', 'Desain Eksklusif ARLENS.ID']
+                },
+                {
+                    name: 'Buku Album (Add-on)', price: 'Rp. 350.000,00',
+                    img: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80',
+                    benefits: ['Cetak Buku Album Berkualitas Tinggi', 'Layout & Desain Eksklusif', 'Penyimpanan Kenangan Abadi']
                 }
             ],
             photobooth: [
@@ -1150,7 +1159,7 @@
         function openModal(category, index) {
             const data = packageData[category][index];
             modalTitle.innerText = `Paket ${data.name}`;
-            modalPrice.innerText = `Estimasi: ${data.price}`;
+            modalPrice.innerText = `Harga: ${data.price}`;
             modalBenefits.innerHTML = '';
             data.benefits.forEach(benefit => {
                 const li = document.createElement('li');

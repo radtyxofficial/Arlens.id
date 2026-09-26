@@ -173,7 +173,7 @@
             align-items: center;
             text-decoration: none;
             gap: 12px;
-            z-index: 1001; /* Untuk di atas menu mobile */
+            z-index: 1001;
         }
 
         .logo-2d {
@@ -181,6 +181,7 @@
             width: auto;
             object-fit: contain;
             filter: drop-shadow(0 2px 5px var(--glow-color));
+            transition: all 0.3s ease;
         }
 
         .brand-name {
@@ -237,7 +238,7 @@
         }
 
         .mobile-menu-btn {
-            display: none; /* Disembunyikan di desktop */
+            display: none;
         }
 
         /* --- HERO SECTION --- */
@@ -357,7 +358,6 @@
         .invitation-preview {
             width: 100%;
             height: 100%;
-            /* Gambar prewedding estetik */
             background: linear-gradient(180deg, rgba(18,29,33,0.4), rgba(42,51,56,0.95)), url('https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=600&q=80') center/cover;
             padding: 40px 20px 20px 20px;
             display: flex;
@@ -703,114 +703,46 @@
 
         /* --- RESPONSIVE MOBILE TWEAKS --- */
         @media (max-width: 992px) {
-            .mobile-menu-btn {
-                display: flex;
-            }
+            .mobile-menu-btn { display: flex; }
             nav {
-                position: fixed;
-                top: -100vh;
-                left: 0;
-                width: 100%;
-                height: 100vh;
-                background: rgba(18, 29, 33, 0.98);
-                backdrop-filter: blur(15px);
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                transition: top 0.4s ease-in-out;
-                z-index: 1000;
+                position: fixed; top: -100vh; left: 0; width: 100%; height: 100vh;
+                background: rgba(18, 29, 33, 0.98); backdrop-filter: blur(15px);
+                display: flex; flex-direction: column; justify-content: center; align-items: center;
+                transition: top 0.4s ease-in-out; z-index: 1000;
             }
-            [data-theme="light"] nav {
-                background: rgba(237, 235, 222, 0.98);
-            }
-            nav.menu-open {
-                top: 0;
-            }
-            nav ul {
-                flex-direction: column;
-                gap: 25px;
-                text-align: center;
-            }
-            nav a {
-                font-size: 1.25rem;
-                font-weight: 700;
-            }
-
-            .hero {
-                grid-template-columns: 1fr;
-                text-align: center;
-                padding: 120px 5% 50px 5%;
-            }
-            .hero-text p {
-                margin: 0 auto 30px auto;
-            }
-            .hero-cta {
-                justify-content: center;
-            }
-            .about-section, .contact-container, .footer-grid {
-                grid-template-columns: 1fr;
-            }
-            .about-3d-logo-wrap {
-                order: -1; 
-            }
+            [data-theme="light"] nav { background: rgba(237, 235, 222, 0.98); }
+            nav.menu-open { top: 0; }
+            nav ul { flex-direction: column; gap: 25px; text-align: center; }
+            nav a { font-size: 1.25rem; font-weight: 700; }
+            .hero { grid-template-columns: 1fr; text-align: center; padding: 120px 5% 50px 5%; }
+            .hero-text p { margin: 0 auto 30px auto; }
+            .hero-cta { justify-content: center; }
+            .about-section, .contact-container, .footer-grid { grid-template-columns: 1fr; }
+            .about-3d-logo-wrap { order: -1; }
         }
 
         @media (max-width: 768px) {
             .intro-welcome { font-size: 1.8rem; }
             .intro-tagline { font-size: 1rem; }
-
-            .hero-text h1 {
-                font-size: 2rem; 
-            }
-            .hero-text p {
-                font-size: 0.9rem;
-                margin-bottom: 25px;
-            }
-            .btn {
-                width: 100%; 
-            }
-            .phone-mockup-wrap {
-                width: 240px; 
-                height: 480px;
-            }
-            .section-title h2 {
-                font-size: 1.7rem; 
-            }
-            .about-section {
-                padding: 60px 5%;
-                gap: 30px;
-            }
-            .logo-3d-box {
-                width: 220px;
-                height: 220px;
-            }
-            .logo-3d-box img {
-                max-width: 140px;
-            }
-            .about-content p {
-                font-size: 0.9rem;
-            }
-            .products-section {
-                padding: 60px 5%;
-            }
-            .cards-grid {
-                grid-template-columns: 1fr; 
-            }
-            .contact-section {
-                padding: 60px 5%;
-            }
-            footer {
-                padding: 50px 5% 30px 5%;
-            }
+            .hero-text h1 { font-size: 2rem; }
+            .hero-text p { font-size: 0.9rem; margin-bottom: 25px; }
+            .btn { width: 100%; }
+            .phone-mockup-wrap { width: 240px; height: 480px; }
+            .section-title h2 { font-size: 1.7rem; }
+            .about-section { padding: 60px 5%; gap: 30px; }
+            .logo-3d-box { width: 220px; height: 220px; }
+            .logo-3d-box img { max-width: 140px; }
+            .about-content p { font-size: 0.9rem; }
+            .products-section { padding: 60px 5%; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .contact-section { padding: 60px 5%; }
+            footer { padding: 50px 5% 30px 5%; }
         }
 
         /* --- MODAL DETAIL PAKET --- */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(6px);
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(6px);
             display: flex; justify-content: center; align-items: center;
             z-index: 10000; opacity: 0; visibility: hidden;
             transition: all 0.3s ease; padding: 20px;
@@ -836,7 +768,7 @@
 </head>
 <body>
 
-    <!-- 1. OPENING / INTRO OVERLAY (Saya pakaikan Logo 3D juga agar estetik di awal) -->
+    <!-- 1. OPENING / INTRO OVERLAY -->
     <div id="intro-overlay">
         <div class="intro-welcome">WELCOME TO</div>
         <div class="intro-brand">
@@ -846,10 +778,11 @@
         <button class="skip-btn" onclick="closeIntro()">Skip Intro <i class="fa-solid fa-forward"></i></button>
     </div>
 
-    <!-- 2. HEADER MINIMALIS + HAMBURGER MENU (Logo 2D Baru diterapkan di sini) -->
+    <!-- 2. HEADER MINIMALIS + HAMBURGER MENU (Logo 2D diberikan ID headerLogo2D untuk transisi JS) -->
     <header>
         <a href="#home" class="logo-container">
-            <img src="https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG" alt="ARLENS 2D Logo" class="logo-2d" onerror="this.onerror=null; this.src='https://via.placeholder.com/40/e5ac31/121d21?text=A';">
+            <!-- Secara default kita panggil logo Dark Mode (karena tema bawaan dark) -->
+            <img src="https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw" id="headerLogo2D" alt="ARLENS 2D Logo" class="logo-2d" onerror="this.onerror=null; this.src='https://via.placeholder.com/40/e5ac31/121d21?text=A';">
             <span class="brand-name">ARLENS<span>.ID</span></span>
         </a>
 
@@ -902,7 +835,7 @@
         </div>
     </section>
 
-    <!-- 4. ABOUT SECTION (Logo 3D Baru diterapkan di sini) -->
+    <!-- 4. ABOUT SECTION -->
     <section class="about-section" id="about">
         <div class="about-3d-logo-wrap">
             <div class="logo-3d-box" id="logo3d">
@@ -1087,9 +1020,15 @@
             });
         });
 
-        // 3. DARK MODE & LIGHT MODE TOGGLE
+        // 3. DARK MODE & LIGHT MODE TOGGLE (DENGAN PERUBAHAN LOGO)
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const htmlElement = document.documentElement;
+        
+        // Element Logo Header
+        const headerLogo2D = document.getElementById('headerLogo2D');
+        // Link Logo
+        const darkLogoUrl = 'https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw'; // Logo Putih
+        const lightLogoUrl = 'https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG'; // Logo Hitam
 
         themeToggleBtn.addEventListener('click', () => {
             const currentTheme = htmlElement.getAttribute('data-theme');
@@ -1098,6 +1037,9 @@
             themeToggleBtn.innerHTML = newTheme === 'dark' 
                 ? '<i class="fa-solid fa-moon"></i>' 
                 : '<i class="fa-solid fa-sun"></i>';
+            
+            // Ganti Logo berdasarkan tema yang aktif
+            headerLogo2D.src = newTheme === 'dark' ? darkLogoUrl : lightLogoUrl;
         });
 
         // 4. 3D INTERACTIVE HERO PHONE MOCKUP

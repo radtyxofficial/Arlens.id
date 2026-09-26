@@ -695,4 +695,592 @@
         }
 
         /* --- RESPONSIVE MOBILE TWEAKS --- */
-        @media (max-width: 992p
+        @media (max-width: 992px) {
+            .mobile-menu-btn { display: flex; }
+            nav {
+                position: fixed; top: -100vh; left: 0; width: 100%; height: 100vh;
+                background: rgba(18, 29, 33, 0.98); backdrop-filter: blur(15px);
+                display: flex; flex-direction: column; justify-content: center; align-items: center;
+                transition: top 0.4s ease-in-out; z-index: 1000;
+            }
+            [data-theme="light"] nav { background: rgba(237, 235, 222, 0.98); }
+            nav.menu-open { top: 0; }
+            nav ul { flex-direction: column; gap: 25px; text-align: center; }
+            nav a { font-size: 1.25rem; font-weight: 700; }
+            .hero { grid-template-columns: 1fr; text-align: center; padding: 120px 5% 50px 5%; }
+            .hero-text p { margin: 0 auto 30px auto; }
+            .hero-cta { justify-content: center; }
+            .about-section, .contact-container, .footer-grid { grid-template-columns: 1fr; }
+            .about-3d-logo-wrap { order: -1; }
+        }
+
+        @media (max-width: 768px) {
+            .intro-welcome { font-size: 1.8rem; }
+            .intro-tagline { font-size: 1rem; }
+            .hero-text h1 { font-size: 2rem; }
+            .hero-text p { font-size: 0.9rem; margin-bottom: 25px; }
+            .btn { width: 100%; }
+            .phone-mockup-wrap { width: 240px; height: 480px; }
+            .section-title h2 { font-size: 1.7rem; }
+            .about-section { padding: 60px 5%; gap: 30px; }
+            .logo-3d-box { width: 220px; height: 220px; }
+            .logo-3d-box img { max-width: 140px; }
+            .about-content p { font-size: 0.9rem; }
+            .products-section { padding: 60px 5%; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .contact-section { padding: 60px 5%; }
+            footer { padding: 50px 5% 30px 5%; }
+        }
+
+        /* --- MODAL DETAIL PAKET & STYLING JARAK CATATAN --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(6px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 10000; opacity: 0; visibility: hidden;
+            transition: all 0.3s ease; padding: 20px;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-box {
+            background: var(--bg-card-solid); border: 1px solid var(--border-color);
+            width: 100%; max-width: 500px; border-radius: 16px;
+            padding: 25px; position: relative;
+            transform: scale(0.9); transition: transform 0.3s ease;
+            max-height: 90vh; overflow-y: auto;
+        }
+        .modal-overlay.active .modal-box { transform: scale(1); }
+        .modal-close {
+            position: absolute; top: 15px; right: 15px;
+            background: transparent; border: none;
+            color: var(--text-cream); font-size: 1.2rem; cursor: pointer;
+        }
+        .modal-title { font-size: 1.4rem; font-weight: 800; color: var(--accent-gold); margin-bottom: 5px; }
+        .modal-price { font-size: 1.1rem; font-weight: 700; color: var(--accent-terracotta); margin-bottom: 20px; }
+        
+        .modal-benefits { list-style: none; }
+        .modal-benefits li { 
+            font-size: 0.9rem; 
+            color: var(--text-cream); 
+            margin-bottom: 10px; 
+            display: flex; 
+            gap: 10px; 
+        }
+        .modal-benefits li i { color: var(--accent-gold); flex-shrink: 0; margin-top: 3px; }
+
+        /* Styling Khusus untuk Catatan/Note agar ada jarak jelas */
+        .modal-benefits li.note-item {
+            margin-top: 18px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border-color);
+            font-size: 0.85rem;
+            color: var(--accent-terracotta);
+            font-weight: 600;
+        }
+        .modal-benefits li.note-item i {
+            color: var(--accent-terracotta);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. OPENING / INTRO OVERLAY -->
+    <div id="intro-overlay">
+        <div class="intro-welcome">WELCOME TO</div>
+        <div class="intro-brand">
+            <img src="https://lh3.googleusercontent.com/d/1-VsXB7QToVlaYd4JTP_bods9H4NzWizG" alt="Logo Arlens" class="intro-logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x100/121d21/e5ac31?text=ARLENS.ID';">
+            <p class="intro-tagline">"Rayakan Setiap Moment Bahagia Bersama Kami"</p>
+        </div>
+        <button class="skip-btn" onclick="closeIntro()">Skip Intro <i class="fa-solid fa-forward"></i></button>
+    </div>
+
+    <!-- 2. HEADER MINIMALIS + HAMBURGER MENU -->
+    <header>
+        <a href="#home" class="logo-container">
+            <img src="https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw" id="headerLogo2D" alt="ARLENS 2D Logo" class="logo-2d" onerror="this.onerror=null; this.src='https://via.placeholder.com/40/e5ac31/121d21?text=A';">
+        </a>
+
+        <nav id="navbar">
+            <ul>
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#products" class="nav-link">Products</a></li>
+                <li><a href="#pricelist" class="nav-link">Pricelist</a></li>
+                <li><a href="#contacts" class="nav-link">Contacts</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggleBtn" title="Ganti Mode Tema">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" title="Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- 3. HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <h1>RAYAKAN SETIAP MOMENT BAHAGIA BERSAMA <span>ARLENS.ID</span></h1>
+            <p>
+                Abadikan setiap momen berharga Anda menjadi karya seni visual yang natural dan elegan. Melalui layanan Dokumentasi, Photobooth, dan Undangan Digital, kami menghadirkan pengalaman unik yang dirancang penuh presisi untuk hari spesial Anda.
+            </p>
+            <div class="hero-cta">
+                <a href="#products" class="btn btn-primary"><i class="fa-solid fa-camera"></i> Lihat Layanan</a>
+                <a href="https://wa.me/6285604613503" target="_blank" class="btn btn-secondary"><i class="fa-brands fa-whatsapp"></i> Hubungi Kami</a>
+            </div>
+        </div>
+
+        <div class="hero-visual" id="heroVisual">
+            <div class="phone-mockup-wrap" id="phone3d">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <div class="invitation-preview">
+                        <div class="inv-title">Undangan Digital</div>
+                        <div>
+                            <div class="inv-names">Romeo & Juliet</div>
+                        </div>
+                        <div class="inv-badge"><i class="fa-solid fa-envelope-open-text"></i> Live Preview GIF</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. ABOUT SECTION -->
+    <section class="about-section" id="about">
+        <div class="about-3d-logo-wrap">
+            <div class="logo-3d-box" id="logo3d">
+                <img src="https://lh3.googleusercontent.com/d/1-VsXB7QToVlaYd4JTP_bods9H4NzWizG" alt="Logo Arlens 3D" onerror="this.onerror=null; this.src='https://via.placeholder.com/170/2a3338/e5ac31?text=ARLENS+3D';">
+            </div>
+        </div>
+
+        <div class="about-content">
+            <div class="section-title" style="text-align: left; margin-bottom: 20px;">
+                <p>Mengenal Kami</p>
+                <h2>Tentang ARLENS.ID</h2>
+            </div>
+            <p>
+                Setiap acara memiliki ceritanya sendiri, dan kami di ARLENS.ID percaya bahwa momen terbaik layak dikenang selamanya. Kami adalah tim kreatif profesional yang berdedikasi untuk menangkap emosi, tawa, dan kehangatan di setiap perayaan Anda.
+            </p>
+            <p>
+                Berawal dari kecintaan pada seni visual, ARLENS.ID kini telah dipercaya untuk menangani berbagai acara mulai dari pernikahan, lamaran, ulang tahun, hingga acara perusahaan. Pendekatan kami tidak hanya sekadar memotret, tetapi juga menceritakan kisah Anda melalui bingkai foto dan video yang jujur, estetik, dan tak lekang oleh waktu.
+            </p>
+        </div>
+    </section>
+
+    <!-- 5. PRODUCTS & PRICELISTS SHOWCASE SECTION -->
+    <section class="products-section" id="products">
+        <div class="section-title">
+            <p>Pilihan Paket Terbaik</p>
+            <h2 id="pricelist">Layanan & Price List</h2>
+        </div>
+
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="switchTab('dokumentasi', this)">Dokumentasi (Photo Only)</button>
+            <button class="tab-btn" onclick="switchTab('photobooth', this)">Photobooth</button>
+            <button class="tab-btn" onclick="switchTab('undangan', this)">Undangan Digital</button>
+        </div>
+
+        <div class="cards-grid" id="cardsGrid">
+            <!-- JS Injecting Content Automatically -->
+        </div>
+    </section>
+
+    <!-- 6. CONTACT & MESSAGE SECTION -->
+    <section class="contact-section" id="contacts">
+        <div class="section-title">
+            <p>Mari Berkolaborasi</p>
+            <h2>Hubungi Kami</h2>
+        </div>
+
+        <div class="contact-container">
+            <div class="contact-info">
+                <a href="https://wa.me/6285604613503" target="_blank" class="contact-card">
+                    <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                    <div class="contact-details">
+                        <h4>WhatsApp Direct</h4>
+                        <p>+62 856-0461-3503</p>
+                    </div>
+                </a>
+
+                <a href="https://instagram.com/arlens.photoboot" target="_blank" class="contact-card">
+                    <div class="contact-icon"><i class="fa-brands fa-instagram"></i></div>
+                    <div class="contact-details">
+                        <h4>Instagram</h4>
+                        <p>@arlens.photoboot</p>
+                    </div>
+                </a>
+
+                <a href="mailto:arlens.photobooth@gmail.com" class="contact-card">
+                    <div class="contact-icon"><i class="fa-regular fa-envelope"></i></div>
+                    <div class="contact-details">
+                        <h4>Email Support</h4>
+                        <p>arlens.photobooth@gmail.com</p>
+                    </div>
+                </a>
+
+                <div class="contact-card" style="cursor: default;">
+                    <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="contact-details">
+                        <h4>Lokasi Utama</h4>
+                        <p>Base in Jombang, Jawa Timur</p>
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form" id="contactForm" onsubmit="sendToWhatsApp(event)">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" class="form-control" placeholder="Nama Anda" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="alamat">Alamat / Kota</label>
+                    <input type="text" id="alamat" class="form-control" placeholder="Contoh: Jombang" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pilihanPaket">Pilihan Paket / Layanan</label>
+                    <select id="pilihanPaket" class="form-control" required>
+                        <option value="Dokumentasi">Dokumentasi</option>
+                        <option value="Photobooth">Photobooth</option>
+                        <option value="Undangan Digital">Undangan Digital</option>
+                        <option value="Other">Other (Saran / Kerjasama)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="pesan">Isi Pesan</label>
+                    <textarea id="pesan" class="form-control" placeholder="Tuliskan pesan Anda di sini..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="fa-brands fa-whatsapp"></i> Kirim Pesan</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- 7. FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>ARLENS.ID</h3>
+                <p>Karya seni visual yang natural, estetik, dan tak lekang oleh waktu.</p>
+                <p style="margin-top: 10px; color: var(--accent-gold); font-weight: 600; font-size: 0.85rem;">Base in Jombang, Jawa Timur</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Navigasi</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#pricelist">Pricelist</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Layanan Kami</h4>
+                <ul>
+                    <li><a href="#products" onclick="switchTab('dokumentasi')">Dokumentasi</a></li>
+                    <li><a href="#products" onclick="switchTab('photobooth')">Photobooth</a></li>
+                    <li><a href="#products" onclick="switchTab('undangan')">Undangan Digital</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align: center; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 20px;">
+            &copy; 2026 ARLENS.ID. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- MODAL DETAIL PAKET -->
+    <div class="modal-overlay" id="packageModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-title" id="modalTitle">Nama Paket</div>
+            <div class="modal-price" id="modalPrice">Harga Paket</div>
+            <ul class="modal-benefits" id="modalBenefits">
+                <!-- Benefit list populated via JS -->
+            </ul>
+            <a href="#" id="modalWhatsAppBtn" target="_blank" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: 15px;"><i class="fa-brands fa-whatsapp"></i> Pesan Paket Ini</a>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // 1. AUTO CLOSE INTRO / SKIP INTRO
+        const introOverlay = document.getElementById('intro-overlay');
+        function closeIntro() {
+            introOverlay.style.opacity = '0';
+            setTimeout(() => introOverlay.style.visibility = 'hidden', 800);
+        }
+        setTimeout(closeIntro, 4500);
+
+        // 2. MOBILE MENU HAMBURGER
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navbar = document.getElementById('navbar');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navbar.classList.toggle('menu-open');
+            const icon = mobileMenuBtn.querySelector('i');
+            if(navbar.classList.contains('menu-open')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navbar.classList.remove('menu-open');
+                mobileMenuBtn.querySelector('i').classList.replace('fa-xmark', 'fa-bars');
+            });
+        });
+
+        // 3. DARK MODE & LIGHT MODE TOGGLE
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const htmlElement = document.documentElement;
+        
+        const headerLogo2D = document.getElementById('headerLogo2D');
+        const darkLogoUrl = 'https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw'; // Logo Putih (Dark Mode)
+        const lightLogoUrl = 'https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG'; // Logo Hitam (Light Mode)
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlElement.setAttribute('data-theme', newTheme);
+            themeToggleBtn.innerHTML = newTheme === 'dark' 
+                ? '<i class="fa-solid fa-moon"></i>' 
+                : '<i class="fa-solid fa-sun"></i>';
+            
+            headerLogo2D.src = newTheme === 'dark' ? darkLogoUrl : lightLogoUrl;
+        });
+
+        // 4. 3D INTERACTIVE HERO PHONE MOCKUP
+        const heroVisual = document.getElementById('heroVisual');
+        const phone3d = document.getElementById('phone3d');
+        const logo3d = document.getElementById('logo3d');
+        const aboutWrap = document.querySelector('.about-3d-logo-wrap');
+
+        if(window.innerWidth > 992) {
+            heroVisual.addEventListener('mousemove', (e) => {
+                const rect = heroVisual.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                phone3d.style.transform = `rotateX(${(-y / rect.height) * 20}deg) rotateY(${(x / rect.width) * 20}deg)`;
+            });
+            heroVisual.addEventListener('mouseleave', () => phone3d.style.transform = `rotateX(0deg) rotateY(0deg)`);
+
+            aboutWrap.addEventListener('mousemove', (e) => {
+                const rect = aboutWrap.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                logo3d.style.transform = `rotateX(${(-y/rect.height)*25}deg) rotateY(${(x/rect.width)*25}deg)`;
+            });
+            aboutWrap.addEventListener('mouseleave', () => logo3d.style.transform = `rotateX(0deg) rotateY(0deg)`);
+        }
+
+        // 5. DATA PAKET & SHOWCASE DATA
+        const packageData = {
+            dokumentasi: [
+                {
+                    name: 'PREMIUM', price: 'Rp. 400.000,00',
+                    img: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=600&q=80',
+                    benefits: ['All file original', '30 File Edit (Retouch)', '4 Jam kerja'],
+                    notes: []
+                },
+                {
+                    name: 'EKSLUSIF', price: 'Rp. 500.000,00',
+                    img: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80',
+                    benefits: ['All file foto edit (color correction)', '25 File Edit (Retouch)', '4 Jam kerja (Max)'],
+                    notes: []
+                },
+                {
+                    name: 'ULTIMATE', price: 'Rp. 600.000,00',
+                    img: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80',
+                    benefits: ['All file foto edit (color correction)', '30 File Edit (Retouch)', '10 Jam kerja (Max)'],
+                    notes: []
+                },
+                {
+                    name: 'Flash Disk (Add-on)', price: 'Rp. 120.000,00',
+                    img: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&q=80',
+                    benefits: ['Flash Disk Custom', 'Isi: Foto Frame + File Original', 'Desain Eksklusif ARLENS.ID'],
+                    notes: []
+                },
+                {
+                    name: 'Buku Album (Add-on)', price: 'Rp. 350.000,00',
+                    img: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80',
+                    benefits: ['Cetak Buku Album Berkualitas Tinggi', 'Layout & Desain Eksklusif', 'Penyimpanan Kenangan Abadi'],
+                    notes: []
+                }
+            ],
+            photobooth: [
+                {
+                    name: 'Paket QR Only', price: 'Mulai Rp. 400.000,00',
+                    img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80',
+                    benefits: [
+                        '2 Hours: Rp. 400.000,00',
+                        '3 Hours: Rp. 500.000,00',
+                        '4 Hours: Rp. 600.000,00',
+                        '5 Hours: Rp. 700.000,00',
+                        '6 Hours: Rp. 800.000,00'
+                    ],
+                    notes: [
+                        'Catatan: Setiap tambahan waktu dikenakan biaya sebesar 100k/Jam dari Harga Sesuai PriceList',
+                        'Catatan: Waktu persiapan rakit photobooth sekitar 30-40 menit (diluar jam yang dipesan). Waktu mulai dihitung setelah perakitan selesai.'
+                    ]
+                },
+                {
+                    name: 'Paket Limited Print', price: 'Mulai Rp. 1.000.000,00',
+                    img: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80',
+                    benefits: [
+                        '100 Print - Max 3 Hours: Rp. 1.000.000,00',
+                        '200 Print - Max 4 Hours: Rp. 1.300.000,00',
+                        '300 Print - Max 5 Hours: Rp. 1.500.000,00',
+                        '400 Print - Max 6 Hours: Rp. 1.800.000,00',
+                        '500 Print - Max 7 Hours: Rp. 2.000.000,00'
+                    ],
+                    notes: [
+                        'Catatan: Setiap tambahan waktu dikenakan biaya sebesar 150k/Jam dari Harga Sesuai PriceList',
+                        'Catatan: Waktu persiapan rakit photobooth sekitar 30-40 menit (diluar jam yang dipesan). Waktu mulai dihitung setelah perakitan selesai.',
+                        'Catatan: Tambahan limited print (jika kuota print habis) mulai dari 250k/50 print (termasuk tambahan waktu 30 menit)'
+                    ]
+                },
+                {
+                    name: 'Paket Unlimited Print', price: 'Mulai Rp. 1.450.000,00',
+                    img: 'https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=600&q=80',
+                    benefits: [
+                        '2 Hours: Rp. 1.450.000,00',
+                        '3 Hours: Rp. 1.900.000,00',
+                        '4 Hours: Rp. 2.350.000,00',
+                        '5 Hours: Rp. 2.800.000,00',
+                        '6 Hours: Rp. 3.750.000,00'
+                    ],
+                    notes: [
+                        'Catatan: Setiap tambahan waktu dikenakan biaya sebesar 300k/Jam dari Harga Sesuai PriceList',
+                        'Catatan: Waktu persiapan rakit photobooth sekitar 30-40 menit (diluar jam yang dipesan). Waktu mulai dihitung setelah perakitan selesai.'
+                    ]
+                },
+                {
+                    name: 'Paket Tambahan (Add-on)', price: 'Mulai Rp. 30.000,00',
+                    img: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&q=80',
+                    benefits: [
+                        'Tambahan Template: Rp. 30.000,00',
+                        'Flash Disk (Foto Frame): Rp. 60.000,00',
+                        'Flash Disk (Foto Frame + Ori): Rp. 90.000,00',
+                        'Buku Album: Rp. 350.000,00'
+                    ],
+                    notes: []
+                }
+            ],
+            undangan: [
+                {
+                    name: 'Digital Invitation', price: 'COMING SOON',
+                    img: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80',
+                    benefits: [
+                        'Layanan Undangan Digital eksklusif sedang dalam tahap pengembangan akhir.',
+                        'Menghadirkan desain interaktif, elegan, dan fitur RSVP modern.',
+                        'Nantikan peluncuran resminya segera bersama ARLENS.ID!',
+                        'Hubungi admin via WhatsApp untuk informasi rilis dan penawaran khusus.'
+                    ],
+                    notes: []
+                }
+            ]
+        };
+
+        const cardsGrid = document.getElementById('cardsGrid');
+
+        function renderTabContent(category) {
+            cardsGrid.innerHTML = '';
+            const items = packageData[category];
+
+            items.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}" class="card-img">
+                    <div class="card-category">${category.toUpperCase()}</div>
+                    <div class="card-title">${item.name}</div>
+                    <div class="card-price">${item.price}</div>
+                    <button class="card-btn" onclick="openModal('${category}', ${index})">
+                        ${category === 'undangan' ? 'Info Peluncuran <i class="fa-solid fa-bell"></i>' : 'Lihat Benefit Detail <i class="fa-solid fa-arrow-right"></i>'}
+                    </button>
+                `;
+                cardsGrid.appendChild(card);
+            });
+        }
+
+        function switchTab(category, btnElement) {
+            if (btnElement) {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btnElement.classList.add('active');
+            }
+            renderTabContent(category);
+        }
+
+        renderTabContent('dokumentasi');
+
+        // 6. MODAL FUNCTIONS & DYNAMIC WHATSAPP URL
+        const modalOverlay = document.getElementById('packageModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalBenefits = document.getElementById('modalBenefits');
+        const modalWhatsAppBtn = document.getElementById('modalWhatsAppBtn');
+
+        function openModal(category, index) {
+            const data = packageData[category][index];
+            const packageName = category === 'undangan' ? 'Digital Invitation' : `Paket ${data.name}`;
+            
+            modalTitle.innerText = packageName;
+            modalPrice.innerText = category === 'undangan' ? `Status: ${data.price}` : `Harga: ${data.price}`;
+            modalBenefits.innerHTML = '';
+            
+            // Masukkan list benefit utama
+            data.benefits.forEach(benefit => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${benefit}`;
+                modalBenefits.appendChild(li);
+            });
+
+            // Masukkan catatan dengan styling jarak khusus jika ada
+            if (data.notes && data.notes.length > 0) {
+                data.notes.forEach(note => {
+                    const li = document.createElement('li');
+                    li.className = 'note-item';
+                    li.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${note}`;
+                    modalBenefits.appendChild(li);
+                });
+            }
+
+            // Set Format WhatsApp Otomatis
+            const whatsappNumber = '6285604613503';
+            const message = `Halo ARLENS.ID 👋🏻%0A%0ASaya ingin bertanya mengenai ketersediaan dan detail untuk layanan *${encodeURIComponent(packageName)}* pada acara saya.%0A%0AMohon infonya, terima kasih😇❣️`;
+            modalWhatsAppBtn.href = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+            modalOverlay.classList.add('active');
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+        }
+
+        // 7. WHATSAPP FORM SUBMISSION
+        function sendToWhatsApp(e) {
+            e.preventDefault();
+            const nama = document.getElementById('nama').value;
+            const alamat = document.getElementById('alamat').value;
+            const pilihanPaket = document.getElementById('pilihanPaket').value;
+            const pesan = document.getElementById('pesan').value;
+
+            const whatsappNumber = '6285604613503';
+            const formattedText = `Halo ARLENS.ID,%0A%0ASaya ingin mengajukan pertanyaan / pemesanan dengan detail:%0A- *Nama*: ${encodeURIComponent(nama)}%0A- *Alamat*: ${encodeURIComponent(alamat)}%0A- *Paket*: ${encodeURIComponent(pilihanPaket)}%0A- *Pesan*: ${encodeURIComponent(pesan)}%0A%0AMohon info lebih lanjut. Terima kasih!`;
+            
+            window.open(`https://wa.me/${whatsappNumber}?text=${formattedText}`, '_blank');
+        }
+    </script>
+</body>
+</html>

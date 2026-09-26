@@ -79,7 +79,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #0a0a0a; /* Background gelap menyesuaikan logo */
+            background-color: #0a0a0a;
             z-index: 9999;
             display: flex;
             justify-content: center;
@@ -99,6 +99,8 @@
             text-align: center;
             transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
             transform: translateY(20px);
+            width: 100%;
+            padding: 0 20px;
         }
 
         .preloader-step.active {
@@ -108,21 +110,21 @@
 
         .preloader-step h1 {
             font-family: var(--font-heading);
-            font-size: 40px;
+            font-size: clamp(24px, 5vw, 40px); /* Responsif font size */
             color: var(--color-cream);
             letter-spacing: 5px;
         }
 
         .preloader-logo {
-            width: 350px;
-            max-width: 80vw;
+            width: 100%;
+            max-width: 350px;
             margin-bottom: 15px;
         }
 
         .preloader-tagline {
             font-family: var(--font-heading);
             color: var(--color-gold);
-            font-size: 16px;
+            font-size: clamp(12px, 3vw, 16px);
             letter-spacing: 2px;
             text-transform: uppercase;
         }
@@ -140,9 +142,6 @@
 
         /* --- Navbar --- */
         nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             padding: 20px 0;
             position: sticky;
             top: 0;
@@ -151,6 +150,14 @@
             z-index: 100;
             border-bottom: 1px solid var(--border-color);
             transition: background 0.5s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .logo {
@@ -170,10 +177,12 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: 20px;
             background: var(--color-slate);
             padding: 8px 25px;
             border-radius: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .nav-links a {
@@ -188,7 +197,6 @@
             color: var(--color-gold);
         }
 
-        /* Tombol Tema */
         .theme-switch {
             background: transparent;
             border: none;
@@ -212,6 +220,7 @@
             font-size: 14px;
             font-weight: 500;
             transition: background 0.3s;
+            white-space: nowrap;
         }
 
         .btn-contact:hover {
@@ -225,16 +234,16 @@
             justify-content: space-between;
             padding: 100px 0;
             min-height: 80vh;
+            gap: 40px;
         }
 
         .hero-content {
             flex: 1;
-            padding-right: 50px;
         }
 
         .hero h1 {
             font-family: var(--font-heading);
-            font-size: 48px;
+            font-size: clamp(32px, 5vw, 48px); /* Responsif ukuran teks */
             line-height: 1.2;
             margin-bottom: 20px;
             color: var(--text-primary);
@@ -250,17 +259,24 @@
         .hero-buttons {
             display: flex;
             gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
         }
 
         .btn-primary {
             background: var(--color-copper);
             color: var(--color-cream);
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
             border: 2px solid var(--color-copper);
-            transition: all 0.3s;
         }
 
         .btn-primary:hover {
@@ -271,12 +287,7 @@
         .btn-secondary {
             background: transparent;
             color: var(--text-primary);
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
             border: 2px solid var(--text-secondary);
-            transition: all 0.3s;
         }
 
         .btn-secondary:hover {
@@ -290,6 +301,7 @@
             display: flex;
             justify-content: center;
             position: relative;
+            width: 100%;
         }
 
         .phone-mockup {
@@ -301,6 +313,7 @@
             box-shadow: 20px 20px 40px rgba(0,0,0,0.15);
             border: 8px solid var(--color-slate);
             overflow: hidden;
+            z-index: 2;
         }
         
         .phone-mockup::before {
@@ -325,13 +338,13 @@
             width: 180px;
             height: 380px;
             bottom: -20px;
-            right: 0;
+            right: 0; /* Posisi relatif ditarik ke dalam di versi mobile */
             z-index: 5;
         }
 
         /* --- About Section --- */
         .about {
-            padding: 100px 0;
+            padding: 80px 0;
             display: flex;
             gap: 50px;
         }
@@ -354,7 +367,7 @@
 
         /* --- Portfolio Section --- */
         .portfolio {
-            padding: 100px 0;
+            padding: 80px 0;
             text-align: center;
         }
 
@@ -378,16 +391,18 @@
         .portfolio-tabs {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 50px;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
         }
 
         .tab {
-            padding: 10px 25px;
+            padding: 8px 20px;
             background: var(--tab-bg);
             color: var(--tab-text);
             border-radius: 30px;
             cursor: pointer;
+            font-size: 14px;
             font-weight: 500;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             transition: all 0.3s;
@@ -403,21 +418,21 @@
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            gap: 20px;
         }
 
         .portfolio-card {
             background: var(--card-bg);
             backdrop-filter: blur(5px);
             border: 1px solid var(--border-color);
-            height: 350px;
+            height: 300px;
             border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.03);
             font-family: var(--font-heading);
-            font-size: 24px;
+            font-size: 20px;
             color: var(--text-secondary);
             transition: transform 0.3s;
         }
@@ -426,14 +441,14 @@
             transform: translateY(-10px);
         }
 
-        /* --- Footer & Contact (Tetap Gelap untuk Estetika) --- */
+        /* --- Contact Section --- */
         .contact, footer {
             background: var(--color-slate);
             color: var(--color-cream);
         }
         
         .contact {
-            padding: 100px 0;
+            padding: 80px 0;
             margin-top: 50px;
         }
 
@@ -446,7 +461,7 @@
 
         .contact-info h2 {
             font-family: var(--font-heading);
-            font-size: 42px;
+            font-size: clamp(32px, 5vw, 42px);
             margin-bottom: 30px;
         }
 
@@ -464,7 +479,7 @@
         .contact-form {
             flex: 1;
             background: #1a2227;
-            padding: 40px;
+            padding: 30px;
             border-radius: 15px;
         }
 
@@ -483,19 +498,48 @@
         }
         .btn-submit:hover { background: var(--color-tan); }
 
+        /* --- Footer --- */
         footer { padding: 50px 0 20px; border-top: 1px solid rgba(255,255,255,0.05); }
-        .footer-grid { display: flex; justify-content: space-between; margin-bottom: 40px; }
+        .footer-grid { display: flex; justify-content: space-between; gap: 30px; margin-bottom: 40px; }
         .footer-col h3 { font-family: var(--font-heading); color: var(--color-gold); margin-bottom: 20px; }
         .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 10px; color: #aaa; font-size: 14px; cursor: pointer;}
+        .footer-col ul li { margin-bottom: 10px; color: #aaa; font-size: 14px; cursor: pointer; transition: color 0.3s;}
+        .footer-col ul li:hover { color: var(--color-gold); }
         .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 14px; color: #777; }
 
-        @media (max-width: 768px) {
-            .hero, .about, .contact-wrapper { flex-direction: column; }
+        /* ========================================= */
+        /* === MEDIA QUERIES (RESPONSIVE MOBILE) === */
+        /* ========================================= */
+        @media (max-width: 992px) {
+            .hero { flex-direction: column; text-align: center; }
+            .hero-content { padding-right: 0; display: flex; flex-direction: column; align-items: center; }
+            .hero-image { transform: scale(0.9); margin-top: 20px; }
+            .phone-small { right: 10%; } /* Menggeser HP kecil agar tidak keluar layar */
+            
+            .about { flex-direction: column; gap: 20px; text-align: center; }
             .about h2, .about-text { width: 100%; }
-            .portfolio-grid { grid-template-columns: 1fr; }
-            .hero-image { margin-top: 50px; }
-            .nav-links { display: none; /* Sembunyikan link di mobile, kecuali tombol tema */ } 
+        }
+
+        @media (max-width: 768px) {
+            .nav-container { justify-content: center; flex-direction: column; }
+            .nav-links { width: 100%; gap: 10px; }
+            .btn-contact { width: 100%; text-align: center; }
+
+            .hero-image { transform: scale(0.75); }
+            
+            .portfolio-grid { grid-template-columns: 1fr; } /* Menjadi 1 kolom memanjang ke bawah */
+            .portfolio-card { height: 200px; grid-column: auto !important; }
+
+            .contact-wrapper { flex-direction: column; }
+            
+            .footer-grid { flex-direction: column; text-align: center; }
+            .footer-col { width: 100% !important; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-image { transform: scale(0.6); margin-top: -30px; } /* Diperkecil lagi untuk HP kecil */
+            .hero p { font-size: 14px; }
+            .btn-primary, .btn-secondary { width: 100%; }
         }
     </style>
 </head>
@@ -514,7 +558,7 @@
 
     <!-- Navbar -->
     <nav>
-        <div class="container" style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+        <div class="container nav-container">
             <a href="#" class="logo">AR<span>Lens</span></a>
             <div class="nav-links">
                 <a href="#home">Home</a>
@@ -572,7 +616,8 @@
             <div class="portfolio-card">BASIC</div>
             <div class="portfolio-card">STANDARD</div>
             <div class="portfolio-card">PREMIUM</div>
-            <div class="portfolio-card" style="grid-column: 2;">ULTIMATE</div>
+            <!-- grid-column dihapus saat dilayar kecil via CSS otomatis -->
+            <div class="portfolio-card">ULTIMATE</div> 
         </div>
     </section>
 
@@ -655,37 +700,24 @@
         document.addEventListener('DOMContentLoaded', () => {
             
             // --- 1. PRELOADER ANIMATION LOGIC ---
-            // Kunci scroll saat preloader berjalan
             document.body.style.overflow = 'hidden'; 
             
             const step1 = document.getElementById('step1');
             const step2 = document.getElementById('step2');
             const preloader = document.getElementById('preloader');
 
-            // Timeout Sequence
-            setTimeout(() => {
-                step1.classList.add('active'); // Memunculkan "WELCOME TO"
-            }, 500);
-
-            setTimeout(() => {
-                step1.classList.remove('active'); // Fade out "WELCOME TO"
-            }, 2500);
-
-            setTimeout(() => {
-                step2.classList.add('active'); // Memunculkan Logo & Text
-            }, 3500);
-
-            setTimeout(() => {
-                preloader.classList.add('hide'); // Menghilangkan background Preloader
-                document.body.style.overflow = 'auto'; // Mengembalikan fungsi scroll
+            setTimeout(() => { step1.classList.add('active'); }, 500);
+            setTimeout(() => { step1.classList.remove('active'); }, 2500);
+            setTimeout(() => { step2.classList.add('active'); }, 3500);
+            setTimeout(() => { 
+                preloader.classList.add('hide'); 
+                document.body.style.overflow = 'auto'; 
             }, 6500);
-
 
             // --- 2. DARK/LIGHT MODE TOGGLE LOGIC ---
             const themeSwitch = document.getElementById('themeSwitch');
             const currentTheme = localStorage.getItem('theme');
 
-            // Cek jika user sebelumnya sudah memilih dark mode
             if (currentTheme === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
                 themeSwitch.textContent = '☀️';
@@ -695,12 +727,10 @@
                 let theme = document.documentElement.getAttribute('data-theme');
                 
                 if (theme === 'dark') {
-                    // Switch to Light
                     document.documentElement.removeAttribute('data-theme');
                     localStorage.setItem('theme', 'light');
                     themeSwitch.textContent = '🌙';
                 } else {
-                    // Switch to Dark
                     document.documentElement.setAttribute('data-theme', 'dark');
                     localStorage.setItem('theme', 'dark');
                     themeSwitch.textContent = '☀️';

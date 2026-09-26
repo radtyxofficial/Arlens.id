@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
-        /* Mengambil Palet Warna dari Gambar 2 */
+        /* --- Palet Warna Dasar --- */
         :root {
             --color-dark: #12181d;
             --color-slate: #2c353c;
@@ -19,6 +19,30 @@
             
             --font-heading: 'Playfair Display', serif;
             --font-body: 'Montserrat', sans-serif;
+
+            /* Variabel Light Mode (Default) */
+            --bg-primary: var(--color-cream);
+            --text-primary: var(--color-dark);
+            --text-secondary: var(--color-slate);
+            --nav-bg: rgba(246, 244, 235, 0.9);
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(44, 53, 60, 0.1);
+            --grid-color: rgba(44, 53, 60, 0.05);
+            --tab-bg: #fff;
+            --tab-text: var(--color-dark);
+        }
+
+        /* Variabel Dark Mode */
+        [data-theme="dark"] {
+            --bg-primary: var(--color-dark);
+            --text-primary: var(--color-cream);
+            --text-secondary: #a0aab2;
+            --nav-bg: rgba(18, 24, 29, 0.9);
+            --card-bg: rgba(44, 53, 60, 0.7);
+            --border-color: rgba(246, 244, 235, 0.1);
+            --grid-color: rgba(246, 244, 235, 0.03);
+            --tab-bg: var(--color-slate);
+            --tab-text: var(--color-cream);
         }
 
         * {
@@ -29,15 +53,16 @@
 
         body {
             font-family: var(--font-body);
-            background-color: var(--color-cream);
-            color: var(--color-dark);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
             
-            /* Latar Belakang Grid Halus */
+            /* Latar Belakang Grid Halus dinamis sesuai tema */
             background-image: 
-                linear-gradient(rgba(44, 53, 60, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(44, 53, 60, 0.05) 1px, transparent 1px);
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
             background-size: 60px 60px;
         }
 
@@ -47,7 +72,62 @@
             padding: 0 20px;
         }
 
-        /* --- Animasi --- */
+        /* --- PRELOADER (Opening Screen) --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0a0a0a; /* Background gelap menyesuaikan logo */
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+        }
+
+        #preloader.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader-step {
+            position: absolute;
+            opacity: 0;
+            text-align: center;
+            transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
+            transform: translateY(20px);
+        }
+
+        .preloader-step.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .preloader-step h1 {
+            font-family: var(--font-heading);
+            font-size: 40px;
+            color: var(--color-cream);
+            letter-spacing: 5px;
+        }
+
+        .preloader-logo {
+            width: 350px;
+            max-width: 80vw;
+            margin-bottom: 15px;
+        }
+
+        .preloader-tagline {
+            font-family: var(--font-heading);
+            color: var(--color-gold);
+            font-size: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* --- Animasi Scroll --- */
         .fade-up {
             opacity: 0;
             transform: translateY(40px);
@@ -66,17 +146,18 @@
             padding: 20px 0;
             position: sticky;
             top: 0;
-            background: rgba(246, 244, 235, 0.9);
+            background: var(--nav-bg);
             backdrop-filter: blur(10px);
             z-index: 100;
-            border-bottom: 1px solid rgba(44, 53, 60, 0.1);
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.5s ease;
         }
 
         .logo {
             font-family: var(--font-heading);
             font-size: 28px;
             font-weight: 700;
-            color: var(--color-dark);
+            color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -88,9 +169,10 @@
 
         .nav-links {
             display: flex;
-            gap: 30px;
+            align-items: center;
+            gap: 25px;
             background: var(--color-slate);
-            padding: 10px 30px;
+            padding: 8px 25px;
             border-radius: 30px;
         }
 
@@ -106,8 +188,23 @@
             color: var(--color-gold);
         }
 
+        /* Tombol Tema */
+        .theme-switch {
+            background: transparent;
+            border: none;
+            color: var(--color-gold);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px;
+            transition: transform 0.3s;
+        }
+
+        .theme-switch:hover {
+            transform: rotate(30deg);
+        }
+
         .btn-contact {
-            background: var(--color-dark);
+            background: var(--color-copper);
             color: var(--color-cream);
             padding: 10px 25px;
             border-radius: 25px;
@@ -118,7 +215,7 @@
         }
 
         .btn-contact:hover {
-            background: var(--color-copper);
+            background: var(--color-tan);
         }
 
         /* --- Hero Section --- */
@@ -140,12 +237,12 @@
             font-size: 48px;
             line-height: 1.2;
             margin-bottom: 20px;
-            color: var(--color-dark);
+            color: var(--text-primary);
         }
 
         .hero p {
             font-size: 16px;
-            color: var(--color-slate);
+            color: var(--text-secondary);
             margin-bottom: 40px;
             max-width: 500px;
         }
@@ -173,18 +270,19 @@
 
         .btn-secondary {
             background: transparent;
-            color: var(--color-dark);
+            color: var(--text-primary);
             padding: 12px 30px;
             border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
-            border: 2px solid var(--color-slate);
+            border: 2px solid var(--text-secondary);
             transition: all 0.3s;
         }
 
         .btn-secondary:hover {
             background: var(--color-slate);
             color: var(--color-cream);
+            border-color: var(--color-slate);
         }
 
         .hero-image {
@@ -194,11 +292,10 @@
             position: relative;
         }
 
-        /* Mockup HP menggunakan CSS */
         .phone-mockup {
             width: 250px;
             height: 500px;
-            background: var(--color-dark);
+            background: #111;
             border-radius: 35px;
             position: relative;
             box-shadow: 20px 20px 40px rgba(0,0,0,0.15);
@@ -248,7 +345,7 @@
         .about-text {
             width: 70%;
             font-size: 16px;
-            color: var(--color-slate);
+            color: var(--text-secondary);
         }
 
         .about-text p {
@@ -262,7 +359,7 @@
         }
 
         .section-tag {
-            background: rgba(44, 53, 60, 0.1);
+            background: var(--border-color);
             padding: 5px 15px;
             border-radius: 20px;
             font-size: 12px;
@@ -287,17 +384,20 @@
 
         .tab {
             padding: 10px 25px;
-            background: white;
+            background: var(--tab-bg);
+            color: var(--tab-text);
             border-radius: 30px;
             cursor: pointer;
             font-weight: 500;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             transition: all 0.3s;
+            border: 1px solid var(--border-color);
         }
 
         .tab:hover, .tab.active {
-            background: var(--color-slate);
+            background: var(--color-copper);
             color: var(--color-cream);
+            border-color: var(--color-copper);
         }
 
         .portfolio-grid {
@@ -307,9 +407,9 @@
         }
 
         .portfolio-card {
-            background: rgba(255,255,255,0.7);
+            background: var(--card-bg);
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.5);
+            border: 1px solid var(--border-color);
             height: 350px;
             border-radius: 15px;
             display: flex;
@@ -318,7 +418,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.03);
             font-family: var(--font-heading);
             font-size: 24px;
-            color: var(--color-slate);
+            color: var(--text-secondary);
             transition: transform 0.3s;
         }
 
@@ -326,11 +426,14 @@
             transform: translateY(-10px);
         }
 
-        /* --- Contact Section --- */
-        .contact {
-            padding: 100px 0;
+        /* --- Footer & Contact (Tetap Gelap untuk Estetika) --- */
+        .contact, footer {
             background: var(--color-slate);
             color: var(--color-cream);
+        }
+        
+        .contact {
+            padding: 100px 0;
             margin-top: 50px;
         }
 
@@ -339,9 +442,7 @@
             gap: 50px;
         }
 
-        .contact-info {
-            flex: 1;
-        }
+        .contact-info { flex: 1; }
 
         .contact-info h2 {
             font-family: var(--font-heading);
@@ -350,7 +451,7 @@
         }
 
         .info-card {
-            background: var(--color-dark);
+            background: #1a2227;
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 15px;
@@ -362,103 +463,54 @@
 
         .contact-form {
             flex: 1;
-            background: var(--color-dark);
+            background: #1a2227;
             padding: 40px;
             border-radius: 15px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: #aaa;
-        }
-
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-size: 14px; color: #aaa; }
         .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            background: var(--color-slate);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            color: white;
+            width: 100%; padding: 12px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white;
             font-family: var(--font-body);
         }
 
         .btn-submit {
-            width: 100%;
-            background: var(--color-copper);
-            color: white;
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
+            width: 100%; background: var(--color-copper); color: white;
+            padding: 15px; border: none; border-radius: 8px;
+            font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s;
         }
+        .btn-submit:hover { background: var(--color-tan); }
 
-        .btn-submit:hover {
-            background: var(--color-tan);
-        }
-
-        /* --- Footer --- */
-        footer {
-            background: var(--color-dark);
-            color: white;
-            padding: 50px 0 20px;
-        }
-
-        .footer-grid {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 40px;
-        }
-
-        .footer-col h3 {
-            font-family: var(--font-heading);
-            color: var(--color-gold);
-            margin-bottom: 20px;
-        }
-
-        .footer-col ul {
-            list-style: none;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 10px;
-            color: #aaa;
-            font-size: 14px;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 14px;
-            color: #777;
-        }
+        footer { padding: 50px 0 20px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-grid { display: flex; justify-content: space-between; margin-bottom: 40px; }
+        .footer-col h3 { font-family: var(--font-heading); color: var(--color-gold); margin-bottom: 20px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; color: #aaa; font-size: 14px; cursor: pointer;}
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 14px; color: #777; }
 
         @media (max-width: 768px) {
-            .hero, .about, .contact-wrapper {
-                flex-direction: column;
-            }
-            .about h2, .about-text {
-                width: 100%;
-            }
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-            }
-            .hero-image {
-                margin-top: 50px;
-            }
+            .hero, .about, .contact-wrapper { flex-direction: column; }
+            .about h2, .about-text { width: 100%; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .hero-image { margin-top: 50px; }
+            .nav-links { display: none; /* Sembunyikan link di mobile, kecuali tombol tema */ } 
         }
     </style>
 </head>
 <body>
+
+    <!-- Opening Screen (Preloader) -->
+    <div id="preloader">
+        <div class="preloader-step" id="step1">
+            <h1>WELCOME TO</h1>
+        </div>
+        <div class="preloader-step" id="step2">
+            <img src="1000821409.png" alt="Logo ARLens" class="preloader-logo">
+            <div class="preloader-tagline">RAYAKAN SETIAP MOMENT BAHAGIA BERSAMA KAMI</div>
+        </div>
+    </div>
 
     <!-- Navbar -->
     <nav>
@@ -468,6 +520,8 @@
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
                 <a href="#portfolio">Portfolio</a>
+                <!-- Toggle Mode Button -->
+                <button class="theme-switch" id="themeSwitch" aria-label="Toggle Dark Mode">🌙</button>
             </div>
             <a href="#contact" class="btn-contact">Hubungi Kami</a>
         </div>
@@ -488,7 +542,7 @@
                 <div class="screen"></div>
             </div>
             <div class="phone-mockup phone-small">
-                <div class="screen" style="background: linear-gradient(135deg, var(--color-copper), var(--color-dark));"></div>
+                <div class="screen" style="background: linear-gradient(135deg, var(--color-copper), #111);"></div>
             </div>
         </div>
     </section>
@@ -506,7 +560,7 @@
     <section class="container portfolio" id="portfolio">
         <span class="section-tag fade-up">Explore Our Project</span>
         <h2 class="fade-up">PORTOFOLIO SHOWCASE</h2>
-        <p class="fade-up" style="margin-bottom: 40px; color: var(--color-slate);">Desain & Inovasi yang Telah Kami Buat</p>
+        <p class="fade-up" style="margin-bottom: 40px; color: var(--text-secondary);">Desain & Inovasi yang Telah Kami Buat</p>
         
         <div class="portfolio-tabs fade-up">
             <div class="tab">DOKUMENTASI WEDDING</div>
@@ -558,7 +612,7 @@
                         <label>Pesan</label>
                         <textarea rows="4" placeholder="Ceritakan kebutuhan acara Anda..."></textarea>
                     </div>
-                    <button type="submit" class="btn-submit">Kirim Pesan</button>
+                    <button type="button" class="btn-submit">Kirim Pesan</button>
                 </form>
             </div>
         </div>
@@ -596,18 +650,71 @@
         </div>
     </footer>
 
-    <!-- Script Animasi Scroll -->
+    <!-- Scripts -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 1. PRELOADER ANIMATION LOGIC ---
+            // Kunci scroll saat preloader berjalan
+            document.body.style.overflow = 'hidden'; 
+            
+            const step1 = document.getElementById('step1');
+            const step2 = document.getElementById('step2');
+            const preloader = document.getElementById('preloader');
+
+            // Timeout Sequence
+            setTimeout(() => {
+                step1.classList.add('active'); // Memunculkan "WELCOME TO"
+            }, 500);
+
+            setTimeout(() => {
+                step1.classList.remove('active'); // Fade out "WELCOME TO"
+            }, 2500);
+
+            setTimeout(() => {
+                step2.classList.add('active'); // Memunculkan Logo & Text
+            }, 3500);
+
+            setTimeout(() => {
+                preloader.classList.add('hide'); // Menghilangkan background Preloader
+                document.body.style.overflow = 'auto'; // Mengembalikan fungsi scroll
+            }, 6500);
+
+
+            // --- 2. DARK/LIGHT MODE TOGGLE LOGIC ---
+            const themeSwitch = document.getElementById('themeSwitch');
+            const currentTheme = localStorage.getItem('theme');
+
+            // Cek jika user sebelumnya sudah memilih dark mode
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeSwitch.textContent = '☀️';
+            }
+
+            themeSwitch.addEventListener('click', () => {
+                let theme = document.documentElement.getAttribute('data-theme');
+                
+                if (theme === 'dark') {
+                    // Switch to Light
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                    themeSwitch.textContent = '🌙';
+                } else {
+                    // Switch to Dark
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    themeSwitch.textContent = '☀️';
+                }
+            });
+
+            // --- 3. SCROLL ANIMATION (Intersection Observer) ---
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     }
                 });
-            }, {
-                threshold: 0.1
-            });
+            }, { threshold: 0.1 });
 
             document.querySelectorAll('.fade-up').forEach((element) => {
                 observer.observe(element);

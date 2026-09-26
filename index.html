@@ -3,17 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arlens.Id — Dokumentasi, Photobooth & Undangan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>AR Lens - Portofolio</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
     <style>
+        /* Mengambil Palet Warna dari Gambar 2 */
         :root {
-            --gold: #d4af37;
-            --gold-light: #f3e5ab;
-            --dark: #1a1a1a;
-            --light: #fdfbf7;
-            --gray: #f5f5f5;
+            --color-dark: #12181d;
+            --color-slate: #2c353c;
+            --color-copper: #9b5942;
+            --color-tan: #be7c65;
+            --color-gold: #f5b72f;
+            --color-cream: #f6f4eb;
+            
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
@@ -21,352 +28,591 @@
         }
 
         body {
-            font-family: 'Jost', sans-serif;
-            background-color: var(--light);
-            color: var(--dark);
+            font-family: var(--font-body);
+            background-color: var(--color-cream);
+            color: var(--color-dark);
             line-height: 1.6;
+            overflow-x: hidden;
+            
+            /* Latar Belakang Grid Halus */
+            background-image: 
+                linear-gradient(rgba(44, 53, 60, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(44, 53, 60, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
         }
 
-        h1, h2, h3, .brand {
-            font-family: 'Cormorant Garamond', serif;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        /* Navbar */
+        /* --- Animasi --- */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Navbar --- */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 50px;
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 20px 0;
             position: sticky;
             top: 0;
-            z-index: 1000;
+            background: rgba(246, 244, 235, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(44, 53, 60, 0.1);
         }
 
-        .brand {
+        .logo {
+            font-family: var(--font-heading);
             font-size: 28px;
             font-weight: 700;
-            color: var(--gold);
+            color: var(--color-dark);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--color-copper);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            background: var(--color-slate);
+            padding: 10px 30px;
+            border-radius: 30px;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: var(--dark);
-            margin: 0 15px;
+            color: var(--color-cream);
+            font-size: 14px;
             font-weight: 500;
             transition: color 0.3s;
         }
 
         .nav-links a:hover {
-            color: var(--gold);
+            color: var(--color-gold);
         }
 
-        .btn-gold {
-            background: var(--gold);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
+        .btn-contact {
+            background: var(--color-dark);
+            color: var(--color-cream);
+            padding: 10px 25px;
+            border-radius: 25px;
             text-decoration: none;
-            transition: 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.3s;
         }
 
-        .btn-gold:hover {
-            background: #b5952f;
+        .btn-contact:hover {
+            background: var(--color-copper);
         }
 
-        /* Hero Section */
+        /* --- Hero Section --- */
         .hero {
-            text-align: center;
-            padding: 100px 20px;
-            background: linear-gradient(rgba(26,26,26,0.8), rgba(26,26,26,0.8)), url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover;
-            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 100px 0;
+            min-height: 80vh;
+        }
+
+        .hero-content {
+            flex: 1;
+            padding-right: 50px;
         }
 
         .hero h1 {
+            font-family: var(--font-heading);
             font-size: 48px;
+            line-height: 1.2;
             margin-bottom: 20px;
-            color: var(--gold-light);
+            color: var(--color-dark);
         }
 
         .hero p {
-            font-size: 18px;
-            max-width: 600px;
-            margin: 0 auto 30px;
+            font-size: 16px;
+            color: var(--color-slate);
+            margin-bottom: 40px;
+            max-width: 500px;
         }
 
-        /* Services */
-        .section-title {
-            text-align: center;
-            font-size: 36px;
-            margin: 60px 0 20px;
-            color: var(--dark);
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
         }
 
-        .gold-divider {
-            width: 60px;
-            height: 3px;
-            background: var(--gold);
-            margin: 0 auto 40px;
+        .btn-primary {
+            background: var(--color-copper);
+            color: var(--color-cream);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid var(--color-copper);
+            transition: all 0.3s;
         }
 
-        .services-grid {
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--color-copper);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-dark);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid var(--color-slate);
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-slate);
+            color: var(--color-cream);
+        }
+
+        .hero-image {
+            flex: 1;
             display: flex;
             justify-content: center;
-            gap: 30px;
-            padding: 0 50px;
-            flex-wrap: wrap;
-        }
-
-        .service-card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            width: 300px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-bottom: 3px solid var(--gold);
-        }
-
-        .service-card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        /* Pricing */
-        .pricing-section {
-            background-color: var(--dark);
-            color: white;
-            padding: 60px 20px;
-            margin-top: 60px;
-        }
-
-        .pricing-section .section-title {
-            color: var(--gold-light);
-        }
-
-        .pricing-grid {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .price-card {
-            background: #fff;
-            color: var(--dark);
-            width: 260px;
-            padding: 30px 20px;
-            border-radius: 10px;
-            text-align: center;
             position: relative;
         }
 
-        .price-card.popular {
-            border: 2px solid var(--gold);
-            transform: scale(1.05);
+        /* Mockup HP menggunakan CSS */
+        .phone-mockup {
+            width: 250px;
+            height: 500px;
+            background: var(--color-dark);
+            border-radius: 35px;
+            position: relative;
+            box-shadow: 20px 20px 40px rgba(0,0,0,0.15);
+            border: 8px solid var(--color-slate);
+            overflow: hidden;
         }
-
-        .popular-badge {
-            background: var(--gold);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
+        
+        .phone-mockup::before {
+            content: '';
             position: absolute;
-            top: -15px;
-            left: 50%;
+            top: 0; left: 50%;
             transform: translateX(-50%);
+            width: 120px; height: 25px;
+            background: var(--color-slate);
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            z-index: 2;
         }
 
-        .price-card h3 {
-            font-size: 22px;
-            margin-bottom: 10px;
+        .phone-mockup .screen {
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--color-tan), var(--color-cream));
         }
 
-        .price {
-            font-size: 28px;
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 700;
-            color: var(--gold);
+        .phone-small {
+            position: absolute;
+            width: 180px;
+            height: 380px;
+            bottom: -20px;
+            right: 0;
+            z-index: 5;
+        }
+
+        /* --- About Section --- */
+        .about {
+            padding: 100px 0;
+            display: flex;
+            gap: 50px;
+        }
+
+        .about h2 {
+            font-family: var(--font-heading);
+            font-size: 36px;
+            width: 30%;
+        }
+
+        .about-text {
+            width: 70%;
+            font-size: 16px;
+            color: var(--color-slate);
+        }
+
+        .about-text p {
             margin-bottom: 20px;
         }
 
-        .features {
-            list-style: none;
+        /* --- Portfolio Section --- */
+        .portfolio {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .section-tag {
+            background: rgba(44, 53, 60, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .portfolio h2 {
+            font-family: var(--font-heading);
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+
+        .portfolio-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+
+        .tab {
+            padding: 10px 25px;
+            background: white;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .tab:hover, .tab.active {
+            background: var(--color-slate);
+            color: var(--color-cream);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .portfolio-card {
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.5);
+            height: 350px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            font-family: var(--font-heading);
+            font-size: 24px;
+            color: var(--color-slate);
+            transition: transform 0.3s;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* --- Contact Section --- */
+        .contact {
+            padding: 100px 0;
+            background: var(--color-slate);
+            color: var(--color-cream);
+            margin-top: 50px;
+        }
+
+        .contact-wrapper {
+            display: flex;
+            gap: 50px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info h2 {
+            font-family: var(--font-heading);
+            font-size: 42px;
             margin-bottom: 30px;
-            text-align: left;
+        }
+
+        .info-card {
+            background: var(--color-dark);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-left: 4px solid var(--color-copper);
+        }
+
+        .contact-form {
+            flex: 1;
+            background: var(--color-dark);
+            padding: 40px;
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: var(--color-slate);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: white;
+            font-family: var(--font-body);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--color-copper);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: var(--color-tan);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--color-dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-grid {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-family: var(--font-heading);
+            color: var(--color-gold);
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+            color: #aaa;
             font-size: 14px;
         }
 
-        .features li {
-            margin-bottom: 10px;
-            padding-left: 20px;
-            position: relative;
-        }
-
-        .features li::before {
-            content: "✓";
-            color: var(--gold);
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-        }
-
-        .features li.disabled::before {
-            content: "✕";
-            color: #ccc;
-        }
-        
-        .features li.disabled {
-            color: #999;
-        }
-
-        /* Footer */
-        footer {
-            background: #111;
-            color: white;
+        .footer-bottom {
             text-align: center;
-            padding: 30px;
-            margin-top: 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+            color: #777;
         }
 
         @media (max-width: 768px) {
-            nav {
+            .hero, .about, .contact-wrapper {
                 flex-direction: column;
-                gap: 15px;
             }
-            .price-card.popular {
-                transform: scale(1);
+            .about h2, .about-text {
+                width: 100%;
+            }
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-image {
+                margin-top: 50px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigasi -->
+    <!-- Navbar -->
     <nav>
-        <a href="#" class="brand">Arlens.Id</a>
-        <div class="nav-links">
-            <a href="#">Beranda</a>
-            <a href="#services">Layanan</a>
-            <a href="#pricing">Harga Undangan</a>
-            <a href="#" class="btn-gold">Hubungi Kami</a>
+        <div class="container" style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+            <a href="#" class="logo">AR<span>Lens</span></a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#portfolio">Portfolio</a>
+            </div>
+            <a href="#contact" class="btn-contact">Hubungi Kami</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <h1>Abadikan Cinta, Momen Bahagia</h1>
-        <p>Platform satu pintu layanan acara Anda. Mulai dari undangan digital, photobooth, hingga dokumentasi acara dengan sentuhan elegan dan berkesan.</p>
-        <a href="#services" class="btn-gold">Lihat Layanan Kami</a>
-    </section>
-
-    <!-- Layanan -->
-    <section id="services">
-        <h2 class="section-title">Layanan Kami</h2>
-        <div class="gold-divider"></div>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>Dokumentasi Acara</h3>
-                <p>Mengabadikan momen terbaik acara Anda melalui foto dan video profesional dengan hasil kualitas tinggi.</p>
+    <section class="container hero" id="home">
+        <div class="hero-content fade-up">
+            <h1>RAYAKAN SETIAP MOMENT BAHAGIA BERSAMA ARLENS.ID</h1>
+            <p>Jadikan setiap momen berharga Anda abadi melalui undangan digital yang elegan dan menawan. Kami menawarkan pengalaman yang unik, dirancang penuh presisi untuk merayakan hari spesial Anda.</p>
+            <div class="hero-buttons">
+                <a href="#portfolio" class="btn-primary">Lebih Detail</a>
+                <a href="#contact" class="btn-secondary">Hubungi Kami</a>
             </div>
-            <div class="service-card">
-                <h3>Photobooth</h3>
-                <p>Hadirkan keseruan interaktif bagi tamu Anda dengan photobooth premium dan cetak foto instan.</p>
+        </div>
+        <div class="hero-image fade-up">
+            <div class="phone-mockup">
+                <div class="screen"></div>
             </div>
-            <div class="service-card">
-                <h3>Undangan Digital</h3>
-                <p>Kesan pertama yang tak terlupakan melalui undangan website interaktif dengan desain eksklusif.</p>
+            <div class="phone-mockup phone-small">
+                <div class="screen" style="background: linear-gradient(135deg, var(--color-copper), var(--color-dark));"></div>
             </div>
         </div>
     </section>
 
-    <!-- Price List Undangan -->
-    <section id="pricing" class="pricing-section">
-        <h2 class="section-title">Paket Undangan Digital</h2>
-        <div class="gold-divider"></div>
+    <!-- About Section -->
+    <section class="container about" id="about">
+        <h2 class="fade-up">Tentang Kami</h2>
+        <div class="about-text fade-up">
+            <p>Saya mahasiswa semester akhir D4 Produksi Film dan Televisi di Institut Seni Indonesia Denpasar, yang saat ini berfokus pada profesi UI/UX dan Graphic Design. Selain minat pada desain, saya memiliki bekal pengalaman dalam produksi audiovisual.</p>
+            <p>Dalam beberapa produksi saya berkesempatan mengemban peran sebagai sutradara, produser, penulis naskah, penata artistik, hingga editor.</p>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="container portfolio" id="portfolio">
+        <span class="section-tag fade-up">Explore Our Project</span>
+        <h2 class="fade-up">PORTOFOLIO SHOWCASE</h2>
+        <p class="fade-up" style="margin-bottom: 40px; color: var(--color-slate);">Desain & Inovasi yang Telah Kami Buat</p>
         
-        <div class="pricing-grid">
-            <!-- Basic -->
-            <div class="price-card">
-                <h3>BASIC</h3>
-                <div class="price">Rp139.000</div>
-                <ul class="features">
-                    <li>Informasi Mempelai</li>
-                    <li>Cover & Detail Acara</li>
-                    <li>Google Maps</li>
-                    <li>Countdown Timer</li>
-                    <li>Wedding Gallery</li>
-                    <li>Custom Greeting & Amplop</li>
-                    <li>Musik (Pilihan)</li>
-                    <li>Template (Pilihan Basic)</li>
-                    <li class="disabled">Love Story & Quote</li>
-                    <li class="disabled">RSVP Form</li>
-                    <li class="disabled">Video</li>
-                </ul>
-                <a href="#" class="btn-gold" style="display:block;">Pilih Basic</a>
-            </div>
+        <div class="portfolio-tabs fade-up">
+            <div class="tab">DOKUMENTASI WEDDING</div>
+            <div class="tab active">PHOTOBOOTH</div>
+            <div class="tab">UNDANGAN ONLINE</div>
+        </div>
 
-            <!-- Premium -->
-            <div class="price-card popular">
-                <div class="popular-badge">✦ Favorit</div>
-                <h3>PREMIUM</h3>
-                <div class="price">Rp179.000</div>
-                <ul class="features">
-                    <li>Semua Fitur Basic</li>
-                    <li>Love Story</li>
-                    <li>Quote</li>
-                    <li>Video</li>
-                    <li>Musik (Pilihan)</li>
-                    <li>Template (Pilihan Premium)</li>
-                    <li class="disabled">RSVP Form</li>
-                    <li class="disabled">Musik Custom</li>
-                </ul>
-                <br><br>
-                <a href="#" class="btn-gold" style="display:block;">Pilih Premium</a>
-            </div>
+        <div class="portfolio-grid fade-up">
+            <div class="portfolio-card">BASIC</div>
+            <div class="portfolio-card">STANDARD</div>
+            <div class="portfolio-card">PREMIUM</div>
+            <div class="portfolio-card" style="grid-column: 2;">ULTIMATE</div>
+        </div>
+    </section>
 
-            <!-- Ultimate -->
-            <div class="price-card">
-                <h3>ULTIMATE</h3>
-                <div class="price">Rp259.000</div>
-                <ul class="features">
-                    <li>Semua Fitur Premium</li>
-                    <li>RSVP Form</li>
-                    <li>Musik (Custom)</li>
-                    <li>Template (Ultimate + Extra)</li>
-                    <li>Prioritas Pengerjaan</li>
-                </ul>
-                <br><br><br><br>
-                <a href="#" class="btn-gold" style="display:block;">Pilih Ultimate</a>
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container contact-wrapper">
+            <div class="contact-info fade-up">
+                <span class="section-tag" style="background: rgba(255,255,255,0.1);">Contact</span>
+                <h2>SIAP MEMULAI MOMENT BAHAGIA ANDA?</h2>
+                <p style="margin-bottom: 30px; color: #ccc;">Hubungi kami hari ini.</p>
+                
+                <div class="info-card">
+                    <div>
+                        <div style="font-size: 12px; color: #aaa;">No WhatsApp</div>
+                        <div>+62 812 3456 7890</div>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div>
+                        <div style="font-size: 12px; color: #aaa;">Email</div>
+                        <div>hello@arlens.id</div>
+                    </div>
+                </div>
             </div>
-
-            <!-- Custom -->
-            <div class="price-card">
-                <h3>CUSTOM</h3>
-                <div class="price">Rp399.000</div>
-                <ul class="features">
-                    <li>Semua Fitur Ultimate</li>
-                    <li>Desain Custom Eksklusif</li>
-                    <li>Request Fitur Khusus</li>
-                    <li>Revisi Tanpa Batas</li>
-                    <li>Masa Aktif 1 Tahun</li>
-                </ul>
-                <br><br><br><br>
-                <a href="#" class="btn-gold" style="display:block;">Konsultasi</a>
+            
+            <div class="contact-form fade-up">
+                <form>
+                    <div class="form-group">
+                        <label>Nama Lengkap</label>
+                        <input type="text" placeholder="Masukkan nama Anda">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="Masukkan email Anda">
+                    </div>
+                    <div class="form-group">
+                        <label>Pesan</label>
+                        <textarea rows="4" placeholder="Ceritakan kebutuhan acara Anda..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Kirim Pesan</button>
+                </form>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <h2 class="brand" style="margin-bottom: 10px;">Arlens.Id</h2>
-        <p>© 2026 Arlens.Id. Merekam Momen, Mencipta Kenangan.</p>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col" style="width: 30%;">
+                    <h3>AR<span>Lens</span></h3>
+                    <p style="font-size: 14px; color: #aaa; margin-top: 15px;">Merekam setiap momen bahagia Anda melalui lensa yang tepat dan desain yang elegan.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Menu</h3>
+                    <ul>
+                        <li>Home</li>
+                        <li>About</li>
+                        <li>Portfolio</li>
+                        <li>Contact</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Layanan</h3>
+                    <ul>
+                        <li>Dokumentasi</li>
+                        <li>Photobooth</li>
+                        <li>Undangan Digital</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 ARLens.id. All rights reserved.
+            </div>
+        </div>
     </footer>
 
+    <!-- Script Animasi Scroll -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.fade-up').forEach((element) => {
+                observer.observe(element);
+            });
+        });
+    </script>
 </body>
 </html>

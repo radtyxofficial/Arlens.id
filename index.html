@@ -528,7 +528,7 @@
 
         .card-img {
             width: 100%;
-            height: 200px; /* Dipertinggi sedikit agar elegan */
+            height: 200px;
             border-radius: 12px;
             object-fit: cover;
             margin-bottom: 20px;
@@ -556,7 +556,7 @@
             font-weight: 800;
             color: var(--accent-terracotta);
             margin-bottom: 20px;
-            margin-top: auto; /* Mendorong tombol ke bawah */
+            margin-top: auto; 
         }
 
         .card-btn {
@@ -703,13 +703,12 @@
 
         /* --- RESPONSIVE MOBILE TWEAKS --- */
         @media (max-width: 992px) {
-            /* Aktifkan Menu Hamburger */
             .mobile-menu-btn {
                 display: flex;
             }
             nav {
                 position: fixed;
-                top: -100vh; /* Disembunyikan di atas */
+                top: -100vh;
                 left: 0;
                 width: 100%;
                 height: 100vh;
@@ -726,7 +725,7 @@
                 background: rgba(237, 235, 222, 0.98);
             }
             nav.menu-open {
-                top: 0; /* Tampil menutupi layar penuh */
+                top: 0;
             }
             nav ul {
                 flex-direction: column;
@@ -734,7 +733,7 @@
                 text-align: center;
             }
             nav a {
-                font-size: 1.25rem; /* Font navigasi dibesarkan sedikit agar mudah ditekan */
+                font-size: 1.25rem;
                 font-weight: 700;
             }
 
@@ -753,31 +752,30 @@
                 grid-template-columns: 1fr;
             }
             .about-3d-logo-wrap {
-                order: -1; /* Pindahkan logo 3d ke atas di HP */
+                order: -1; 
             }
         }
 
         @media (max-width: 768px) {
-            /* PENYESUAIAN FONT & SPACING UNTUK HP */
             .intro-welcome { font-size: 1.8rem; }
             .intro-tagline { font-size: 1rem; }
 
             .hero-text h1 {
-                font-size: 2rem; /* Font lebih kecil agar tidak menumpuk */
+                font-size: 2rem; 
             }
             .hero-text p {
-                font-size: 0.9rem; /* Deskripsi dirapikan */
+                font-size: 0.9rem;
                 margin-bottom: 25px;
             }
             .btn {
-                width: 100%; /* Tombol full width di HP */
+                width: 100%; 
             }
             .phone-mockup-wrap {
-                width: 240px; /* HP mockup dikecilkan sedikit */
+                width: 240px; 
                 height: 480px;
             }
             .section-title h2 {
-                font-size: 1.7rem; /* Font judul section dirapikan */
+                font-size: 1.7rem; 
             }
             .about-section {
                 padding: 60px 5%;
@@ -797,7 +795,7 @@
                 padding: 60px 5%;
             }
             .cards-grid {
-                grid-template-columns: 1fr; /* Satu kolom untuk kartu di HP */
+                grid-template-columns: 1fr; 
             }
             .contact-section {
                 padding: 60px 5%;
@@ -838,20 +836,20 @@
 </head>
 <body>
 
-    <!-- 1. OPENING / INTRO OVERLAY -->
+    <!-- 1. OPENING / INTRO OVERLAY (Saya pakaikan Logo 3D juga agar estetik di awal) -->
     <div id="intro-overlay">
         <div class="intro-welcome">WELCOME TO</div>
         <div class="intro-brand">
-            <img src="https://lh3.googleusercontent.com/d/1z34mnwgFn74_oFYpuCgQn9ifQKTnm2v7" alt="Logo Arlens" class="intro-logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x100/121d21/e5ac31?text=ARLENS.ID';">
+            <img src="https://lh3.googleusercontent.com/d/1-VsXB7QToVlaYd4JTP_bods9H4NzWizG" alt="Logo Arlens" class="intro-logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x100/121d21/e5ac31?text=ARLENS.ID';">
             <p class="intro-tagline">"Rayakan Setiap Moment Bahagia Bersama Kami"</p>
         </div>
         <button class="skip-btn" onclick="closeIntro()">Skip Intro <i class="fa-solid fa-forward"></i></button>
     </div>
 
-    <!-- 2. HEADER MINIMALIS + HAMBURGER MENU -->
+    <!-- 2. HEADER MINIMALIS + HAMBURGER MENU (Logo 2D Baru diterapkan di sini) -->
     <header>
         <a href="#home" class="logo-container">
-            <img src="https://lh3.googleusercontent.com/d/105fMhSHZ8e7VKuVcLDYq5RjXR4Uy0YgF" alt="ARLENS 2D Logo" class="logo-2d" onerror="this.onerror=null; this.src='https://via.placeholder.com/40/e5ac31/121d21?text=A';">
+            <img src="https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG" alt="ARLENS 2D Logo" class="logo-2d" onerror="this.onerror=null; this.src='https://via.placeholder.com/40/e5ac31/121d21?text=A';">
             <span class="brand-name">ARLENS<span>.ID</span></span>
         </a>
 
@@ -904,11 +902,11 @@
         </div>
     </section>
 
-    <!-- 4. ABOUT SECTION -->
+    <!-- 4. ABOUT SECTION (Logo 3D Baru diterapkan di sini) -->
     <section class="about-section" id="about">
         <div class="about-3d-logo-wrap">
             <div class="logo-3d-box" id="logo3d">
-                <img src="https://lh3.googleusercontent.com/d/1z34mnwgFn74_oFYpuCgQn9ifQKTnm2v7" alt="Logo Arlens 3D" onerror="this.onerror=null; this.src='https://via.placeholder.com/170/2a3338/e5ac31?text=ARLENS+3D';">
+                <img src="https://lh3.googleusercontent.com/d/1-VsXB7QToVlaYd4JTP_bods9H4NzWizG" alt="Logo Arlens 3D" onerror="this.onerror=null; this.src='https://via.placeholder.com/170/2a3338/e5ac31?text=ARLENS+3D';">
             </div>
         </div>
 
@@ -933,14 +931,12 @@
             <h2 id="pricelist">Layanan & Price List</h2>
         </div>
 
-        <!-- TAB NAVIGATION -->
         <div class="tab-navigation">
             <button class="tab-btn active" onclick="switchTab('dokumentasi', this)">Dokumentasi</button>
             <button class="tab-btn" onclick="switchTab('photobooth', this)">Photobooth</button>
             <button class="tab-btn" onclick="switchTab('undangan', this)">Undangan Digital</button>
         </div>
 
-        <!-- CARDS CONTAINER -->
         <div class="cards-grid" id="cardsGrid">
             <!-- JS Injecting Content Automatically -->
         </div>
@@ -980,7 +976,6 @@
                 </div>
             </div>
 
-            <!-- Pesan / Saran / Kerjasama Form -->
             <form class="contact-form" id="contactForm" onsubmit="sendToWhatsApp(event)">
                 <div class="form-group">
                     <label for="nama">Nama Lengkap</label>
@@ -1066,7 +1061,7 @@
             introOverlay.style.opacity = '0';
             setTimeout(() => introOverlay.style.visibility = 'hidden', 800);
         }
-        setTimeout(closeIntro, 4500); // 4.5 sec auto close
+        setTimeout(closeIntro, 4500);
 
         // 2. MOBILE MENU HAMBURGER
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -1085,7 +1080,6 @@
             }
         });
 
-        // Tutup menu saat link diklik (di mobile)
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
                 navbar.classList.remove('menu-open');
@@ -1106,7 +1100,7 @@
                 : '<i class="fa-solid fa-sun"></i>';
         });
 
-        // 4. 3D INTERACTIVE HERO PHONE MOCKUP (Hanya aktif di perangkat dengan mouse / desktop)
+        // 4. 3D INTERACTIVE HERO PHONE MOCKUP
         const heroVisual = document.getElementById('heroVisual');
         const phone3d = document.getElementById('phone3d');
         const logo3d = document.getElementById('logo3d');
@@ -1130,7 +1124,7 @@
             aboutWrap.addEventListener('mouseleave', () => logo3d.style.transform = `rotateX(0deg) rotateY(0deg)`);
         }
 
-        // 5. DATA PAKET & SHOWCASE DATA (GAMBAR LEBIH ESTETIK)
+        // 5. DATA PAKET & SHOWCASE DATA
         const packageData = {
             dokumentasi: [
                 {

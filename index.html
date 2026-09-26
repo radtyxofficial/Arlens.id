@@ -740,6 +740,7 @@
             width: 100%; max-width: 500px; border-radius: 16px;
             padding: 25px; position: relative;
             transform: scale(0.9); transition: transform 0.3s ease;
+            max-height: 90vh; overflow-y: auto;
         }
         .modal-overlay.active .modal-box { transform: scale(1); }
         .modal-close {
@@ -750,7 +751,7 @@
         .modal-title { font-size: 1.4rem; font-weight: 800; color: var(--accent-gold); margin-bottom: 5px; }
         .modal-price { font-size: 1.1rem; font-weight: 700; color: var(--accent-terracotta); margin-bottom: 20px; }
         .modal-benefits li { font-size: 0.9rem; color: var(--text-cream); margin-bottom: 10px; display: flex; gap: 10px; }
-        .modal-benefits li i { color: var(--accent-gold); }
+        .modal-benefits li i { color: var(--accent-gold); flex-shrink: 0; margin-top: 3px; }
     </style>
 </head>
 <body>
@@ -1048,7 +1049,7 @@
             aboutWrap.addEventListener('mouseleave', () => logo3d.style.transform = `rotateX(0deg) rotateY(0deg)`);
         }
 
-        // 5. DATA PAKET & SHOWCASE DATA (DIPERBARUI DENGAN PRICELIST BARU)
+        // 5. DATA PAKET & SHOWCASE DATA (DIPERBARUI DENGAN PRICELIST PHOTOBOOTH TERBARU)
         const packageData = {
             dokumentasi: [
                 {
@@ -1079,19 +1080,54 @@
             ],
             photobooth: [
                 {
-                    name: 'Photobooth QR', price: 'Disesuaikan Jam Ops.',
+                    name: 'Paket QR Only', price: 'Mulai Rp. 400.000,00',
                     img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80',
-                    benefits: ['Sistem Softcopy Instant QR', 'Custom Frame Overlay', 'Lighting Studio Professional', 'Fun Props & Aksesoris', 'Operator & Photographer']
+                    benefits: [
+                        '2 Hours: Rp. 400.000,00',
+                        '3 Hours: Rp. 500.000,00',
+                        '4 Hours: Rp. 600.000,00',
+                        '5 Hours: Rp. 700.000,00',
+                        '6 Hours: Rp. 800.000,00',
+                        'Setiap tambahan waktu: Rp. 100.000 / Jam',
+                        'Persiapan rakit 30-40 menit (diluar jam dipesan). Waktu mulai dihitung setelah perakitan selesai.'
+                    ]
                 },
                 {
-                    name: 'Print Limited', price: 'Disesuaikan Kertas',
+                    name: 'Paket Limited Print', price: 'Mulai Rp. 1.000.000,00',
                     img: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80',
-                    benefits: ['Cetak Thermal High Quality', 'Kuota (100 / 200 / 300 lembar)', 'Free Custom Frame', 'Props Lengkap', 'Scan QR Code Tamu']
+                    benefits: [
+                        '100 Print - Max 3 Hours: Rp. 1.000.000,00',
+                        '200 Print - Max 4 Hours: Rp. 1.300.000,00',
+                        '300 Print - Max 5 Hours: Rp. 1.500.000,00',
+                        '400 Print - Max 6 Hours: Rp. 1.800.000,00',
+                        '500 Print - Max 7 Hours: Rp. 2.000.000,00',
+                        'Setiap tambahan waktu: Rp. 150.000 / Jam',
+                        'Tambahan limited print (jika kuota habis): Rp. 150.000 / 50 print (termasuk tambahan waktu 30 menit)',
+                        'Persiapan rakit 30-40 menit (diluar jam dipesan).'
+                    ]
                 },
                 {
-                    name: 'Unlimited Print', price: 'Disesuaikan Durasi',
+                    name: 'Paket Unlimited Print', price: 'Mulai Rp. 1.450.000,00',
                     img: 'https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=600&q=80',
-                    benefits: ['Cetak Sepuasnya (Unlimited)', 'High Speed Photo Printer', 'Desain Border Bertema Event', 'Team Ramah & Profesional', 'File Digital High-Res']
+                    benefits: [
+                        '2 Hours: Rp. 1.450.000,00',
+                        '3 Hours: Rp. 1.900.000,00',
+                        '4 Hours: Rp. 2.350.000,00',
+                        '5 Hours: Rp. 2.800.000,00',
+                        '6 Hours: Rp. 3.750.000,00',
+                        'Setiap tambahan waktu: Rp. 300.000 / Jam',
+                        'Persiapan rakit 30-40 menit (diluar jam dipesan).'
+                    ]
+                },
+                {
+                    name: 'Paket Tambahan (Add-on)', price: 'Mulai Rp. 30.000,00',
+                    img: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&q=80',
+                    benefits: [
+                        'Tambahan Template: Rp. 30.000,00',
+                        'Flash Disk (Foto Frame): Rp. 60.000,00',
+                        'Flash Disk (Foto Frame + Ori): Rp. 90.000,00',
+                        'Buku Album: Rp. 350.000,00'
+                    ]
                 }
             ],
             undangan: [

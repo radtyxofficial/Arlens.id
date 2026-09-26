@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Lens - Portofolio</title>
+    <title>AR Lens - Portofolio & Undangan Digital</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
+        /* Smooth Scroll Behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
         /* --- Palet Warna Dasar --- */
         :root {
             --color-dark: #12181d;
@@ -28,7 +33,7 @@
             --card-bg: rgba(255, 255, 255, 0.7);
             --border-color: rgba(44, 53, 60, 0.1);
             --grid-color: rgba(44, 53, 60, 0.05);
-            --tab-bg: #fff;
+            --tab-bg: #ffffff;
             --tab-text: var(--color-dark);
         }
 
@@ -59,7 +64,7 @@
             overflow-x: hidden;
             transition: background-color 0.5s ease, color 0.5s ease;
             
-            /* Latar Belakang Grid Halus dinamis sesuai tema */
+            /* Latar Belakang Grid Halus */
             background-image: 
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
@@ -110,7 +115,7 @@
 
         .preloader-step h1 {
             font-family: var(--font-heading);
-            font-size: clamp(24px, 5vw, 40px); /* Responsif font size */
+            font-size: clamp(24px, 5vw, 40px);
             color: var(--color-cream);
             letter-spacing: 5px;
         }
@@ -243,7 +248,7 @@
 
         .hero h1 {
             font-family: var(--font-heading);
-            font-size: clamp(32px, 5vw, 48px); /* Responsif ukuran teks */
+            font-size: clamp(32px, 5vw, 48px);
             line-height: 1.2;
             margin-bottom: 20px;
             color: var(--text-primary);
@@ -307,7 +312,7 @@
         .phone-mockup {
             width: 250px;
             height: 500px;
-            background: #111;
+            background: #111111;
             border-radius: 35px;
             position: relative;
             box-shadow: 20px 20px 40px rgba(0,0,0,0.15);
@@ -338,7 +343,7 @@
             width: 180px;
             height: 380px;
             bottom: -20px;
-            right: 0; /* Posisi relatif ditarik ke dalam di versi mobile */
+            right: 0;
             z-index: 5;
         }
 
@@ -498,23 +503,52 @@
         }
         .btn-submit:hover { background: var(--color-tan); }
 
-        /* --- Footer --- */
-        footer { padding: 50px 0 20px; border-top: 1px solid rgba(255,255,255,0.05); }
-        .footer-grid { display: flex; justify-content: space-between; gap: 30px; margin-bottom: 40px; }
-        .footer-col h3 { font-family: var(--font-heading); color: var(--color-gold); margin-bottom: 20px; }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 10px; color: #aaa; font-size: 14px; cursor: pointer; transition: color 0.3s;}
-        .footer-col ul li:hover { color: var(--color-gold); }
-        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 14px; color: #777; }
+        /* --- Footer Styles --- */
+        footer { 
+            padding: 50px 0 20px; 
+            border-top: 1px solid rgba(255,255,255,0.05); 
+        }
+        .footer-grid { 
+            display: flex; 
+            justify-content: space-between; 
+            gap: 30px; 
+            margin-bottom: 40px; 
+        }
+        .footer-col h3 { 
+            font-family: var(--font-heading); 
+            color: var(--color-gold); 
+            margin-bottom: 20px; 
+        }
+        .footer-col ul { 
+            list-style: none; 
+        }
+        .footer-col ul li { 
+            margin-bottom: 10px; 
+        }
+        .footer-col ul li a {
+            color: #aaaaaa;
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: inline-block;
+        }
+        .footer-col ul li a:hover { 
+            color: var(--color-gold); 
+        }
+        .footer-bottom { 
+            text-align: center; 
+            padding-top: 20px; 
+            border-top: 1px solid rgba(255,255,255,0.1); 
+            font-size: 14px; 
+            color: #777777; 
+        }
 
-        /* ========================================= */
-        /* === MEDIA QUERIES (RESPONSIVE MOBILE) === */
-        /* ========================================= */
+        /* --- Media Queries (Responsif HP & Laptop) --- */
         @media (max-width: 992px) {
             .hero { flex-direction: column; text-align: center; }
             .hero-content { padding-right: 0; display: flex; flex-direction: column; align-items: center; }
             .hero-image { transform: scale(0.9); margin-top: 20px; }
-            .phone-small { right: 10%; } /* Menggeser HP kecil agar tidak keluar layar */
+            .phone-small { right: 10%; }
             
             .about { flex-direction: column; gap: 20px; text-align: center; }
             .about h2, .about-text { width: 100%; }
@@ -527,7 +561,7 @@
 
             .hero-image { transform: scale(0.75); }
             
-            .portfolio-grid { grid-template-columns: 1fr; } /* Menjadi 1 kolom memanjang ke bawah */
+            .portfolio-grid { grid-template-columns: 1fr; }
             .portfolio-card { height: 200px; grid-column: auto !important; }
 
             .contact-wrapper { flex-direction: column; }
@@ -537,7 +571,7 @@
         }
 
         @media (max-width: 480px) {
-            .hero-image { transform: scale(0.6); margin-top: -30px; } /* Diperkecil lagi untuk HP kecil */
+            .hero-image { transform: scale(0.6); margin-top: -30px; }
             .hero p { font-size: 14px; }
             .btn-primary, .btn-secondary { width: 100%; }
         }
@@ -564,7 +598,7 @@
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
                 <a href="#portfolio">Portfolio</a>
-                <!-- Toggle Mode Button -->
+                <!-- Toggle Dark/Light Mode -->
                 <button class="theme-switch" id="themeSwitch" aria-label="Toggle Dark Mode">🌙</button>
             </div>
             <a href="#contact" class="btn-contact">Hubungi Kami</a>
@@ -586,7 +620,7 @@
                 <div class="screen"></div>
             </div>
             <div class="phone-mockup phone-small">
-                <div class="screen" style="background: linear-gradient(135deg, var(--color-copper), #111);"></div>
+                <div class="screen" style="background: linear-gradient(135deg, var(--color-copper), #111111);"></div>
             </div>
         </div>
     </section>
@@ -616,7 +650,6 @@
             <div class="portfolio-card">BASIC</div>
             <div class="portfolio-card">STANDARD</div>
             <div class="portfolio-card">PREMIUM</div>
-            <!-- grid-column dihapus saat dilayar kecil via CSS otomatis -->
             <div class="portfolio-card">ULTIMATE</div> 
         </div>
     </section>
@@ -663,7 +696,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer Interaktif -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -674,18 +707,18 @@
                 <div class="footer-col">
                     <h3>Menu</h3>
                     <ul>
-                        <li>Home</li>
-                        <li>About</li>
-                        <li>Portfolio</li>
-                        <li>Contact</li>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h3>Layanan</h3>
                     <ul>
-                        <li>Dokumentasi</li>
-                        <li>Photobooth</li>
-                        <li>Undangan Digital</li>
+                        <li><a href="#portfolio">Dokumentasi</a></li>
+                        <li><a href="#portfolio">Photobooth</a></li>
+                        <li><a href="#portfolio">Undangan Digital</a></li>
                     </ul>
                 </div>
             </div>
@@ -695,7 +728,7 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- JavaScript Interaktif -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
@@ -753,34 +786,3 @@
     </script>
 </body>
 </html>
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col" style="width: 30%;">
-                    <h3>AR<span>Lens</span></h3>
-                    <p style="font-size: 14px; color: #aaa; margin-top: 15px;">Merekam setiap momen bahagia Anda melalui lensa yang tepat dan desain yang elegan.</p>
-                </div>
-                <div class="footer-col">
-                    <h3>Menu</h3>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#portfolio">Portfolio</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Layanan</h3>
-                    <ul>
-                        <li><a href="#portfolio">Dokumentasi</a></li>
-                        <li><a href="#portfolio">Photobooth</a></li>
-                        <li><a href="#portfolio">Undangan Digital</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                &copy; 2026 ARLens.id. All rights reserved.
-            </div>
-        </div>
-    </footer>

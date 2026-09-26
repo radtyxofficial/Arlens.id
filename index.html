@@ -1,1360 +1,582 @@
+```html
 <!DOCTYPE html>
-<html lang="id" data-theme="dark">
+<html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARLENS.ID | Creative Visual & Digital Invitation</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <title>Arlens.id - Rayakan Setiap Moment Bahagia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        c1: '#121d21', // Darkest
+                        c2: '#2a3338', // Dark
+                        c3: '#975a41', // Rust
+                        c4: '#b7785c', // Terracotta
+                        c5: '#e5ac31', // Gold
+                        c6: '#edebde'  // Light/Cream
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --bg-main: #121d21;
-            --bg-card: rgba(42, 51, 56, 0.7);
-            --bg-card-solid: #2a3338;
-            --accent-copper: #975a41;
-            --accent-terracotta: #b7785c;
-            --accent-gold: #e5ac31;
-            --text-cream: #edebde;
-            --text-muted: #a0aab0;
-            --grid-color: rgba(229, 172, 49, 0.05);
-            --border-color: rgba(183, 120, 92, 0.2);
-            --glow-color: rgba(229, 172, 49, 0.35);
-            --shadow-subtle: rgba(0,0,0,0.4);
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 
-        [data-theme="light"] {
-            --bg-main: #edebde;
-            --bg-card: rgba(255, 255, 255, 0.85);
-            --bg-card-solid: #ffffff;
-            --accent-copper: #975a41;
-            --accent-terracotta: #b7785c;
-            --accent-gold: #975a41;
-            --text-cream: #121d21;
-            --text-muted: #4a555a;
-            --grid-color: rgba(18, 29, 33, 0.06);
-            --border-color: rgba(151, 90, 65, 0.25);
-            --glow-color: rgba(183, 120, 92, 0.25);
-            --shadow-subtle: rgba(0,0,0,0.08);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-cream);
+        /* Grid Backgrounds */
+        .bg-grid-dark {
+            background-size: 40px 40px;
             background-image: 
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 32px 32px;
-            overflow-x: hidden;
-            transition: background-color 0.4s ease, color 0.4s ease;
+                linear-gradient(to right, rgba(237, 235, 222, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(237, 235, 222, 0.03) 1px, transparent 1px);
         }
-
-        /* --- INTRO SCREEN --- */
-        #intro-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #121d21;
+        .bg-grid-light {
+            background-size: 40px 40px;
             background-image: 
-                linear-gradient(rgba(229, 172, 49, 0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(229, 172, 49, 0.04) 1px, transparent 1px);
-            background-size: 30px 30px;
-            z-index: 99999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
+                linear-gradient(to right, rgba(18, 29, 33, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(18, 29, 33, 0.05) 1px, transparent 1px);
         }
 
-        .intro-welcome {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: 6px;
-            color: #e5ac31;
-            opacity: 0;
-            animation: welcomeAnim 2.2s ease forwards;
+        /* Intro Animation */
+        .intro-container {
+            transition: opacity 1s ease-out, visibility 1s ease-out;
         }
-
-        .intro-brand {
-            position: absolute;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0;
-            transform: scale(0.9);
-            animation: brandAnim 2.5s ease 2s forwards;
+        .fade-out-anim {
+            animation: fadeOut 2s ease-in-out forwards;
+            animation-delay: 1.5s;
         }
-
-        .intro-logo {
-            max-width: 180px;
-            height: auto;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 15px rgba(229, 172, 49, 0.4));
-        }
-
-        .intro-tagline {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.25rem;
-            color: #edebde;
-            letter-spacing: 1px;
-        }
-
-        .skip-btn {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            background: rgba(42, 51, 56, 0.8);
-            border: 1px solid #b7785c;
-            color: #edebde;
-            padding: 10px 22px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            z-index: 100000;
-        }
-
-        .skip-btn:hover {
-            background: #e5ac31;
-            color: #121d21;
-            border-color: #e5ac31;
-            box-shadow: 0 0 15px rgba(229, 172, 49, 0.5);
-        }
-
-        @keyframes welcomeAnim {
-            0% { opacity: 0; transform: translateY(20px); }
-            40% { opacity: 1; transform: translateY(0); }
-            70% { opacity: 1; transform: translateY(0); }
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: translateY(0); }
             100% { opacity: 0; transform: translateY(-20px); }
         }
-
-        @keyframes brandAnim {
-            0% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        /* --- HEADER & NAVBAR --- */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 18px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(18, 29, 33, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        [data-theme="light"] header {
-            background: rgba(237, 235, 222, 0.85);
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            gap: 12px;
-        }
-
-        .logo-2d {
-            height: 42px;
-            width: auto;
-            object-fit: contain;
-            filter: drop-shadow(0 2px 5px var(--glow-color));
-        }
-
-        .brand-name {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--text-cream);
-            letter-spacing: 1px;
-        }
-
-        .brand-name span {
-            color: var(--accent-gold);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 28px;
-            align-items: center;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--text-cream);
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        nav a:hover, nav a.active {
-            color: var(--accent-gold);
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background-color: var(--accent-gold);
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .theme-toggle {
-            background: var(--bg-card-solid);
-            border: 1px solid var(--border-color);
-            color: var(--text-cream);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle:hover {
-            border-color: var(--accent-gold);
-            color: var(--accent-gold);
-            transform: rotate(15deg);
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            min-height: 100vh;
-            padding: 140px 8% 80px 8%;
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            align-items: center;
-            gap: 40px;
+        
+        /* 3D perspective setup */
+        .perspective-container {
             perspective: 1000px;
         }
-
-        .hero-text h1 {
-            font-size: 2.8rem;
-            line-height: 1.2;
-            font-weight: 800;
-            margin-bottom: 20px;
-            color: var(--text-cream);
-            letter-spacing: -0.5px;
-        }
-
-        .hero-text h1 span {
-            color: var(--accent-gold);
-            background: linear-gradient(135deg, var(--accent-gold), var(--accent-terracotta));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-text p {
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            line-height: 1.7;
-            margin-bottom: 35px;
-            max-width: 620px;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-copper), var(--accent-gold));
-            color: #121d21;
-            box-shadow: 0 4px 15px var(--glow-color);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px var(--glow-color);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-cream);
-            border: 2px solid var(--border-color);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--accent-gold);
-            color: var(--accent-gold);
-            transform: translateY(-3px);
-        }
-
-        /* 3D Phone Container */
-        .hero-visual {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        .phone-mockup-wrap {
-            width: 280px;
-            height: 540px;
-            background: #1e262a;
-            border-radius: 40px;
-            padding: 12px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 30px var(--glow-color);
-            border: 4px solid #2a3338;
-            transform-style: preserve-3d;
+        .tilt-element {
             transition: transform 0.1s ease-out;
-            position: relative;
-        }
-
-        .phone-screen {
-            width: 100%;
-            height: 100%;
-            background: #0f1619;
-            border-radius: 30px;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .phone-notch {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 110px;
-            height: 22px;
-            background: #1e262a;
-            border-radius: 12px;
-            z-index: 10;
-        }
-
-        /* Simulated Digital Invitation Content inside Phone */
-        .invitation-preview {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, rgba(18,29,33,0.8), rgba(42,51,56,0.95)), url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80') center/cover;
-            padding: 40px 20px 20px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            text-align: center;
-            color: #edebde;
-            box-sizing: border-box;
-        }
-
-        .inv-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1rem;
-            color: #e5ac31;
-            margin-top: 15px;
-        }
-
-        .inv-names {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 10px 0;
-            color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.7);
-        }
-
-        .inv-date {
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            color: #b7785c;
-            text-transform: uppercase;
-        }
-
-        .inv-badge {
-            background: rgba(229, 172, 49, 0.2);
-            border: 1px solid #e5ac31;
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: #e5ac31;
-            margin-bottom: 20px;
-            animation: pulseGlow 2s infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            from { box-shadow: 0 0 5px rgba(229, 172, 49, 0.3); }
-            to { box-shadow: 0 0 15px rgba(229, 172, 49, 0.8); }
-        }
-
-        /* --- ABOUT SECTION --- */
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--text-cream);
-            letter-spacing: 1px;
-        }
-
-        .section-title p {
-            color: var(--accent-terracotta);
-            font-size: 0.95rem;
-            margin-top: 8px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .about-section {
-            padding: 100px 8%;
-            display: grid;
-            grid-template-columns: 0.8fr 1.2fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .about-3d-logo-wrap {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1000px;
-        }
-
-        .logo-3d-box {
-            width: 260px;
-            height: 260px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 15px 35px var(--shadow-subtle);
             transform-style: preserve-3d;
-            transition: transform 0.2s ease-out;
-            cursor: pointer;
         }
 
-        .logo-3d-box img {
-            max-width: 170px;
-            height: auto;
-            transform: translateZ(40px);
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
-        }
-
-        .about-content p {
-            color: var(--text-muted);
-            line-height: 1.8;
-            font-size: 1.02rem;
-            margin-bottom: 20px;
-            text-align: justify;
-        }
-
-        /* --- PRODUCTS & SHOWCASE TABS --- */
-        .products-section {
-            padding: 100px 8%;
-            background: rgba(0, 0, 0, 0.15);
-        }
-
-        .tab-navigation {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 45px;
-            flex-wrap: wrap;
-        }
-
-        .tab-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-cream);
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
+        /* Card Glow */
+        .card-glow {
             transition: all 0.3s ease;
         }
-
-        .tab-btn:hover, .tab-btn.active {
-            background: var(--accent-copper);
-            color: #ffffff;
-            border-color: var(--accent-copper);
-            box-shadow: 0 4px 15px var(--glow-color);
+        .card-glow:hover {
+            box-shadow: 0 0 20px rgba(229, 172, 49, 0.3); /* Gold glow */
+            border-color: #e5ac31;
+            transform: translateY(-5px);
         }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 24px;
-            backdrop-filter: blur(8px);
-            transition: all 0.35s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-gold);
-            box-shadow: 0 10px 30px var(--glow-color);
-        }
-
-        .card-img {
-            width: 100%;
-            height: 180px;
-            border-radius: 10px;
-            object-fit: cover;
-            margin-bottom: 20px;
-            background-color: var(--bg-card-solid);
-        }
-
-        .card-title {
-            font-size: 1.35rem;
-            font-weight: 700;
-            color: var(--text-cream);
-            margin-bottom: 8px;
-        }
-
-        .card-category {
-            font-size: 0.8rem;
-            color: var(--accent-gold);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .card-price {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: var(--accent-terracotta);
-            margin-bottom: 20px;
-        }
-
-        .card-btn {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-cream);
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.88rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            text-align: center;
-        }
-
-        .card-btn:hover {
-            background: var(--accent-gold);
-            color: #121d21;
-            border-color: var(--accent-gold);
-        }
-
-        /* --- MODAL DETAIL PAKET --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(6px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-box {
-            background: var(--bg-card-solid);
-            border: 1px solid var(--border-color);
-            width: 100%;
-            max-width: 550px;
-            border-radius: 20px;
-            padding: 30px;
-            position: relative;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-overlay.active .modal-box {
-            transform: scale(1);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: transparent;
-            border: none;
-            color: var(--text-cream);
-            font-size: 1.3rem;
-            cursor: pointer;
-        }
-
-        .modal-title {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--accent-gold);
-            margin-bottom: 5px;
-        }
-
-        .modal-price {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--accent-terracotta);
-            margin-bottom: 20px;
-        }
-
-        .modal-benefits {
-            list-style: none;
-            margin-bottom: 25px;
-        }
-
-        .modal-benefits li {
-            font-size: 0.95rem;
-            color: var(--text-cream);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .modal-benefits li i {
-            color: var(--accent-gold);
-        }
-
-        /* --- CONTACT & MESSAGE SECTION --- */
-        .contact-section {
-            padding: 100px 8%;
-        }
-
-        .contact-container {
-            display: grid;
-            grid-template-columns: 0.9fr 1.1fr;
-            gap: 50px;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .contact-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 24px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            text-decoration: none;
-            color: var(--text-cream);
-            transition: all 0.3s ease;
-        }
-
-        .contact-card:hover {
-            border-color: var(--accent-gold);
-            transform: translateX(6px);
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(229, 172, 49, 0.15);
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--accent-gold);
-            font-size: 1.4rem;
-        }
-
-        .contact-details h4 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .contact-details p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        /* Message Form */
-        .contact-form {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 32px;
-            border-radius: 18px;
-            backdrop-filter: blur(10px);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-cream);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 16px;
-            background: var(--bg-card-solid);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-cream);
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-control:focus {
-            border-color: var(--accent-gold);
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 110px;
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            background: var(--bg-card-solid);
-            border-top: 1px solid var(--border-color);
-            padding: 60px 8% 30px 8%;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-brand h3 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-cream);
-            margin-bottom: 12px;
-        }
-
-        .footer-brand p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .footer-col h4 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--accent-gold);
-            margin-bottom: 18px;
-        }
-
-        .footer-col ul {
-            list-style: none;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-col ul li a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-col ul li a:hover {
-            color: var(--accent-gold);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid var(--border-color);
-            padding-top: 25px;
-            text-align: center;
-            font-size: 0.88rem;
-            color: var(--text-muted);
-        }
-
-        /* Responsive Breakpoints */
-        @media (max-width: 992px) {
-            .hero, .about-section, .contact-container, .footer-grid {
-                grid-template-columns: 1fr;
-            }
-            .hero {
-                text-align: center;
-                padding-top: 120px;
-            }
-            .hero-text p {
-                margin: 0 auto 30px auto;
-            }
-            .hero-cta {
-                justify-content: center;
-            }
-            nav {
-                display: none; /* simple dynamic hide or wrap for mobile */
-            }
-        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--tw-bg-opacity, #121d21); }
+        ::-webkit-scrollbar-thumb { background: #975a41; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #b7785c; }
     </style>
 </head>
-<body>
+<body class="bg-c6 dark:bg-c1 text-c1 dark:text-c6 font-sans transition-colors duration-500 overflow-x-hidden min-h-screen relative">
+    
+    <!-- Background Grid Pattern -->
+    <div class="fixed inset-0 pointer-events-none z-[-1] bg-grid-light dark:bg-grid-dark transition-colors duration-500"></div>
 
-    <div id="intro-overlay">
-        <div class="intro-welcome">WELCOME TO</div>
-        <div class="intro-brand">
-            <img src="https://lh3.googleusercontent.com/d/1z34mnwgFn74_oFYpuCgQn9ifQKTnm2v7" alt="Logo Arlens" class="intro-logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x100/121d21/e5ac31?text=ARLENS.ID';">
-            <p class="intro-tagline">"Rayakan Setiap Moment Bahagia Bersama Kami"</p>
+    <!-- Intro Splash Screen -->
+    <div id="introScreen" class="fixed inset-0 z-50 bg-c1 flex flex-col items-center justify-center intro-container text-c6">
+        <button id="skipIntro" class="absolute top-6 right-6 text-sm text-c6/70 hover:text-c5 border border-c6/30 rounded-full px-4 py-1 transition-colors">Skip Intro</button>
+        <div class="text-center fade-out-anim">
+            <h1 class="text-2xl tracking-widest mb-4 font-sans font-light">WELCOME TO</h1>
+            <img src="https://drive.google.com/uc?export=view&id=1z34mnwgFn74_oFYpuCgQn9ifQKTnm2v7" alt="Arlens Logo" class="h-24 md:h-32 mx-auto mb-4 object-contain">
+            <p class="font-serif italic text-lg md:text-xl text-c5">"Rayakan Setiap Moment Bahagia Bersama Kami"</p>
         </div>
-        <button class="skip-btn" onclick="closeIntro()">Skip Intro <i class="fa-solid fa-forward"></i></button>
     </div>
 
-    <header>
-        <a href="#home" class="logo-container">
-            <img src="https://lh3.googleusercontent.com/d/105fMhSHZ8e7VKuVcLDYq5RjXR4Uy0YgF" alt="ARLENS 2D Logo" class="logo-2d" onerror="this.onerror=null; this.src='https://via.placeholder.com/40/e5ac31/121d21?text=A';">
-            <span class="brand-name">ARLENS<span>.ID</span></span>
-        </a>
-
-        <nav>
-            <ul>
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#products">Products</a></li>
-                <li><a href="#pricelist">Pricelist</a></li>
-                <li><a href="#contacts">Contacts</a></li>
-            </ul>
-        </nav>
-
-        <div class="header-actions">
-            <button class="theme-toggle" id="themeToggleBtn" title="Ganti Mode Tema">
-                <i class="fa-solid fa-moon"></i>
-            </button>
+    <!-- Header Navigation -->
+    <header class="fixed top-0 w-full z-40 bg-c6/80 dark:bg-c1/80 backdrop-blur-md border-b border-c2/20 dark:border-c6/10 transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#home">
+                        <img src="https://drive.google.com/uc?export=view&id=105fMhSHZ8e7VKuVcLDYq5RjXR4Uy0YgF" alt="Arlens 2D Logo" class="h-10 w-auto">
+                    </a>
+                </div>
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-c5 transition-colors font-medium">Home</a>
+                    <a href="#about" class="hover:text-c5 transition-colors font-medium">About</a>
+                    <a href="#products" class="hover:text-c5 transition-colors font-medium">Products & Pricelist</a>
+                    <a href="#contact" class="hover:text-c5 transition-colors font-medium">Contacts</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <!-- Theme Toggle -->
+                    <button id="themeToggle" class="p-2 rounded-full bg-c2/10 dark:bg-c6/10 hover:bg-c5/20 transition-colors" title="Toggle Theme">
+                        <!-- Sun Icon (shows in dark mode) -->
+                        <svg id="sunIcon" class="w-5 h-5 hidden dark:block text-c5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <!-- Moon Icon (shows in light mode) -->
+                        <svg id="moonIcon" class="w-5 h-5 block dark:hidden text-c2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+                    <!-- Mobile menu button -->
+                    <button class="md:hidden p-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
         </div>
     </header>
 
-    <section class="hero" id="home">
-        <div class="hero-text">
-            <h1>RAYAKAN SETIAP MOMENT BAHAGIA BERSAMA <span>ARLENS.ID</span></h1>
-            <p>
-                Abadikan setiap momen berharga Anda menjadi karya seni visual yang natural dan elegan. Melalui layanan Dokumentasi, Photobooth, dan Undangan Digital, kami menghadirkan pengalaman unik yang dirancang penuh presisi untuk merayakan hari spesial Anda.
-            </p>
-            <div class="hero-cta">
-                <a href="#products" class="btn btn-primary"><i class="fa-solid fa-camera"></i> Lihat Layanan Kami</a>
-                <a href="https://wa.me/6285604613503" target="_blank" class="btn btn-secondary"><i class="fa-brands fa-whatsapp"></i> Hubungi ARLENS.ID Sekarang</a>
-            </div>
-        </div>
-
-        <div class="hero-visual" id="heroVisual">
-            <div class="phone-mockup-wrap" id="phone3d">
-                <div class="phone-notch"></div>
-                <div class="phone-screen">
-                    <div class="invitation-preview">
-                        <div class="inv-title">Undangan Digital</div>
-                        <div>
-                            <div class="inv-names">Romeo & Juliet</div>
-                            <div class="inv-date">26 . 12 . 2026</div>
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section id="home" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 min-h-[90vh] flex items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="order-2 lg:order-1">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold leading-tight mb-6">
+                        RAYAKAN SETIAP MOMENT <span class="text-c5">BAHAGIA</span> BERSAMA ARLENS.ID
+                    </h1>
+                    <p class="text-lg text-c2 dark:text-c6/80 mb-8 max-w-xl">
+                        Abadikan setiap momen berharga Anda menjadi karya seni visual yang natural dan elegan. Melalui layanan Dokumentasi, Photobooth, dan Undangan Digital, kami menghadirkan pengalaman unik yang dirancang penuh presisi untuk merayakan hari spesial Anda.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#products" class="px-8 py-3 bg-c5 hover:bg-c4 text-c1 font-semibold rounded-lg transition-colors text-center shadow-lg shadow-c5/30">
+                            Lihat Layanan Kami
+                        </a>
+                        <a href="#contact" class="px-8 py-3 border border-c1 dark:border-c6 hover:bg-c1 hover:text-c6 dark:hover:bg-c6 dark:hover:text-c1 font-semibold rounded-lg transition-colors text-center">
+                            Hubungi Sekarang
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 3D Phone Element -->
+                <div class="order-1 lg:order-2 flex justify-center perspective-container py-10" id="hero3DContainer">
+                    <div class="relative w-64 h-[500px] bg-c1 dark:bg-c2 rounded-[3rem] border-8 border-c2 dark:border-c6/20 shadow-2xl tilt-element overflow-hidden" id="hero3DElement">
+                        <!-- Phone Notch -->
+                        <div class="absolute top-0 inset-x-0 h-6 bg-c2 dark:bg-c6/20 rounded-b-2xl w-32 mx-auto z-10 flex justify-center items-center">
+                            <div class="w-12 h-1.5 bg-c1 rounded-full"></div>
                         </div>
-                        <div class="inv-badge"><i class="fa-solid fa-envelope-open-text"></i> Live Preview GIF</div>
+                        <!-- Mock Digital Invite content / GIF -->
+                        <div class="absolute inset-0 bg-c6 dark:bg-c1 flex flex-col items-center pt-16 px-4">
+                            <div class="w-24 h-24 rounded-full bg-c5/20 animate-pulse mb-4 flex items-center justify-center">
+                                <span class="font-serif text-c5 text-xl italic">Wedding</span>
+                            </div>
+                            <h3 class="font-serif text-xl mb-2 text-c1 dark:text-c6">Romeo & Juliet</h3>
+                            <p class="text-xs text-center text-c3 mb-6">Digital Invitation Mockup<br>(Bayangkan GIF yang indah disini)</p>
+                            <div class="w-full bg-c6 dark:bg-c2 rounded-xl p-4 shadow-inner">
+                                <div class="w-full h-4 bg-c4/30 rounded mb-2"></div>
+                                <div class="w-3/4 h-4 bg-c4/30 rounded"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="about-section" id="about">
-        <div class="about-3d-logo-wrap">
-            <div class="logo-3d-box" id="logo3d">
-                <img src="https://lh3.googleusercontent.com/d/1z34mnwgFn74_oFYpuCgQn9ifQKTnm2v7" alt="Logo Arlens 3D" onerror="this.onerror=null; this.src='https://via.placeholder.com/170/2a3338/e5ac31?text=ARLENS+3D';">
-            </div>
-        </div>
-
-        <div class="about-content">
-            <div class="section-title" style="text-align: left; margin-bottom: 25px;">
-                <p>Mengenal Kami</p>
-                <h2>Tentang ARLENS.ID</h2>
-            </div>
-            <p>
-                Setiap acara memiliki ceritanya sendiri, dan kami di ARLENS.ID percaya bahwa momen terbaik layak dikenang selamanya. Kami adalah tim kreatif profesional yang berdedikasi untuk menangkap emosi, tawa, dan kehangatan di setiap perayaan Anda.
-            </p>
-            <p>
-                Berawal dari kecintaan pada seni visual, ARLENS.ID kini telah dipercaya untuk menangani berbagai acara mulai dari pernikahan, lamaran, ulang tahun, hingga acara perusahaan. Pendekatan kami tidak hanya sekadar memotret, tetapi juga menceritakan kisah Anda melalui bingkai foto dan video yang jujur, estetik, dan tak lekang oleh waktu.
-            </p>
-        </div>
-    </section>
-
-    <section class="products-section" id="products">
-        <div class="section-title">
-            <p>Pilihan Paket Terbaik</p>
-            <h2 id="pricelist">Layanan & Price List</h2>
-        </div>
-
-        <div class="tab-navigation">
-            <button class="tab-btn active" onclick="switchTab('dokumentasi', this)">Dokumentasi</button>
-            <button class="tab-btn" onclick="switchTab('photobooth', this)">Photobooth</button>
-            <button class="tab-btn" onclick="switchTab('undangan', this)">Undangan Digital</button>
-        </div>
-
-        <div class="cards-grid" id="cardsGrid">
-            </div>
-    </section>
-
-    <section class="contact-section" id="contacts">
-        <div class="section-title">
-            <p>Mari Berkolaborasi</p>
-            <h2>Hubungi Kami</h2>
-        </div>
-
-        <div class="contact-container">
-            <div class="contact-info">
-                <a href="https://wa.me/6285604613503" target="_blank" class="contact-card">
-                    <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
-                    <div class="contact-details">
-                        <h4>WhatsApp Direct</h4>
-                        <p>+62 856-0461-3503</p>
+        <!-- About Section -->
+        <section id="about" class="bg-c2/5 dark:bg-c2/20 py-24 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <!-- 3D Logo Element -->
+                    <div class="flex justify-center perspective-container" id="about3DContainer">
+                        <div class="w-64 h-64 md:w-80 md:h-80 bg-gradient-to-tr from-c1 to-c2 dark:from-c2 dark:to-c1 rounded-full shadow-2xl shadow-c5/20 border border-c5/30 flex items-center justify-center tilt-element relative" id="about3DElement">
+                            <div class="absolute inset-0 rounded-full border-4 border-c5/50 border-dashed animate-[spin_20s_linear_infinite]"></div>
+                            <img src="https://drive.google.com/uc?export=view&id=105fMhSHZ8e7VKuVcLDYq5RjXR4Uy0YgF" alt="Arlens Logo 3D" class="w-32 h-auto filter drop-shadow-lg z-10">
+                        </div>
                     </div>
-                </a>
-
-                <a href="mailto:arlens.photobooth@gmail.com" class="contact-card">
-                    <div class="contact-icon"><i class="fa-regular fa-envelope"></i></div>
-                    <div class="contact-details">
-                        <h4>Email Support</h4>
-                        <p>arlens.photobooth@gmail.com</p>
-                    </div>
-                </a>
-
-                <div class="contact-card" style="cursor: default;">
-                    <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
-                    <div class="contact-details">
-                        <h4>Lokasi Utama</h4>
-                        <p>Base in Jombang, Jawa Timur</p>
+                    <div>
+                        <h2 class="text-3xl font-serif font-bold mb-6 text-c3 dark:text-c5">Tentang Arlens.id</h2>
+                        <div class="space-y-4 text-lg">
+                            <p>
+                                Setiap acara memiliki ceritanya sendiri, dan kami di <span class="font-semibold text-c5">ARLENS.ID</span> percaya bahwa momen terbaik layak dikenang selamanya. Kami adalah tim kreatif profesional yang berdedikasi untuk menangkap emosi, tawa, dan kehangatan di setiap perayaan Anda.
+                            </p>
+                            <p>
+                                Berawal dari kecintaan pada seni visual, ARLENS.ID kini telah dipercaya untuk menangani berbagai acara mulai dari pernikahan, lamaran, ulang tahun, hingga acara perusahaan. 
+                            </p>
+                            <p>
+                                Pendekatan kami tidak hanya sekadar memotret, tetapi juga menceritakan kisah Anda melalui bingkai foto dan video yang jujur, estetik, dan tak lekang oleh waktu.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <form class="contact-form" id="contactForm" onsubmit="sendToWhatsApp(event)">
-                <div class="form-group">
-                    <label for="nama">Nama Lengkap</label>
-                    <input type="text" id="nama" class="form-control" placeholder="Masukkan nama Anda" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="alamat">Alamat / Kota</label>
-                    <input type="text" id="alamat" class="form-control" placeholder="Contoh: Jombang, Jawa Timur" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="pilihanPaket">Pilihan Paket / Layanan</label>
-                    <select id="pilihanPaket" class="form-control" required>
-                        <option value="Dokumentasi">Dokumentasi</option>
-                        <option value="Photobooth">Photobooth</option>
-                        <option value="Undangan Digital">Undangan Digital</option>
-                        <option value="Other">Other (Saran / Kerjasama / Pertanyaan)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="pesan">Tujuan Pesan / Isi Pesan</label>
-                    <textarea id="pesan" class="form-control" placeholder="Tuliskan pesan, saran, atau ajakan kerja sama Anda di sini..." required></textarea>
-                </div>
-
-                <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="fa-brands fa-whatsapp"></i> Kirim Pesan ke WhatsApp</button>
-            </form>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <h3>ARLENS.ID</h3>
-                <p>Abadikan setiap momen berharga Anda menjadi karya seni visual yang natural, estetik, dan tak lekang oleh waktu.</p>
-                <p style="margin-top: 12px; color: var(--accent-gold); font-weight: 600;">Base in Jombang, Jawa Timur</p>
+        <!-- Products & Services Tabs Section -->
+        <section id="products" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-serif font-bold mb-4">Layanan & Pricelist</h2>
+                <p class="text-c2 dark:text-c6/70">Pilih layanan yang sesuai dengan kebutuhan momen spesial Anda.</p>
             </div>
 
-            <div class="footer-col">
-                <h4>Menu Navigasi</h4>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#products">Products</a></li>
-                    <li><a href="#pricelist">Pricelist</a></li>
-                    <li><a href="#contacts">Contact</a></li>
-                </ul>
+            <!-- Tabs -->
+            <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-12 border-b border-c2/20 dark:border-c6/20 pb-4">
+                <button class="tab-btn active px-6 py-2 rounded-full font-medium transition-all duration-300 bg-c5 text-c1 shadow-lg" data-target="tab-dokumentasi">
+                    Dokumentasi
+                </button>
+                <button class="tab-btn px-6 py-2 rounded-full font-medium transition-all duration-300 hover:bg-c2/10 dark:hover:bg-c6/10" data-target="tab-photobooth">
+                    Photobooth
+                </button>
+                <button class="tab-btn px-6 py-2 rounded-full font-medium transition-all duration-300 hover:bg-c2/10 dark:hover:bg-c6/10" data-target="tab-undangan">
+                    Undangan Digital
+                </button>
             </div>
 
-            <div class="footer-col">
-                <h4>Layanan Kami</h4>
-                <ul>
-                    <li><a href="#products" onclick="switchTab('dokumentasi')">Dokumentasi</a></li>
-                    <li><a href="#products" onclick="switchTab('photobooth')">Photobooth</a></li>
-                    <li><a href="#products" onclick="switchTab('undangan')">Undangan Digital</a></li>
-                </ul>
+            <!-- Tab Contents -->
+            <div id="tab-dokumentasi" class="tab-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Dokumentasi Cards -->
+                <!-- Rendered by JS to keep HTML clean -->
             </div>
-        </div>
 
-        <div class="footer-bottom">
-            <p>&copy; 2026 ARLENS.ID. All Rights Reserved.</p>
+            <div id="tab-photobooth" class="tab-content hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Photobooth Cards -->
+            </div>
+
+            <div id="tab-undangan" class="tab-content hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Undangan Cards -->
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="bg-c1 text-c6 py-24 border-t border-c2 dark:border-c2">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <div>
+                        <h2 class="text-3xl font-serif font-bold mb-6 text-c5">Mari Berkolaborasi</h2>
+                        <p class="mb-8 text-c6/80">Punya pertanyaan, saran, atau tawaran kerjasama? Jangan ragu untuk menghubungi kami melalui form disamping atau kontak langsung di bawah ini.</p>
+                        
+                        <div class="space-y-6">
+                            <a href="https://wa.me/6285604613503" target="_blank" class="flex items-center space-x-4 p-4 rounded-lg bg-c2/50 hover:bg-c2 border border-c2 hover:border-c5 transition-all group">
+                                <div class="p-3 bg-c5 text-c1 rounded-full group-hover:scale-110 transition-transform">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.599-.187-.968-.356-1.611-.741-2.67-2.404-2.753-2.518-.082-.113-.655-.873-.655-1.666 0-.793.411-1.183.555-1.339.144-.155.313-.194.417-.194.104 0 .208 0 .292.004.09.004.212-.036.331.25.123.295.422 1.026.46 1.104.038.077.064.168.013.272-.051.104-.077.168-.154.26-.077.091-.161.2-.23.28-.082.09-.168.188-.073.353.095.165.424.701.91 1.135.628.561 1.155.736 1.32.813.165.077.262.064.361-.051.098-.114.423-.495.539-.665.114-.17.23-.142.38-.086.15.056.948.448 1.11.529.162.081.27.123.31.192.04.069.04.405-.104.81z"/></svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-c6/60">WhatsApp</p>
+                                    <p class="font-medium">+62 856-0461-3503</p>
+                                </div>
+                            </a>
+                            <a href="mailto:arlens.photobooth@gmail.com" class="flex items-center space-x-4 p-4 rounded-lg bg-c2/50 hover:bg-c2 border border-c2 hover:border-c5 transition-all group">
+                                <div class="p-3 bg-c5 text-c1 rounded-full group-hover:scale-110 transition-transform">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-c6/60">Email</p>
+                                    <p class="font-medium">arlens.photobooth@gmail.com</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Form directly to WhatsApp -->
+                    <div class="bg-c2/30 p-8 rounded-2xl border border-c2 backdrop-blur-sm">
+                        <h3 class="text-xl font-bold mb-6 border-b border-c6/10 pb-4">Kirim Pesan Cepat</h3>
+                        <form id="waForm" class="space-y-4">
+                            <div>
+                                <label class="block text-sm mb-1 text-c6/80">Nama Lengkap</label>
+                                <input type="text" id="waName" required class="w-full bg-c1 border border-c2 rounded-lg px-4 py-2 focus:outline-none focus:border-c5 text-c6">
+                            </div>
+                            <div>
+                                <label class="block text-sm mb-1 text-c6/80">Alamat / Lokasi Acara</label>
+                                <input type="text" id="waAddress" required class="w-full bg-c1 border border-c2 rounded-lg px-4 py-2 focus:outline-none focus:border-c5 text-c6">
+                            </div>
+                            <div>
+                                <label class="block text-sm mb-1 text-c6/80">Ketertarikan Paket</label>
+                                <select id="waPackage" class="w-full bg-c1 border border-c2 rounded-lg px-4 py-2 focus:outline-none focus:border-c5 text-c6 appearance-none">
+                                    <option value="Dokumentasi">Dokumentasi (All)</option>
+                                    <option value="Photobooth">Photobooth (All)</option>
+                                    <option value="Undangan Digital">Undangan Digital (All)</option>
+                                    <option value="Other">Lainnya / Kerjasama</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm mb-1 text-c6/80">Tujuan / Isi Pesan</label>
+                                <textarea id="waMessage" required rows="4" class="w-full bg-c1 border border-c2 rounded-lg px-4 py-2 focus:outline-none focus:border-c5 text-c6 resize-none"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-c5 hover:bg-c4 text-c1 font-bold py-3 rounded-lg transition-colors flex justify-center items-center gap-2">
+                                Kirim via WhatsApp
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-c1 pt-12 pb-6 border-t border-c2 text-c6/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-2">
+                    <img src="https://drive.google.com/uc?export=view&id=105fMhSHZ8e7VKuVcLDYq5RjXR4Uy0YgF" alt="Arlens Logo" class="h-10 opacity-80 mb-4 filter grayscale brightness-200">
+                    <p class="mb-2 text-c5 font-medium">Arlens.id</p>
+                    <p class="text-sm">Base in Jombang, Jawa Timur.<br>Melayani dengan sepenuh hati untuk hari paling bahagia dalam hidup Anda.</p>
+                </div>
+                <div>
+                    <h4 class="text-c6 font-bold mb-4">Navigasi Utama</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#home" class="hover:text-c5 transition-colors">Home</a></li>
+                        <li><a href="#about" class="hover:text-c5 transition-colors">About</a></li>
+                        <li><a href="#products" class="hover:text-c5 transition-colors">Product & Price List</a></li>
+                        <li><a href="#contact" class="hover:text-c5 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-c6 font-bold mb-4">Layanan Jasa</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#products" onclick="switchTab('tab-dokumentasi')" class="hover:text-c5 transition-colors">Dokumentasi</a></li>
+                        <li><a href="#products" onclick="switchTab('tab-photobooth')" class="hover:text-c5 transition-colors">Photobooth</a></li>
+                        <li><a href="#products" onclick="switchTab('tab-undangan')" class="hover:text-c5 transition-colors">Undangan Digital</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center text-xs border-t border-c2/50 pt-6">
+                &copy; <span id="year"></span> Arlens.id. All rights reserved. Designed for Happiness.
+            </div>
         </div>
     </footer>
 
-    <div class="modal-overlay" id="packageModal">
-        <div class="modal-box">
-            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-title" id="modalTitle">Nama Paket</div>
-            <div class="modal-price" id="modalPrice">Harga Paket</div>
-            <ul class="modal-benefits" id="modalBenefits">
+    <!-- Package Detail Modal -->
+    <div id="packageModal" class="fixed inset-0 z-50 bg-c1/80 backdrop-blur-sm hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-c6 dark:bg-c2 rounded-2xl w-full max-w-lg p-6 md:p-8 relative transform scale-95 transition-transform duration-300" id="modalContent">
+            <button id="closeModal" class="absolute top-4 right-4 text-c2 dark:text-c6/50 hover:text-c3 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div class="mb-4">
+                <span id="modalCategory" class="text-xs font-bold text-c5 tracking-wider uppercase">Category</span>
+                <h3 id="modalTitle" class="text-2xl font-serif font-bold text-c1 dark:text-c6 mt-1">Package Name</h3>
+            </div>
+            <div class="bg-c2/5 dark:bg-c1 rounded-lg p-4 mb-6 text-c2 dark:text-c6/80">
+                <h4 class="font-bold mb-2">Benefit Package:</h4>
+                <ul id="modalBenefits" class="list-disc pl-5 space-y-1 text-sm">
+                    <!-- Benefits injected via JS -->
                 </ul>
-            <a href="https://wa.me/6285604613503" target="_blank" class="btn btn-primary" style="width: 100%; text-align: center;">Pesan Paket Ini Sekarang</a>
+            </div>
+            <div class="flex items-end justify-between border-t border-c2/10 dark:border-c6/10 pt-4">
+                <div>
+                    <p class="text-sm text-c3">Mulai dari</p>
+                    <p id="modalPrice" class="text-xl font-bold text-c1 dark:text-c5">Rp. -</p>
+                </div>
+                <a href="#contact" onclick="closeModalFn()" class="px-6 py-2 bg-c5 hover:bg-c4 text-c1 font-semibold rounded-lg transition-colors text-sm">Pesan Paket</a>
+            </div>
         </div>
     </div>
 
+    <!-- Logic Script -->
     <script>
-        // 1. AUTO CLOSE INTRO / SKIP INTRO
-        const introOverlay = document.getElementById('intro-overlay');
-        function closeIntro() {
-            introOverlay.style.opacity = '0';
-            introOverlay.style.visibility = 'hidden';
+        // Set Current Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // 1. Intro Animation Logic
+        const introScreen = document.getElementById('introScreen');
+        const skipIntroBtn = document.getElementById('skipIntro');
+        
+        function hideIntro() {
+            introScreen.classList.add('opacity-0');
+            setTimeout(() => {
+                introScreen.style.display = 'none';
+                document.body.classList.remove('overflow-hidden');
+            }, 1000);
         }
-        // Auto close after 5 seconds if not skipped
-        setTimeout(() => {
-            closeIntro();
-        }, 5000);
 
-        // 2. DARK MODE & LIGHT MODE TOGGLE
-        const themeToggleBtn = document.getElementById('themeToggleBtn');
-        const htmlElement = document.documentElement;
+        // Lock scroll initially
+        document.body.classList.add('overflow-hidden');
+        
+        // Auto hide after animation (1.5s delay + 2s animation = 3.5s)
+        let introTimeout = setTimeout(hideIntro, 3500);
 
-        themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            htmlElement.setAttribute('data-theme', newTheme);
-            themeToggleBtn.innerHTML = newTheme === 'dark' 
-                ? '<i class="fa-solid fa-moon"></i>' 
-                : '<i class="fa-solid fa-sun"></i>';
+        skipIntroBtn.addEventListener('click', () => {
+            clearTimeout(introTimeout);
+            hideIntro();
         });
 
-        // 3. 3D INTERACTIVE HERO PHONE MOCKUP
-        const heroVisual = document.getElementById('heroVisual');
-        const phone3d = document.getElementById('phone3d');
+        // 2. Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        // Check local storage or system preference
+        if (localStorage.getItem('theme') === 'light' || (!('theme' in localStorage) && !window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.remove('dark');
+        }
 
-        heroVisual.addEventListener('mousemove', (e) => {
-            const rect = heroVisual.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            if (html.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // 3. 3D Interactive Elements
+        function setup3DEffect(containerId, elementId) {
+            const container = document.getElementById(containerId);
+            const element = document.getElementById(elementId);
             
-            const rotateX = (-y / rect.height) * 30;
-            const rotateY = (x / rect.width) * 30;
+            if(!container || !element) return;
 
-            phone3d.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        });
+            container.addEventListener('mousemove', (e) => {
+                const rect = container.getBoundingClientRect();
+                const x = e.clientX - rect.left; // x position within the element.
+                const y = e.clientY - rect.top;  // y position within the element.
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                // Calculate rotation (max 15 degrees)
+                const rotateX = ((y - centerY) / centerY) * -15;
+                const rotateY = ((x - centerX) / centerX) * 15;
+                
+                element.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
 
-        heroVisual.addEventListener('mouseleave', () => {
-            phone3d.style.transform = `rotateX(0deg) rotateY(0deg)`;
-        });
+            container.addEventListener('mouseleave', () => {
+                element.style.transform = 'rotateX(0deg) rotateY(0deg)';
+                element.style.transition = 'transform 0.5s ease-out';
+                setTimeout(() => {
+                    element.style.transition = 'transform 0.1s ease-out';
+                }, 500);
+            });
+        }
 
-        // 4. 3D INTERACTIVE ABOUT LOGO
-        const logo3d = document.getElementById('logo3d');
-        const aboutWrap = document.querySelector('.about-3d-logo-wrap');
+        setup3DEffect('hero3DContainer', 'hero3DElement');
+        setup3DEffect('about3DContainer', 'about3DElement');
 
-        aboutWrap.addEventListener('mousemove', (e) => {
-            const rect = aboutWrap.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-
-            logo3d.style.transform = `rotateX(${(-y/rect.height)*35}deg) rotateY(${(x/rect.width)*35}deg)`;
-        });
-
-        aboutWrap.addEventListener('mouseleave', () => {
-            logo3d.style.transform = `rotateX(0deg) rotateY(0deg)`;
-        });
-
-        // 5. DATA PAKET & SHOWCASE DATA
-        const packageData = {
+        // 4. Products & Pricelist Data and Tabs
+        const productData = {
             dokumentasi: [
-                {
-                    name: 'Premium',
-                    price: 'Sesuai Kebutuhan',
-                    img: 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=500&q=80',
-                    benefits: [
-                        '1 Photographer Utama',
-                        'Cakupan Acara hingga 4 Jam',
-                        'Unlimited Photos Softcopy',
-                        'Editing Foto Pilihan (50 Foto)',
-                        'Flashdisk 16GB Exclusive Box'
-                    ]
-                },
-                {
-                    name: 'Ekslusif',
-                    price: 'Sesuai Kebutuhan',
-                    img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=500&q=80',
-                    benefits: [
-                        '2 Photographers + 1 Videographer',
-                        'Cakupan Acara Full Day (s.d. 8 Jam)',
-                        'Cinematic Highlight Video (2-3 Menit)',
-                        '1 Cetak Album Magnetic 20 Hal',
-                        'Editing All Best Photos',
-                        'Flashdisk 32GB Exclusive Box'
-                    ]
-                },
-                {
-                    name: 'Ultimate',
-                    price: 'Sesuai Kebutuhan',
-                    img: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=500&q=80',
-                    benefits: [
-                        'Full Team (3 Photo + 2 Video + Drone operator)',
-                        'Cakupan Acara Multiday / Unlimited',
-                        'Cinematic Video Teaser (1 Min) & Full Movie',
-                        '2 Custom Hardcover Magazine Album',
-                        'Cetak Bingkai Frameless 40x60cm',
-                        'Semua File HD via Google Drive & USB'
-                    ]
-                }
+                { name: "Premium", price: "Disesuaikan nanti", category: "Dokumentasi", thumb: "📸", benefits: ["Sesi foto eksklusif", "Editing standar", "Album digital", "Flashdisk copy"] },
+                { name: "Ekslusif", price: "Disesuaikan nanti", category: "Dokumentasi", thumb: "🎥", benefits: ["Sesi foto & video", "Cinematic highlight", "Album cetak eksklusif", "Drone (jika memungkinkan)"] },
+                { name: "Ultimate", price: "Disesuaikan nanti", category: "Dokumentasi", thumb: "🏆", benefits: ["Full day coverage", "Multiple kameramen", "Same Day Edit Video", "Premium cetak album besar", "Pre-wedding inclusion"] }
             ],
             photobooth: [
-                {
-                    name: 'Photobooth QR',
-                    price: 'Disesuaikan Jam Ops.',
-                    img: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=500&q=80',
-                    benefits: [
-                        'Sistem Softcopy Instant QR Code Dynamic',
-                        'Pilihan Frame Overlay Custom Logo/Event',
-                        'Lighting Professional Studio Set',
-                        'Fun Fun Props & Aksesoris Foto',
-                        '1 Operator & 1 Photographer'
-                    ]
-                },
-                {
-                    name: 'Photobooth Print Limited',
-                    price: 'Disesuaikan Jam & Kertas Print',
-                    img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=500&q=80',
-                    benefits: [
-                        'Cetak Cepat High Quality Thermal Printer',
-                        'Kuota Cetak Sesuai Pilihan (100 / 200 / 300 lembar)',
-                        'Free Custom Frame Layout & Overlay',
-                        'Lighting Studio & Props Lengkap',
-                        'Softcopy Scan QR Code untuk Tamu'
-                    ]
-                },
-                {
-                    name: 'Photobooth Unlimited Print',
-                    price: 'Disesuaikan Durasi Jam',
-                    img: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=500&q=80',
-                    benefits: [
-                        'Cetak Cetak Sepuasnya (Unlimited) Dalam Durasi Jam',
-                        'High Speed Thermal Photo Printer',
-                        'Custom Border Design Bertema Event',
-                        'Operator & Photographer Ramah',
-                        'File Digital All High-Res via Cloud'
-                    ]
-                }
+                { name: "Photobooth QR", price: "Disesuaikan nanti", category: "Photobooth", thumb: "📱", benefits: ["Sistem unduh via QR Code", "Props menarik", "Lighting standar", "Digital file only"] },
+                { name: "Print Limited", price: "Disesuaikan nanti", category: "Photobooth", thumb: "🖨️", benefits: ["Cetak terbatas (Sesuai paket kuota)", "Custom template kertas", "Props Premium", "File digital copy"] },
+                { name: "Unlimited Print", price: "Disesuaikan nanti", category: "Photobooth", thumb: "♾️", benefits: ["Cetak sepuasnya sesuai durasi jam", "Custom template eksklusif", "Premium backdrop & props", "Softcopy & Hardcopy"] }
             ],
             undangan: [
-                {
-                    name: 'Silver',
-                    price: 'Sesuai Kebutuhan',
-                    img: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=500&q=80',
-                    benefits: [
-                        'Tampilan Responsive Mobile-Friendly',
-                        'Hitung Mundur / Countdown Acara',
-                        'Navigasi Lokasi Google Maps Direct',
-                        'Fitur RSVP & Ucapan Tamu',
-                        'Masa Aktif Undangan 6 Bulan'
-                    ]
-                },
-                {
-                    name: 'Gold',
-                    price: 'Sesuai Kebutuhan',
-                    img: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=500&q=80',
-                    benefits: [
-                        'Semua Fitur Paket Silver',
-                        'Galeri Foto (Up to 10 Foto)',
-                        'Integrasi Background Music / Audio Player',
-                        'Fitur Amplop Digital / Rekening / QRIS',
-                        'Kirim Nama Tamu Tanpa Batas (Nama Tamu kustom)'
-                    ]
-                },
-                {
-                    name: 'Diamond',
-                    price: 'Sesuai Kebutuhan',
-                    img: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=500&q=80',
-                    benefits: [
-                        'Semua Fitur Paket Gold',
-                        'Fitur Video Prewedding Embed',
-                        'Love Story Timeline Section',
-                        'Filter Instagram Custom Frame Event',
-                        'Pengingat Kalender Google / Apple'
-                    ]
-                },
-                {
-                    name: 'Ultimate',
-                    price: 'Sesuai Kebutuhan',
-                    img: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80',
-                    benefits: [
-                        'Desain Custom Exclusively Sesuai Wish Request',
-                        'Sistem QR Code Check-in Tamu di Lokasi (Buku Tamu Digital)',
-                        'Domain Kustom Web (.com / .id)',
-                        'Masa Aktif Undangan Selamanya / 1 Tahun+',
-                        'Prioritas Support & Revision'
-                    ]
-                }
+                { name: "Silver", price: "Disesuaikan nanti", category: "Undangan Digital", thumb: "✉️", benefits: ["Desain template standar", "Informasi acara & peta", "Galeri foto terbatas", "Aktif 3 bulan"] },
+                { name: "Gold", price: "Disesuaikan nanti", category: "Undangan Digital", thumb: "⭐", benefits: ["Desain custom warna", "Galeri foto & video prewed", "Buku tamu digital", "Hitung mundur (Countdown)"] },
+                { name: "Diamond", price: "Disesuaikan nanti", category: "Undangan Digital", thumb: "💎", benefits: ["Desain fully custom", "RSVP system terintegrasi WA", "Backsound musik pilihan", "Quotes eksklusif"] },
+                { name: "Ultimate", price: "Disesuaikan nanti", category: "Undangan Digital", thumb: "👑", benefits: ["Semua fitur Diamond", "Filter Instagram custom", "Animasi khusus (GIF/WebP)", "Prioritas pengerjaan kilat"] }
             ]
         };
 
-        const cardsGrid = document.getElementById('cardsGrid');
-
-        function renderTabContent(category) {
-            cardsGrid.innerHTML = '';
-            const items = packageData[category];
-
-            items.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <img src="${item.img}" alt="${item.name}" class="card-img">
-                    <div class="card-category">${category.toUpperCase()}</div>
-                    <div class="card-title">${item.name}</div>
-                    <div class="card-price">${item.price}</div>
-                    <button class="card-btn" onclick="openModal('${category}', ${index})">
-                        View Details for Benefit <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                `;
-                cardsGrid.appendChild(card);
-            });
-        }
-
-        function switchTab(category, btnElement) {
-            if (btnElement) {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                btnElement.classList.add('active');
-            }
-            renderTabContent(category);
-        }
-
-        // Initialize First Tab
-        renderTabContent('dokumentasi');
-
-        // 6. MODAL FUNCTIONS
-        const modalOverlay = document.getElementById('packageModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalPrice = document.getElementById('modalPrice');
-        const modalBenefits = document.getElementById('modalBenefits');
-
-        function openModal(category, index) {
-            const data = packageData[category][index];
-            modalTitle.innerText = `Paket ${data.name}`;
-            modalPrice.innerText = `Estimasi Harga: ${data.price}`;
-
-            modalBenefits.innerHTML = '';
-            data.benefits.forEach(benefit => {
-                const li = document.createElement('li');
-                li.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${benefit}`;
-                modalBenefits.appendChild(li);
-            });
-
-            modalOverlay.classList.add('active');
-        }
-
-        function closeModal() {
-            modalOverlay.classList.remove('active');
-        }
-
-        // 7. WHATSAPP FORM SUBMISSION
-        function sendToWhatsApp(e) {
-            e.preventDefault();
-            const nama = document.getElementById('nama').value;
-            const alamat = document.getElementById('alamat').value;
-            const pilihanPaket = document.getElementById('pilihanPaket').value;
-            const pesan = document.getElementById('pesan').value;
-
-            const whatsappNumber = '6285604613503';
+        function renderCards(tabId, dataKey) {
+            const container = document.getElementById(tabId);
+            container.innerHTML = ''; // Clear existing
             
-            const formattedText = `Halo ARLENS.ID,%0A%0ASaya ingin mengajukan pertanyaan / pemesanan dengan detail berikut:%0A- *Nama*: ${encodeURIComponent(nama)}%0A- *Alamat*: ${encodeURIComponent(alamat)}%0A- *Pilihan Paket*: ${encodeURIComponent(pilihanPaket)}%0A- *Isi Pesan*: ${encodeURIComponent(pesan)}%0A%0AMohon info lebih lanjut. Terima kasih!`;
-
-            window.open(`https://wa.me/${whatsappNumber}?text=${formattedText}`, '_blank');
+            productData[dataKey].forEach((pkg, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-c1 border border-c2/50 dark:border-c6/10 rounded-2xl p-6 flex flex-col card-glow relative overflow-hidden group";
+                card.innerHTML = `
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity text-6xl pointer-events-none">${pkg.thumb}</div>
+                    <span class="text-xs font-bold text-c5 tracking-wider uppercase mb-2">${pkg.category}</span>
+                    <h3 class="text-2xl font-serif text-c6 mb-4">${pkg.name}</h3>
+                    <p class="text-c4 font-semibold mb-6 text-lg">${pkg.price}</p>
+                    <div class="mt-auto">
+                        <button onclick='openModal(${JSON.stringify(pkg).replace(/'/g, "&#39;")})' class="w-full py-2 border border-c5 text-c5 hover:bg-c5 hover:text-c1 rounded-lg transition-colors text-sm font-medium">
+                            View Details for benefit
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
         }
+
+        // Initialize cards
+        renderCards('tab-dokumentasi', 'dokumentasi');
+        renderCards('tab-photobooth', 'photobooth');
+        renderCards('tab-undangan', 'undangan');
+
+        // Tab Switching Logic
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        function switchTab(targetId) {
+            tabBtns.forEach(btn => {
+                if(btn.dataset.target === targetId) {
+                    btn.classList.add('bg-c5', 'text-c1', 'shadow-lg');
+                    btn.classList.remove('hover:bg-c2/10', 'dark:hover:bg-c6/10');
+                } else {
+                    btn.classList.remove('bg-c5', 'text-c1', 'shadow-lg');
+                    btn.classList.add('hover:bg-c2/10', 'dark:hover:bg-c6/10');
+                }
+            });
+
+            tabContents.forEach(content => {
+                if(content.id === targetId) {
+                    content.classList.remove('hidden');
+                    // simple fade in effect
+                    content.style.opacity = '0';
+                    setTimeout(() => content.style.opacity = '1', 50);
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+        }
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => switchTab(e.target.dataset.target));
+        });
+
+        // 5. Modal Logic
+        const modal = document.getElementById('packageModal');
+        const modalContent = document.getElementById('modalContent');
+        
+        function openModal(pkg) {
+            document.getElementById('modalCategory').textContent = pkg.category;
+            document.getElementById('modalTitle').textContent = pkg.name;
+            document.getElementById('modalPrice').textContent = pkg.price;
+            
+            const benefitsList = document.getElementById('modalBenefits');
+            benefitsList.innerHTML = pkg.benefits.map(b => `<li>${b}</li>`).join('');
+            
+            modal.classList.remove('hidden');
+            // Small delay for transition
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeModalFn() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }, 300);
+        }
+
+        document.getElementById('closeModal').addEventListener('click', closeModalFn);
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) closeModalFn();
+        });
+
+        // 6. WhatsApp Form Logic
+        document.getElementById('waForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('waName').value;
+            const address = document.getElementById('waAddress').value;
+            const pkg = document.getElementById('waPackage').value;
+            const message = document.getElementById('waMessage').value;
+            
+            const waNumber = "6285604613503";
+            const text = `Halo ARLENS.ID,%0A%0ASaya ingin berdiskusi mengenai layanan Anda. Berikut detail saya:%0A%0A*Nama:* ${name}%0A*Alamat/Lokasi:* ${address}%0A*Pilihan Paket:* ${pkg}%0A*Pesan:* ${message}%0A%0AMohon info lebih lanjut. Terima kasih!`;
+            
+            const waUrl = `https://wa.me/${waNumber}?text=${text}`;
+            window.open(waUrl, '_blank');
+        });
+
     </script>
 </body>
 </html>
+```

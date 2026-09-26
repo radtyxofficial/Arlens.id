@@ -1,358 +1,372 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Platform satu pintu layanan pernikahan mulai dari undangan digital hingga dokumentasi dengan sentuhan gaya yang elegan, modern, dan berkesan.">
-  <meta name="keywords" content="undangan digital, digital invitation, wedding, arlens.id">
-  <meta property="og:title" content="Arlens.id — Undangan Digital & Dokumentasi Pernikahan">
-  <meta property="og:description" content="Platform satu pintu layanan pernikahan mulai dari undangan digital hingga dokumentasi dengan sentuhan gaya yang elegan, modern, dan berkesan.">
-  <meta name="robots" content="index, follow">
-  
-  <title>Arlens.id — Undangan Digital & Dokumentasi Pernikahan</title>
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com/">
-  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&amp;family=Jost:wght@300;400;500;600&amp;family=Great+Vibes&amp;display=swap" rel="stylesheet">
-
-  <!-- AOS — Animate On Scroll -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-
-  <!-- Swiper.js CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css">
-
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <!-- Main Stylesheet (Pastikan struktur folder CSS Anda sesuai) -->
-  <link rel="stylesheet" href="/aset/css/style.css">
-</head>
-<body data-aos-easing="ease-out-cubic" data-aos-duration="800" data-aos-delay="0">
-
-  <!-- SECTION 1 — NAVIGATION -->
-  <header id="navbar" role="banner" class="">
-    <div class="container">
-      <nav class="nav-inner" aria-label="Main Navigation">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arlens.Id — Dokumentasi, Photobooth & Undangan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --dark: #1a1a1a;
+            --light: #fdfbf7;
+            --gray: #f5f5f5;
+        }
         
-        <a href="#hero" class="nav-logo display-font">
-          <!-- Ganti dengan path logo Arlens.id -->
-          <img src="/aset/images/logo-arlens-black.png" alt="Arlens.id" style="width: 100px;">
-        </a>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        <ul class="nav-links" role="list">
-          <li><a href="#hero" data-section="hero" class="active">Beranda</a></li>
-          <li><a href="#about" data-section="about">Tentang</a></li>
-          <li><a href="#gallery" data-section="gallery">Koleksi</a></li>
-          <li><a href="#how-it-works" data-section="how-it-works">Cara Kerja</a></li>
-          <li><a href="#pricing" data-section="pricing">Harga</a></li>
-          <li><a href="#testimonials" data-section="testimonials">Testimoni</a></li>
-          <li class="nav-dropdown-wrapper"> 
-            <a href="#" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-              Service Lainnya <i class="fa-solid fa-chevron-down dropdown-icon"></i>
-            </a>
-            <ul class="nav-dropdown-menu" role="menu">
-              <li><a href="#" role="menuitem" target="_blank">Dokumentasi Wedding</a></li>
-              <li><a href="#" role="menuitem" target="_blank">Photobook</a></li>
-              <li><a href="#" role="menuitem" target="_blank">Photobooth</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="/client/dashboard.php" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm">
-              Buat Sekarang!
-            </a>
-          </li>
-        </ul>
+        body {
+            font-family: 'Jost', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
 
-        <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle Menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </nav>
-    </div>
+        h1, h2, h3, .brand {
+            font-family: 'Cormorant Garamond', serif;
+        }
 
-    <!-- Mobile Menu Overlay -->
-    <div id="nav-mobile" class="nav-mobile" role="navigation" aria-label="Mobile Menu">
-        <button class="nav-mobile-close" aria-label="Tutup Menu">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-        <ul role="list">
-          <li><a href="#hero" data-section="hero">Beranda</a></li>
-          <li><a href="#about" data-section="about">Tentang</a></li>
-          <li><a href="#gallery" data-section="gallery">Koleksi</a></li>
-          <li><a href="#how-it-works" data-section="how-it-works">Cara Kerja</a></li>
-          <li><a href="#pricing" data-section="pricing">Harga</a></li>
-          <li><a href="#testimonials" data-section="testimonials">Testimoni</a></li>
-        </ul>
-        <div class="nav-mobile-action p-3">
-          <a href="/client/dashboard.php" class="btn btn-gold w-100 text-center" target="_blank">
-            Buat Sekarang!
-          </a>
-      </div>
-    </div>
-  </header>
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-  <!-- SECTION 2 — HERO -->
-  <section id="hero" aria-labelledby="hero-title">
-    <div class="hero-bg-circle hero-bg-circle-1" aria-hidden="true"></div>
-    <div class="hero-bg-circle hero-bg-circle-2" aria-hidden="true"></div>
-    <div class="hero-pattern" aria-hidden="true"></div>
+        .brand {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gold);
+            text-decoration: none;
+        }
 
-    <div class="container">
-      <div class="hero-inner">
-        <div class="hero-content">
-          <span class="hero-eyebrow" data-aos="fade-right" data-aos-delay="100">
-            One Stop Wedding Service
-          </span>
-          <h1 class="hero-title display-font" id="hero-title" data-aos="fade-up" data-aos-delay="150">
-            Abadikan Cinta,<br> Momen Bahagia
-          </h1>
-          <span class="hero-subtitle-script script-font" data-aos="fade-up" data-aos-delay="220">
-            bersama Arlens.id
-          </span>
-          <p class="hero-desc" data-aos="fade-up" data-aos-delay="280">
-           Hadirkan kesan pertama yang tak terlupakan melalui undangan digital yang elegan dan modern. Kami menggabungkan desain yang indah, teknologi yang praktis, dan pengalaman pengguna yang nyaman untuk menceritakan kisah spesial Anda.
-          </p>
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
 
-          <div class="hero-cta-group" data-aos="fade-up" data-aos-delay="340">
-            <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-lg">
-              <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Coba Sekarang 
-            </a>
-            <a href="#gallery" class="btn btn-outline-gold btn-lg">
-              <i class="fa-solid fa-eye" aria-hidden="true"></i> Lihat Sample
-            </a>
-          </div>
+        .nav-links a:hover {
+            color: var(--gold);
+        }
 
-          <div class="hero-stats" data-aos="fade-up" data-aos-delay="420">
-            <div class="stat-item">
-              <div class="stat-number display-font"><span data-count="100" data-suffix="k">100k</span></div>
-              <div class="stat-label">Harga mulai dari</div>
+        .btn-gold {
+            background: var(--gold);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-gold:hover {
+            background: #b5952f;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(rgba(26,26,26,0.8), rgba(26,26,26,0.8)), url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--gold-light);
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        /* Services */
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin: 60px 0 20px;
+            color: var(--dark);
+        }
+
+        .gold-divider {
+            width: 60px;
+            height: 3px;
+            background: var(--gold);
+            margin: 0 auto 40px;
+        }
+
+        .services-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 0 50px;
+            flex-wrap: wrap;
+        }
+
+        .service-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .service-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        /* Pricing */
+        .pricing-section {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 20px;
+            margin-top: 60px;
+        }
+
+        .pricing-section .section-title {
+            color: var(--gold-light);
+        }
+
+        .pricing-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .price-card {
+            background: #fff;
+            color: var(--dark);
+            width: 260px;
+            padding: 30px 20px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .price-card.popular {
+            border: 2px solid var(--gold);
+            transform: scale(1.05);
+        }
+
+        .popular-badge {
+            background: var(--gold);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .price-card h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 28px;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .features {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .features li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .features li::before {
+            content: "✓";
+            color: var(--gold);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .features li.disabled::before {
+            content: "✕";
+            color: #ccc;
+        }
+        
+        .features li.disabled {
+            color: #999;
+        }
+
+        /* Footer */
+        footer {
+            background: #111;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .price-card.popular {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigasi -->
+    <nav>
+        <a href="#" class="brand">Arlens.Id</a>
+        <div class="nav-links">
+            <a href="#">Beranda</a>
+            <a href="#services">Layanan</a>
+            <a href="#pricing">Harga Undangan</a>
+            <a href="#" class="btn-gold">Hubungi Kami</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Abadikan Cinta, Momen Bahagia</h1>
+        <p>Platform satu pintu layanan acara Anda. Mulai dari undangan digital, photobooth, hingga dokumentasi acara dengan sentuhan elegan dan berkesan.</p>
+        <a href="#services" class="btn-gold">Lihat Layanan Kami</a>
+    </section>
+
+    <!-- Layanan -->
+    <section id="services">
+        <h2 class="section-title">Layanan Kami</h2>
+        <div class="gold-divider"></div>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Dokumentasi Acara</h3>
+                <p>Mengabadikan momen terbaik acara Anda melalui foto dan video profesional dengan hasil kualitas tinggi.</p>
             </div>
-            <div class="stat-item">
-              <div class="stat-number display-font"><span data-count="20" data-suffix="+">20+</span></div>
-              <div class="stat-label">Template Tersedia</div>
+            <div class="service-card">
+                <h3>Photobooth</h3>
+                <p>Hadirkan keseruan interaktif bagi tamu Anda dengan photobooth premium dan cetak foto instan.</p>
             </div>
-            <div class="stat-item">
-              <div class="stat-number display-font"><span data-count="99" data-suffix="%">99%</span></div>
-              <div class="stat-label">Pelanggan Puas</div>
+            <div class="service-card">
+                <h3>Undangan Digital</h3>
+                <p>Kesan pertama yang tak terlupakan melalui undangan website interaktif dengan desain eksklusif.</p>
             </div>
-          </div>
         </div>
+    </section>
 
-        <div class="hero-visual" data-aos="fade-left" data-aos-delay="200">
-          <div class="hero-phone-wrapper">
-            <img src="/aset/images/1.webp" alt="Preview Undangan Digital" class="hero-phone">
-            <div class="hero-glow" aria-hidden="true"></div>
-          </div>
-          <div class="hero-card-float-2" aria-hidden="true">
-            <img src="/aset/images/2.webp" alt="Preview Undangan Digital" class="hero-phone" width="600px">  
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-features" data-aos="fade-up" data-aos-delay="500">
-        <div class="hero-feature-item">
-          <div class="hero-feature-icon" aria-hidden="true">🎨</div>
-          <div>
-            <div class="hero-feature-title display-font">Desain Eksklusif</div>
-            <div class="hero-feature-desc">Berbagai desain dapat dipilih sesuai dengan tema pernikahan kamu</div>
-          </div>
-        </div>
-        <div class="hero-feature-item">
-          <div class="hero-feature-icon" aria-hidden="true">⚡</div>
-          <div>
-            <div class="hero-feature-title display-font">Mudah &amp; Cepat</div>
-            <div class="hero-feature-desc">Kamu dapat membuatnya mandiri, kapan saja dan di mana saja</div>
-          </div>
-        </div>
-        <div class="hero-feature-item">
-          <div class="hero-feature-icon" aria-hidden="true">📱</div>
-          <div>
-            <div class="hero-feature-title display-font">Ramah di Semua Perangkat</div>
-            <div class="hero-feature-desc">Tampil sempurna di HP, tablet, maupun desktop</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 3 — ABOUT -->
-  <section id="about" aria-labelledby="about-title">
-    <div class="container">
-      <div class="about-inner">
-        <div class="about-image-col" data-aos="fade-right" data-aos-duration="1000">
-          <div class="about-img-gold-border" aria-hidden="true"></div>
-          <div class="about-img-main">
-            <img src="/aset/images/BHR01754.JPG.webp" alt="Prewed" loading="lazy" width="500" height="375">
-          </div>
-          <div class="about-img-badge">
-            <div class="badge-years display-font">3+</div>
-            <div class="badge-label">Tahun<br>Pengalaman</div>
-          </div>
-        </div>
-
-        <div class="about-content" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="150">
-          <span class="section-label">Tentang Arlens.id</span>
-          <h2 class="section-title display-font" id="about-title">One Stop<br>Wedding Services</h2>
-          <div class="gold-divider"></div>
-          <p class="section-subtitle">
-            Mengabadikan momen, merangkai cerita, dan menciptakan kenangan yang tak lekang oleh waktu. Kami menyediakan semua kebutuhan pernikahan, dari undangan digital yang elegan, dokumentasi foto dan video, hingga photobooth premium.
-          </p>
-
-          <div class="about-features-grid" data-aos="fade-up" data-aos-delay="300">
-            <div class="about-feature-card">
-              <div class="about-feature-icon" aria-hidden="true">📸</div>
-              <div class="about-feature-title display-font">Photo &amp; Video</div>
-              <div class="about-feature-desc">Setiap detail ditangkap dengan sentuhan estetika premium</div>
+    <!-- Price List Undangan -->
+    <section id="pricing" class="pricing-section">
+        <h2 class="section-title">Paket Undangan Digital</h2>
+        <div class="gold-divider"></div>
+        
+        <div class="pricing-grid">
+            <!-- Basic -->
+            <div class="price-card">
+                <h3>BASIC</h3>
+                <div class="price">Rp139.000</div>
+                <ul class="features">
+                    <li>Informasi Mempelai</li>
+                    <li>Cover & Detail Acara</li>
+                    <li>Google Maps</li>
+                    <li>Countdown Timer</li>
+                    <li>Wedding Gallery</li>
+                    <li>Custom Greeting & Amplop</li>
+                    <li>Musik (Pilihan)</li>
+                    <li>Template (Pilihan Basic)</li>
+                    <li class="disabled">Love Story & Quote</li>
+                    <li class="disabled">RSVP Form</li>
+                    <li class="disabled">Video</li>
+                </ul>
+                <a href="#" class="btn-gold" style="display:block;">Pilih Basic</a>
             </div>
-            <div class="about-feature-card">
-              <div class="about-feature-icon" aria-hidden="true">💌</div>
-              <div class="about-feature-title display-font">Undangan Digital</div>
-              <div class="about-feature-desc">Tampilan interaktif dengan animasi elegan yang memorable</div>
+
+            <!-- Premium -->
+            <div class="price-card popular">
+                <div class="popular-badge">✦ Favorit</div>
+                <h3>PREMIUM</h3>
+                <div class="price">Rp179.000</div>
+                <ul class="features">
+                    <li>Semua Fitur Basic</li>
+                    <li>Love Story</li>
+                    <li>Quote</li>
+                    <li>Video</li>
+                    <li>Musik (Pilihan)</li>
+                    <li>Template (Pilihan Premium)</li>
+                    <li class="disabled">RSVP Form</li>
+                    <li class="disabled">Musik Custom</li>
+                </ul>
+                <br><br>
+                <a href="#" class="btn-gold" style="display:block;">Pilih Premium</a>
             </div>
-            <div class="about-feature-card">
-              <div class="about-feature-icon" aria-hidden="true">📓</div>
-              <div class="about-feature-title display-font">Photobook</div>
-              <div class="about-feature-desc">Dengan hasil cetak premium yang dapat dikenang sepanjang masa</div>
+
+            <!-- Ultimate -->
+            <div class="price-card">
+                <h3>ULTIMATE</h3>
+                <div class="price">Rp259.000</div>
+                <ul class="features">
+                    <li>Semua Fitur Premium</li>
+                    <li>RSVP Form</li>
+                    <li>Musik (Custom)</li>
+                    <li>Template (Ultimate + Extra)</li>
+                    <li>Prioritas Pengerjaan</li>
+                </ul>
+                <br><br><br><br>
+                <a href="#" class="btn-gold" style="display:block;">Pilih Ultimate</a>
             </div>
-            <div class="about-feature-card">
-              <div class="about-feature-icon" aria-hidden="true">👨‍👩‍👧‍👦</div>
-              <div class="about-feature-title display-font">Photobooth</div>
-              <div class="about-feature-desc">Abadikan momen bersama tamu saat acara berlangsung dengan kualitas foto tinggi</div>
+
+            <!-- Custom -->
+            <div class="price-card">
+                <h3>CUSTOM</h3>
+                <div class="price">Rp399.000</div>
+                <ul class="features">
+                    <li>Semua Fitur Ultimate</li>
+                    <li>Desain Custom Eksklusif</li>
+                    <li>Request Fitur Khusus</li>
+                    <li>Revisi Tanpa Batas</li>
+                    <li>Masa Aktif 1 Tahun</li>
+                </ul>
+                <br><br><br><br>
+                <a href="#" class="btn-gold" style="display:block;">Konsultasi</a>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- SECTION 4 — HOW IT WORKS -->
-  <section id="how-it-works" aria-labelledby="steps-title">
-    <div class="container">
-      <div class="section-header" data-aos="fade-up">
-        <span class="section-label">Cara Kerja</span>
-        <h2 class="section-title display-font" id="steps-title">Mudah dalam 3 Langkah</h2>
-        <div class="gold-divider center"></div>
-        <p class="section-subtitle">
-          Dari pilihan paket hingga undangan siap dikirim, prosesnya mudah, praktis, dan cepat.
-        </p>
-      </div>
+    <!-- Footer -->
+    <footer>
+        <h2 class="brand" style="margin-bottom: 10px;">Arlens.Id</h2>
+        <p>© 2026 Arlens.Id. Merekam Momen, Mencipta Kenangan.</p>
+    </footer>
 
-      <div class="steps-grid" role="list">
-        <div class="step-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="step-number display-font" aria-hidden="true">1</div>
-          <div class="step-icon" aria-hidden="true"><i class="fa-solid fa-layer-group"></i></div>
-          <h3 class="step-title display-font">Pilih Paket &amp; Template</h3>
-          <p class="step-desc">Pilih paket yang sesuai dengan kebutuhan dan budget Anda beserta template favorit.</p>
-        </div>
-        <div class="step-card" data-aos="fade-up" data-aos-delay="220">
-          <div class="step-number display-font" aria-hidden="true">2</div>
-          <div class="step-icon" aria-hidden="true"><i class="fa-solid fa-pen-to-square"></i></div>
-          <h3 class="step-title display-font">Isi Data</h3>
-          <p class="step-desc">Lengkapi informasi pernikahan Kamu dari nama mempelai, tanggal, lokasi, hingga galeri foto.</p>
-        </div>
-        <div class="step-card" data-aos="fade-up" data-aos-delay="340">
-          <div class="step-number display-font" aria-hidden="true">3</div>
-          <div class="step-icon" aria-hidden="true"><i class="fa-solid fa-paper-plane"></i></div>
-          <h3 class="step-title display-font">Bagikan &amp; Rayakan</h3>
-          <p class="step-desc">Lihat langsung hasilnya di preview dan link-nya siap dibagikan ke tamu undangan.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 5 — CTA BANNER -->
-  <section id="cta-banner" aria-labelledby="cta-title">
-    <div class="cta-banner-glow" aria-hidden="true"></div>
-    <div class="container">
-      <div data-aos="fade-up">
-        <span class="section-label" style="color:var(--color-gold-light)">Jadikan Hari Istimewa</span>
-        <h2 class="cta-banner-title display-font" id="cta-title">
-          Siap Memulai Cerita Indah Anda?
-        </h2>
-        <p class="cta-banner-subtitle">
-          Buat undangan digital impian Anda sekarang. Tim Arlens.id siap membantu setiap langkahnya.
-        </p>
-        <div class="cta-banner-buttons">
-          <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-lg">
-            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Mulai Sekarang
-          </a>
-          <a href="#gallery" class="btn btn-outline-cream btn-lg">
-            <i class="fa-solid fa-image" aria-hidden="true"></i> Lihat Template
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 6 — FOOTER -->
-  <footer id="footer" role="contentinfo">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <a href="#hero" class="nav-logo display-font">
-            <img src="/aset/images/logo-arlens-white.png" alt="Arlens.id" style="width: 180px;">
-          </a>
-          <p class="footer-tagline">
-            Platform layanan digital pernikahan. Ciptakan kenangan indah bersama kami.  
-          </p>
-          <div class="footer-social" role="list">
-            <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" class="social-link"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" class="social-link"><i class="fa-brands fa-tiktok"></i></a>
-            <a href="#" class="social-link"><i class="fa-brands fa-whatsapp"></i></a>
-          </div>
-        </div>
-
-        <nav aria-label="Footer Menu Utama">
-          <h3 class="footer-col-title display-font">Menu</h3>
-          <ul class="footer-links" role="list">
-            <li><a href="#hero">Beranda</a></li>
-            <li><a href="#about">Tentang Kami</a></li>
-            <li><a href="#gallery">Pilihan Template</a></li>
-            <li><a href="#pricing">Paket Harga</a></li>
-          </ul>
-        </nav>
-
-        <nav aria-label="Footer Layanan">
-          <h3 class="footer-col-title display-font">Layanan</h3>
-          <ul class="footer-links" role="list">
-            <li><a href="#">Undangan Digital</a></li>
-            <li><a href="#">Photo &amp; Video Wedding</a></li>
-            <li><a href="#">Photobook &amp; Photobooth</a></li>
-          </ul>
-        </nav>
-
-        <address>
-          <h3 class="footer-col-title display-font">Hubungi Kami</h3>
-          <ul class="footer-links" role="list">
-            <li class="footer-contact-item">
-              <i class="fa-brands fa-instagram"></i> <span>@arlens.id</span>
-            </li>
-            <li class="footer-contact-item">
-              <i class="fa-brands fa-whatsapp"></i> <span>[Nomor WhatsApp Arlens]</span>
-            </li>
-          </ul>
-        </address>
-      </div>
-
-      <div class="footer-bottom">
-        <p class="footer-copyright">
-          © 2026 Arlens.id. Dibuat dengan ❤
-        </p>
-      </div>
-    </div>
-  </footer>
-
-  <button id="back-to-top" aria-label="Kembali ke Atas">
-    <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
-  </button>
-
-  <!-- Scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
-  <script>
-    AOS.init();
-    // Tambahkan inisialisasi Swiper dan logika navigasi sesuai file JS asli
-  </script>
 </body>
 </html>

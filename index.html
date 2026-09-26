@@ -1,1270 +1,1360 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ARLENS.ID - Portofolio & Layanan Dokumentasi</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <style>
-    /* ==========================================
-       COLOR PALETTE & CSS VARIABLES
-       ========================================== */
-    :root {
-      --bg-color: #121d21;
-      --surface-color: #2a3338;
-      --accent-1: #975a41;
-      --accent-2: #b7785c;
-      --gold: #e5ac31;
-      --text-main: #edebde;
-      --text-muted: #b7785c;
-      --grid-line: rgba(229, 172, 49, 0.08);
-      --card-bg: rgba(42, 51, 56, 0.65);
-      --card-border: rgba(183, 120, 92, 0.3);
-      --glow-color: rgba(229, 172, 49, 0.4);
-      --shadow-color: rgba(0, 0, 0, 0.5);
-    }
-
-    body.light-mode {
-      --bg-color: #edebde;
-      --surface-color: #ffffff;
-      --accent-1: #b7785c;
-      --accent-2: #975a41;
-      --gold: #975a41;
-      --text-main: #121d21;
-      --text-muted: #2a3338;
-      --grid-line: rgba(42, 51, 56, 0.08);
-      --card-bg: rgba(255, 255, 255, 0.75);
-      --card-border: rgba(151, 90, 65, 0.3);
-      --glow-color: rgba(151, 90, 65, 0.3);
-      --shadow-color: rgba(0, 0, 0, 0.1);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      overflow-x: hidden;
-      transition: background-color 0.4s ease, color 0.4s ease;
-      background-image: 
-        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-      background-size: 32px 32px;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* ==========================================
-       INTRO / SPLASH SCREEN
-       ========================================== */
-    #intro-screen {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background-color: #121d21;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 20px;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
-    }
-
-    #intro-screen.hide {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .intro-welcome {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: 6px;
-      color: #e5ac31;
-      margin-bottom: 20px;
-      animation: fadeOutWelcome 2.2s forwards ease-in-out;
-    }
-
-    .intro-logo-box {
-      opacity: 0;
-      animation: fadeInLogo 1.5s 1.8s forwards ease-out;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .intro-logo {
-      max-width: 180px;
-      height: auto;
-      margin-bottom: 15px;
-      filter: drop-shadow(0 0 12px rgba(229, 172, 49, 0.3));
-    }
-
-    .intro-tagline {
-      font-style: italic;
-      color: #edebde;
-      font-size: 1.1rem;
-      max-width: 400px;
-    }
-
-    .skip-btn {
-      position: absolute;
-      bottom: 40px;
-      padding: 10px 24px;
-      border: 1px solid #b7785c;
-      background: rgba(42, 51, 56, 0.8);
-      color: #edebde;
-      border-radius: 30px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
-    }
-
-    .skip-btn:hover {
-      background: #e5ac31;
-      color: #121d21;
-      border-color: #e5ac31;
-      box-shadow: 0 0 15px rgba(229, 172, 49, 0.5);
-    }
-
-    @keyframes fadeOutWelcome {
-      0% { opacity: 0; transform: translateY(10px); }
-      40% { opacity: 1; transform: translateY(0); }
-      70% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-10px); display: none; }
-    }
-
-    @keyframes fadeInLogo {
-      0% { opacity: 0; transform: scale(0.9); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
-    /* ==========================================
-       HEADER & NAVBAR
-       ========================================== */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      background: rgba(18, 29, 33, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--card-border);
-      padding: 15px 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: background 0.4s ease;
-    }
-
-    body.light-mode header {
-      background: rgba(237, 235, 222, 0.85);
-    }
-
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .nav-logo {
-      height: 42px;
-      width: auto;
-      object-fit: contain;
-    }
-
-    .nav-menu {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-      list-style: none;
-    }
-
-    .nav-link {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text-main);
-      transition: color 0.3s ease;
-      position: relative;
-    }
-
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0%;
-      height: 2px;
-      background: var(--gold);
-      transition: width 0.3s ease;
-    }
-
-    .nav-link:hover::after,
-    .nav-link.active::after {
-      width: 100%;
-    }
-
-    .theme-toggle {
-      background: var(--surface-color);
-      border: 1px solid var(--card-border);
-      color: var(--gold);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-    }
-
-    .theme-toggle:hover {
-      transform: rotate(15deg) scale(1.05);
-      box-shadow: 0 0 10px var(--glow-color);
-    }
-
-    /* ==========================================
-       HERO SECTION
-       ========================================== */
-    .hero {
-      min-height: 100vh;
-      padding: 140px 5% 60px 5%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 40px;
-    }
-
-    .hero-content {
-      flex: 1;
-      max-width: 620px;
-    }
-
-    .hero-title {
-      font-size: 2.8rem;
-      font-weight: 800;
-      line-height: 1.2;
-      color: var(--text-main);
-      margin-bottom: 20px;
-      letter-spacing: -0.5px;
-    }
-
-    .hero-title span {
-      color: var(--gold);
-    }
-
-    .hero-desc {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: var(--text-muted);
-      margin-bottom: 35px;
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 14px 28px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .btn-primary {
-      background: var(--gold);
-      color: #121d21;
-      border: 1px solid var(--gold);
-      box-shadow: 0 4px 15px rgba(229, 172, 49, 0.3);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(229, 172, 49, 0.5);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text-main);
-      border: 1px solid var(--card-border);
-    }
-
-    .btn-secondary:hover {
-      background: var(--surface-color);
-      border-color: var(--gold);
-      transform: translateY(-3px);
-    }
-
-    /* 3D Phone Mockup Container */
-    .hero-visual {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      perspective: 1000px;
-    }
-
-    .phone-mockup {
-      width: 280px;
-      height: 560px;
-      background: #000;
-      border-radius: 40px;
-      border: 10px solid #2a3338;
-      box-shadow: 0 25px 50px var(--shadow-color), 0 0 30px var(--glow-color);
-      position: relative;
-      overflow: hidden;
-      transform-style: preserve-3d;
-      transition: transform 0.1s ease-out;
-    }
-
-    .phone-notch {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px;
-      height: 22px;
-      background: #2a3338;
-      border-bottom-left-radius: 14px;
-      border-bottom-right-radius: 14px;
-      z-index: 10;
-    }
-
-    .phone-screen {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #121d21, #2a3338);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      text-align: center;
-      color: #edebde;
-    }
-
-    .phone-gif-placeholder {
-      width: 100%;
-      height: 80%;
-      border-radius: 20px;
-      background: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80') center/cover;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 15px;
-      box-shadow: inset 0 -50px 50px rgba(0,0,0,0.8);
-    }
-
-    .phone-demo-tag {
-      background: rgba(229, 172, 49, 0.9);
-      color: #121d21;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 12px;
-      margin-bottom: 8px;
-      align-self: flex-start;
-    }
-
-    /* ==========================================
-       ABOUT SECTION
-       ========================================== */
-    .section {
-      padding: 100px 5%;
-    }
-
-    .section-title {
-      font-size: 2.2rem;
-      font-weight: 800;
-      text-align: center;
-      margin-bottom: 12px;
-      color: var(--text-main);
-    }
-
-    .section-subtitle {
-      text-align: center;
-      color: var(--accent-2);
-      font-size: 1rem;
-      margin-bottom: 60px;
-    }
-
-    .about-container {
-      display: flex;
-      align-items: center;
-      gap: 60px;
-    }
-
-    .about-visual {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      perspective: 800px;
-    }
-
-    .logo-3d-card {
-      width: 300px;
-      height: 300px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 15px 35px var(--shadow-color);
-      transform-style: preserve-3d;
-      transition: transform 0.1s ease-out;
-      cursor: pointer;
-    }
-
-    .logo-3d-card img {
-      max-width: 180px;
-      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
-      transform: translateZ(40px);
-    }
-
-    .about-text {
-      flex: 1.2;
-      font-size: 1.05rem;
-      line-height: 1.8;
-      color: var(--text-main);
-    }
-
-    .about-text p {
-      margin-bottom: 18px;
-      opacity: 0.9;
-    }
-
-    /* ==========================================
-       SHOWCASE & PRICELIST SECTION (TABS)
-       ========================================== */
-    .tabs-container {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-    }
-
-    .tab-btn {
-      padding: 12px 28px;
-      background: var(--surface-color);
-      border: 1px solid var(--card-border);
-      color: var(--text-main);
-      border-radius: 30px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .tab-btn.active,
-    .tab-btn:hover {
-      background: var(--gold);
-      color: #121d21;
-      border-color: var(--gold);
-      box-shadow: 0 0 15px var(--glow-color);
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-    }
-
-    .service-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 30px;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .service-card:hover {
-      transform: translateY(-8px);
-      border-color: var(--gold);
-      box-shadow: 0 10px 30px var(--glow-color);
-    }
-
-    .card-icon {
-      font-size: 2.2rem;
-      color: var(--gold);
-      margin-bottom: 20px;
-    }
-
-    .card-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .card-price {
-      font-size: 1.1rem;
-      color: var(--accent-2);
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-
-    .btn-detail {
-      width: 100%;
-      padding: 12px;
-      background: transparent;
-      border: 1px solid var(--card-border);
-      color: var(--text-main);
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .service-card:hover .btn-detail {
-      background: var(--gold);
-      color: #121d21;
-      border-color: var(--gold);
-    }
-
-    /* Modal Detail Benefits */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(8px);
-      z-index: 10000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .modal-backdrop.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .modal-content {
-      background: var(--surface-color);
-      border: 1px solid var(--gold);
-      border-radius: 20px;
-      max-width: 500px;
-      width: 100%;
-      padding: 30px;
-      position: relative;
-      color: var(--text-main);
-      transform: scale(0.8);
-      transition: transform 0.3s ease;
-    }
-
-    .modal-backdrop.active .modal-content {
-      transform: scale(1);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: transparent;
-      border: none;
-      color: var(--text-main);
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    .modal-title {
-      font-size: 1.6rem;
-      color: var(--gold);
-      margin-bottom: 10px;
-    }
-
-    .modal-benefits {
-      list-style: none;
-      margin: 20px 0;
-    }
-
-    .modal-benefits li {
-      padding: 8px 0;
-      border-bottom: 1px solid var(--card-border);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .modal-benefits li i {
-      color: var(--gold);
-    }
-
-    /* ==========================================
-       CONTACT & DIRECT MESSAGE SECTION
-       ========================================== */
-    .contact-container {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 50px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 40px;
-      backdrop-filter: blur(10px);
-    }
-
-    .contact-info {
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-    }
-
-    .contact-card {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 16px;
-      background: var(--surface-color);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      transition: border-color 0.3s;
-    }
-
-    .contact-card:hover {
-      border-color: var(--gold);
-    }
-
-    .contact-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 10px;
-      background: var(--gold);
-      color: #121d21;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-    }
-
-    /* Contact Form */
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .form-group label {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text-main);
-    }
-
-    .form-control {
-      padding: 12px 16px;
-      background: var(--surface-color);
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      color: var(--text-main);
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.3s ease;
-    }
-
-    .form-control:focus {
-      border-color: var(--gold);
-    }
-
-    textarea.form-control {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    /* ==========================================
-       FOOTER
-       ========================================== */
-    footer {
-      background: var(--surface-color);
-      border-top: 1px solid var(--card-border);
-      padding: 60px 5% 30px 5%;
-      margin-top: 80px;
-    }
-
-    .footer-content {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 40px;
-      margin-bottom: 40px;
-    }
-
-    .footer-brand h3 {
-      font-size: 1.6rem;
-      color: var(--gold);
-      margin-bottom: 10px;
-    }
-
-    .footer-brand p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    .footer-links h4 {
-      font-size: 1.1rem;
-      margin-bottom: 15px;
-      color: var(--text-main);
-    }
-
-    .footer-links ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .footer-links a {
-      color: var(--text-muted);
-      transition: color 0.3s ease;
-    }
-
-    .footer-links a:hover {
-      color: var(--gold);
-    }
-
-    .footer-bottom {
-      text-align: center;
-      padding-top: 20px;
-      border-top: 1px solid var(--card-border);
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    /* ==========================================
-       RESPONSIVE DESIGN
-       ========================================== */
-    @media (max-width: 992px) {
-      .hero {
-        flex-direction: column;
-        text-align: center;
-        padding-top: 120px;
-      }
-      .hero-content {
-        max-width: 100%;
-      }
-      .hero-cta {
-        justify-content: center;
-      }
-      .about-container {
-        flex-direction: column;
-      }
-      .contact-container {
-        grid-template-columns: 1fr;
-      }
-      .footer-content {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .nav-menu {
-        display: none; /* Can be expanded to mobile drawer */
-      }
-      .hero-title {
-        font-size: 2rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARLENS.ID | Creative Visual & Digital Invitation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-main: #121d21;
+            --bg-card: rgba(42, 51, 56, 0.7);
+            --bg-card-solid: #2a3338;
+            --accent-copper: #975a41;
+            --accent-terracotta: #b7785c;
+            --accent-gold: #e5ac31;
+            --text-cream: #edebde;
+            --text-muted: #a0aab0;
+            --grid-color: rgba(229, 172, 49, 0.05);
+            --border-color: rgba(183, 120, 92, 0.2);
+            --glow-color: rgba(229, 172, 49, 0.35);
+            --shadow-subtle: rgba(0,0,0,0.4);
+        }
+
+        [data-theme="light"] {
+            --bg-main: #edebde;
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --bg-card-solid: #ffffff;
+            --accent-copper: #975a41;
+            --accent-terracotta: #b7785c;
+            --accent-gold: #975a41;
+            --text-cream: #121d21;
+            --text-muted: #4a555a;
+            --grid-color: rgba(18, 29, 33, 0.06);
+            --border-color: rgba(151, 90, 65, 0.25);
+            --glow-color: rgba(183, 120, 92, 0.25);
+            --shadow-subtle: rgba(0,0,0,0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-cream);
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 32px 32px;
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* --- INTRO SCREEN --- */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #121d21;
+            background-image: 
+                linear-gradient(rgba(229, 172, 49, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(229, 172, 49, 0.04) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .intro-welcome {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 6px;
+            color: #e5ac31;
+            opacity: 0;
+            animation: welcomeAnim 2.2s ease forwards;
+        }
+
+        .intro-brand {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: brandAnim 2.5s ease 2s forwards;
+        }
+
+        .intro-logo {
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 15px rgba(229, 172, 49, 0.4));
+        }
+
+        .intro-tagline {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.25rem;
+            color: #edebde;
+            letter-spacing: 1px;
+        }
+
+        .skip-btn {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(42, 51, 56, 0.8);
+            border: 1px solid #b7785c;
+            color: #edebde;
+            padding: 10px 22px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            z-index: 100000;
+        }
+
+        .skip-btn:hover {
+            background: #e5ac31;
+            color: #121d21;
+            border-color: #e5ac31;
+            box-shadow: 0 0 15px rgba(229, 172, 49, 0.5);
+        }
+
+        @keyframes welcomeAnim {
+            0% { opacity: 0; transform: translateY(20px); }
+            40% { opacity: 1; transform: translateY(0); }
+            70% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+
+        @keyframes brandAnim {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- HEADER & NAVBAR --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(18, 29, 33, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="light"] header {
+            background: rgba(237, 235, 222, 0.85);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 12px;
+        }
+
+        .logo-2d {
+            height: 42px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 5px var(--glow-color));
+        }
+
+        .brand-name {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-cream);
+            letter-spacing: 1px;
+        }
+
+        .brand-name span {
+            color: var(--accent-gold);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 28px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-cream);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-gold);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-toggle {
+            background: var(--bg-card-solid);
+            border: 1px solid var(--border-color);
+            color: var(--text-cream);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            transform: rotate(15deg);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 100vh;
+            padding: 140px 8% 80px 8%;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            gap: 40px;
+            perspective: 1000px;
+        }
+
+        .hero-text h1 {
+            font-size: 2.8rem;
+            line-height: 1.2;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--text-cream);
+            letter-spacing: -0.5px;
+        }
+
+        .hero-text h1 span {
+            color: var(--accent-gold);
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-terracotta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 35px;
+            max-width: 620px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-copper), var(--accent-gold));
+            color: #121d21;
+            box-shadow: 0 4px 15px var(--glow-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--glow-color);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-cream);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            transform: translateY(-3px);
+        }
+
+        /* 3D Phone Container */
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .phone-mockup-wrap {
+            width: 280px;
+            height: 540px;
+            background: #1e262a;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 30px var(--glow-color);
+            border: 4px solid #2a3338;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+            position: relative;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: #0f1619;
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px;
+            height: 22px;
+            background: #1e262a;
+            border-radius: 12px;
+            z-index: 10;
+        }
+
+        /* Simulated Digital Invitation Content inside Phone */
+        .invitation-preview {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(18,29,33,0.8), rgba(42,51,56,0.95)), url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80') center/cover;
+            padding: 40px 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+            color: #edebde;
+            box-sizing: border-box;
+        }
+
+        .inv-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: #e5ac31;
+            margin-top: 15px;
+        }
+
+        .inv-names {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+        }
+
+        .inv-date {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: #b7785c;
+            text-transform: uppercase;
+        }
+
+        .inv-badge {
+            background: rgba(229, 172, 49, 0.2);
+            border: 1px solid #e5ac31;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #e5ac31;
+            margin-bottom: 20px;
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            from { box-shadow: 0 0 5px rgba(229, 172, 49, 0.3); }
+            to { box-shadow: 0 0 15px rgba(229, 172, 49, 0.8); }
+        }
+
+        /* --- ABOUT SECTION --- */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-cream);
+            letter-spacing: 1px;
+        }
+
+        .section-title p {
+            color: var(--accent-terracotta);
+            font-size: 0.95rem;
+            margin-top: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .about-section {
+            padding: 100px 8%;
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-3d-logo-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        .logo-3d-box {
+            width: 260px;
+            height: 260px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px var(--shadow-subtle);
+            transform-style: preserve-3d;
+            transition: transform 0.2s ease-out;
+            cursor: pointer;
+        }
+
+        .logo-3d-box img {
+            max-width: 170px;
+            height: auto;
+            transform: translateZ(40px);
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+        }
+
+        .about-content p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.02rem;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        /* --- PRODUCTS & SHOWCASE TABS --- */
+        .products-section {
+            padding: 100px 8%;
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .tab-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 45px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-cream);
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background: var(--accent-copper);
+            color: #ffffff;
+            border-color: var(--accent-copper);
+            box-shadow: 0 4px 15px var(--glow-color);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(8px);
+            transition: all 0.35s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 10px 30px var(--glow-color);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 180px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            background-color: var(--bg-card-solid);
+        }
+
+        .card-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-cream);
+            margin-bottom: 8px;
+        }
+
+        .card-category {
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .card-price {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--accent-terracotta);
+            margin-bottom: 20px;
+        }
+
+        .card-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-cream);
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+
+        .card-btn:hover {
+            background: var(--accent-gold);
+            color: #121d21;
+            border-color: var(--accent-gold);
+        }
+
+        /* --- MODAL DETAIL PAKET --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background: var(--bg-card-solid);
+            border: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 550px;
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-cream);
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        .modal-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            margin-bottom: 5px;
+        }
+
+        .modal-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-terracotta);
+            margin-bottom: 20px;
+        }
+
+        .modal-benefits {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .modal-benefits li {
+            font-size: 0.95rem;
+            color: var(--text-cream);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-benefits li i {
+            color: var(--accent-gold);
+        }
+
+        /* --- CONTACT & MESSAGE SECTION --- */
+        .contact-section {
+            padding: 100px 8%;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 50px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-decoration: none;
+            color: var(--text-cream);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateX(6px);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(229, 172, 49, 0.15);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--accent-gold);
+            font-size: 1.4rem;
+        }
+
+        .contact-details h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .contact-details p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Message Form */
+        .contact-form {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 32px;
+            border-radius: 18px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-cream);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-card-solid);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-cream);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-gold);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--bg-card-solid);
+            border-top: 1px solid var(--border-color);
+            padding: 60px 8% 30px 8%;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-cream);
+            margin-bottom: 12px;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .footer-col h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 18px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-gold);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 25px;
+            text-align: center;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 992px) {
+            .hero, .about-section, .contact-container, .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero {
+                text-align: center;
+                padding-top: 120px;
+            }
+            .hero-text p {
+                margin: 0 auto 30px auto;
+            }
+            .hero-cta {
+                justify-content: center;
+            }
+            nav {
+                display: none; /* simple dynamic hide or wrap for mobile */
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <div id="intro-screen">
-    <div class="intro-welcome">WELCOME TO</div>
-    <div class="intro-logo-box">
-      <img src="https://lh3.googleusercontent.com/d/1z34mnwgFn74_oFYpuCgQn9ifQKTnm2v7" alt="Logo Arlens Intro" class="intro-logo" onerror="this.src='https://via.placeholder.com/180x180/2a3338/e5ac31?text=ARLENS.ID'">
-      <p class="intro-tagline">"Rayakan Setiap Moment Bahagia Bersama Kami"</p>
-    </div>
-    <button class="skip-btn" onclick="skipIntro()"><i class="fa-solid fa-forward me-2"></i> Skip Intro</button>
-  </div>
-
-  <header>
-    <div class="nav-brand">
-      <img src="https://lh3.googleusercontent.com/d/105fMhSHZ8e7VKuVcLDYq5RjXR4Uy0YgF" alt="Logo Arlens 2D" class="nav-logo" onerror="this.src='https://via.placeholder.com/120x40/2a3338/e5ac31?text=ARLENS'">
-    </div>
-    <ul class="nav-menu">
-      <li><a href="#home" class="nav-link active">Home</a></li>
-      <li><a href="#about" class="nav-link">About</a></li>
-      <li><a href="#products" class="nav-link">Products</a></li>
-      <li><a href="#pricelist" class="nav-link">Pricelist</a></li>
-      <li><a href="#contacts" class="nav-link">Contacts</a></li>
-    </ul>
-    <button class="theme-toggle" onclick="toggleTheme()" title="Ubah Mode Layar">
-      <i class="fa-solid fa-moon" id="theme-icon"></i>
-    </button>
-  </header>
-
-  <section class="hero" id="home">
-    <div class="hero-content">
-      <h1 class="hero-title">RAYAKAN SETIAP MOMENT BAHAGIA BERSAMA <span>ARLENS.ID</span></h1>
-      <p class="hero-desc">
-        Abadikan setiap momen berharga Anda menjadi karya seni visual yang natural dan elegan. Melalui layanan Dokumentasi, Photobooth, dan Undangan Digital, kami menghadirkan pengalaman unik yang dirancang penuh presisi untuk merayakan hari spesial Anda.
-      </p>
-      <div class="hero-cta">
-        <a href="#products" class="btn btn-primary"><i class="fa-solid fa-camera"></i> Lihat Layanan Kami</a>
-        <a href="#contacts" class="btn btn-secondary"><i class="fa-brands fa-whatsapp"></i> Hubungi ARLENS.ID Sekarang</a>
-      </div>
-    </div>
-
-    <div class="hero-visual">
-      <div class="phone-mockup" id="phoneMockup">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="phone-gif-placeholder">
-            <span class="phone-demo-tag"><i class="fa-solid fa-heart"></i> Undangan Digital</span>
-            <p style="font-weight:700; font-size:0.9rem;">Sarah & Dimas</p>
-            <p style="font-size:0.75rem; opacity:0.8;">Save The Date • 12.12.2026</p>
-          </div>
+    <div id="intro-overlay">
+        <div class="intro-welcome">WELCOME TO</div>
+        <div class="intro-brand">
+            <img src="https://lh3.googleusercontent.com/d/1z34mnwgFn74_oFYpuCgQn9ifQKTnm2v7" alt="Logo Arlens" class="intro-logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x100/121d21/e5ac31?text=ARLENS.ID';">
+            <p class="intro-tagline">"Rayakan Setiap Moment Bahagia Bersama Kami"</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="about">
-    <h2 class="section-title">Tentang Kami</h2>
-    <p class="section-subtitle">Kisah Kreatif Dibalik Lensa ARLENS.ID</p>
-
-    <div class="about-container">
-      <div class="about-visual">
-        <div class="logo-3d-card" id="logo3DCard">
-          <img src="https://lh3.googleusercontent.com/d/1z34mnwgFn74_oFYpuCgQn9ifQKTnm2v7" alt="Logo 3D Arlens" onerror="this.src='https://via.placeholder.com/180x180/2a3338/e5ac31?text=ARLENS+3D'">
-        </div>
-      </div>
-
-      <div class="about-text">
-        <p>
-          Setiap acara memiliki ceritanya sendiri, dan kami di <strong>ARLENS.ID</strong> percaya bahwa momen terbaik layak dikenang selamanya. Kami adalah tim kreatif profesional yang berdedikasi untuk menangkap emosi, tawa, dan kehangatan di setiap perayaan Anda.
-        </p>
-        <p>
-          Berawal dari kecintaan pada seni visual, ARLENS.ID kini telah dipercaya untuk menangani berbagai acara mulai dari pernikahan, lamaran, ulang tahun, hingga acara perusahaan. Pendekatan kami tidak hanya sekadar memotret, tetapi juga menceritakan kisah Anda melalui bingkai foto dan video yang jujur, estetik, dan tak lekang oleh waktu.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="products">
-    <h2 class="section-title">Layanan & Paket Harga</h2>
-    <p class="section-subtitle">Pilih Layanan Terbaik Sesuai Kebutuhan Acara Anda</p>
-
-    <div class="tabs-container" id="pricelist">
-      <button class="tab-btn active" onclick="switchTab('dokumentasi')"><i class="fa-solid fa-video"></i> Dokumentasi</button>
-      <button class="tab-btn" onclick="switchTab('photobooth')"><i class="fa-solid fa-camera-retro"></i> Photobooth</button>
-      <button class="tab-btn" onclick="switchTab('undangan')"><i class="fa-solid fa-envelope-open-text"></i> Undangan Digital</button>
+        <button class="skip-btn" onclick="closeIntro()">Skip Intro <i class="fa-solid fa-forward"></i></button>
     </div>
 
-    <div class="services-grid" id="servicesGrid">
-      </div>
-  </section>
-
-  <section class="section" id="contacts">
-    <h2 class="section-title">Hubungi Kami</h2>
-    <p class="section-subtitle">Mari Diskusikan Konsep Acara Impian Anda Bersama ARLENS.ID</p>
-
-    <div class="contact-container">
-      <div class="contact-info">
-        <h3>Informasi Kontak</h3>
-        <p style="color: var(--text-muted);">Klik tombol di bawah ini untuk terhubung langsung secara instan.</p>
-
-        <a href="https://wa.me/6285604613503" target="_blank" class="contact-card">
-          <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
-          <div>
-            <strong>WhatsApp Official</strong>
-            <p style="font-size:0.85rem; color:var(--text-muted);">+62 856-0461-3503</p>
-          </div>
+    <header>
+        <a href="#home" class="logo-container">
+            <img src="https://lh3.googleusercontent.com/d/105fMhSHZ8e7VKuVcLDYq5RjXR4Uy0YgF" alt="ARLENS 2D Logo" class="logo-2d" onerror="this.onerror=null; this.src='https://via.placeholder.com/40/e5ac31/121d21?text=A';">
+            <span class="brand-name">ARLENS<span>.ID</span></span>
         </a>
 
-        <a href="mailto:arlens.photobooth@gmail.com" class="contact-card">
-          <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
-          <div>
-            <strong>Email Support</strong>
-            <p style="font-size:0.85rem; color:var(--text-muted);">arlens.photobooth@gmail.com</p>
-          </div>
-        </a>
-      </div>
+        <nav>
+            <ul>
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#pricelist">Pricelist</a></li>
+                <li><a href="#contacts">Contacts</a></li>
+            </ul>
+        </nav>
 
-      <form class="contact-form" onsubmit="sendToWhatsApp(event)">
-        <h3>Kirim Pesan & Penawaran</h3>
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggleBtn" title="Ganti Mode Tema">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+    </header>
 
-        <div class="form-group">
-          <label for="nama">Nama Lengkap</label>
-          <input type="text" id="nama" class="form-control" placeholder="Masukkan nama Anda" required>
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <h1>RAYAKAN SETIAP MOMENT BAHAGIA BERSAMA <span>ARLENS.ID</span></h1>
+            <p>
+                Abadikan setiap momen berharga Anda menjadi karya seni visual yang natural dan elegan. Melalui layanan Dokumentasi, Photobooth, dan Undangan Digital, kami menghadirkan pengalaman unik yang dirancang penuh presisi untuk merayakan hari spesial Anda.
+            </p>
+            <div class="hero-cta">
+                <a href="#products" class="btn btn-primary"><i class="fa-solid fa-camera"></i> Lihat Layanan Kami</a>
+                <a href="https://wa.me/6285604613503" target="_blank" class="btn btn-secondary"><i class="fa-brands fa-whatsapp"></i> Hubungi ARLENS.ID Sekarang</a>
+            </div>
         </div>
 
-        <div class="form-group">
-          <label for="alamat">Alamat / Lokasi Acara</label>
-          <input type="text" id="alamat" class="form-control" placeholder="Kota / Alamat lokasi" required>
+        <div class="hero-visual" id="heroVisual">
+            <div class="phone-mockup-wrap" id="phone3d">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <div class="invitation-preview">
+                        <div class="inv-title">Undangan Digital</div>
+                        <div>
+                            <div class="inv-names">Romeo & Juliet</div>
+                            <div class="inv-date">26 . 12 . 2026</div>
+                        </div>
+                        <div class="inv-badge"><i class="fa-solid fa-envelope-open-text"></i> Live Preview GIF</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="about-3d-logo-wrap">
+            <div class="logo-3d-box" id="logo3d">
+                <img src="https://lh3.googleusercontent.com/d/1z34mnwgFn74_oFYpuCgQn9ifQKTnm2v7" alt="Logo Arlens 3D" onerror="this.onerror=null; this.src='https://via.placeholder.com/170/2a3338/e5ac31?text=ARLENS+3D';">
+            </div>
         </div>
 
-        <div class="form-group">
-          <label for="paket">Pilihan Paket Layanan</label>
-          <select id="paket" class="form-control" required>
-            <option value="" disabled selected>-- Pilih Paket --</option>
-            <optgroup label="Dokumentasi">
-              <option value="Dokumentasi - Premium">Dokumentasi - Premium</option>
-              <option value="Dokumentasi - Eksklusif">Dokumentasi - Eksklusif</option>
-              <option value="Dokumentasi - Ultimate">Dokumentasi - Ultimate</option>
-            </optgroup>
-            <optgroup label="Photobooth">
-              <option value="Photobooth - QR">Photobooth QR</option>
-              <option value="Photobooth - Print Limited">Photobooth Print Limited</option>
-              <option value="Photobooth - Unlimited Print">Photobooth Unlimited Print</option>
-            </optgroup>
-            <optgroup label="Undangan Digital">
-              <option value="Undangan - Silver">Undangan Silver</option>
-              <option value="Undangan - Gold">Undangan Gold</option>
-              <option value="Undangan - Diamond">Undangan Diamond</option>
-              <option value="Undangan - Ultimate">Undangan Ultimate</option>
-            </optgroup>
-            <option value="Other / Lainnya">Other / Consultation</option>
-          </select>
+        <div class="about-content">
+            <div class="section-title" style="text-align: left; margin-bottom: 25px;">
+                <p>Mengenal Kami</p>
+                <h2>Tentang ARLENS.ID</h2>
+            </div>
+            <p>
+                Setiap acara memiliki ceritanya sendiri, dan kami di ARLENS.ID percaya bahwa momen terbaik layak dikenang selamanya. Kami adalah tim kreatif profesional yang berdedikasi untuk menangkap emosi, tawa, dan kehangatan di setiap perayaan Anda.
+            </p>
+            <p>
+                Berawal dari kecintaan pada seni visual, ARLENS.ID kini telah dipercaya untuk menangani berbagai acara mulai dari pernikahan, lamaran, ulang tahun, hingga acara perusahaan. Pendekatan kami tidak hanya sekadar memotret, tetapi juga menceritakan kisah Anda melalui bingkai foto dan video yang jujur, estetik, dan tak lekang oleh waktu.
+            </p>
+        </div>
+    </section>
+
+    <section class="products-section" id="products">
+        <div class="section-title">
+            <p>Pilihan Paket Terbaik</p>
+            <h2 id="pricelist">Layanan & Price List</h2>
         </div>
 
-        <div class="form-group">
-          <label for="pesan">Tujuan Pesan / Detail Catatan</label>
-          <textarea id="pesan" class="form-control" placeholder="Tuliskan tanggal acara atau pertanyaan Anda..." required></textarea>
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="switchTab('dokumentasi', this)">Dokumentasi</button>
+            <button class="tab-btn" onclick="switchTab('photobooth', this)">Photobooth</button>
+            <button class="tab-btn" onclick="switchTab('undangan', this)">Undangan Digital</button>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="justify-content: center;"><i class="fa-brands fa-whatsapp"></i> Kirim Langsung ke WhatsApp</button>
-      </form>
+        <div class="cards-grid" id="cardsGrid">
+            </div>
+    </section>
+
+    <section class="contact-section" id="contacts">
+        <div class="section-title">
+            <p>Mari Berkolaborasi</p>
+            <h2>Hubungi Kami</h2>
+        </div>
+
+        <div class="contact-container">
+            <div class="contact-info">
+                <a href="https://wa.me/6285604613503" target="_blank" class="contact-card">
+                    <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                    <div class="contact-details">
+                        <h4>WhatsApp Direct</h4>
+                        <p>+62 856-0461-3503</p>
+                    </div>
+                </a>
+
+                <a href="mailto:arlens.photobooth@gmail.com" class="contact-card">
+                    <div class="contact-icon"><i class="fa-regular fa-envelope"></i></div>
+                    <div class="contact-details">
+                        <h4>Email Support</h4>
+                        <p>arlens.photobooth@gmail.com</p>
+                    </div>
+                </a>
+
+                <div class="contact-card" style="cursor: default;">
+                    <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="contact-details">
+                        <h4>Lokasi Utama</h4>
+                        <p>Base in Jombang, Jawa Timur</p>
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form" id="contactForm" onsubmit="sendToWhatsApp(event)">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" class="form-control" placeholder="Masukkan nama Anda" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="alamat">Alamat / Kota</label>
+                    <input type="text" id="alamat" class="form-control" placeholder="Contoh: Jombang, Jawa Timur" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pilihanPaket">Pilihan Paket / Layanan</label>
+                    <select id="pilihanPaket" class="form-control" required>
+                        <option value="Dokumentasi">Dokumentasi</option>
+                        <option value="Photobooth">Photobooth</option>
+                        <option value="Undangan Digital">Undangan Digital</option>
+                        <option value="Other">Other (Saran / Kerjasama / Pertanyaan)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="pesan">Tujuan Pesan / Isi Pesan</label>
+                    <textarea id="pesan" class="form-control" placeholder="Tuliskan pesan, saran, atau ajakan kerja sama Anda di sini..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="fa-brands fa-whatsapp"></i> Kirim Pesan ke WhatsApp</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>ARLENS.ID</h3>
+                <p>Abadikan setiap momen berharga Anda menjadi karya seni visual yang natural, estetik, dan tak lekang oleh waktu.</p>
+                <p style="margin-top: 12px; color: var(--accent-gold); font-weight: 600;">Base in Jombang, Jawa Timur</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Menu Navigasi</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#pricelist">Pricelist</a></li>
+                    <li><a href="#contacts">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Layanan Kami</h4>
+                <ul>
+                    <li><a href="#products" onclick="switchTab('dokumentasi')">Dokumentasi</a></li>
+                    <li><a href="#products" onclick="switchTab('photobooth')">Photobooth</a></li>
+                    <li><a href="#products" onclick="switchTab('undangan')">Undangan Digital</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 ARLENS.ID. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="packageModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-title" id="modalTitle">Nama Paket</div>
+            <div class="modal-price" id="modalPrice">Harga Paket</div>
+            <ul class="modal-benefits" id="modalBenefits">
+                </ul>
+            <a href="https://wa.me/6285604613503" target="_blank" class="btn btn-primary" style="width: 100%; text-align: center;">Pesan Paket Ini Sekarang</a>
+        </div>
     </div>
-  </section>
 
-  <div class="modal-backdrop" id="benefitModal">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeModal()">&times;</button>
-      <h3 class="modal-title" id="modalTitle">Nama Paket</h3>
-      <p id="modalPrice" style="color:var(--accent-2); font-weight:700;"></p>
-      <ul class="modal-benefits" id="modalBenefits">
-        </ul>
-      <a href="#contacts" onclick="closeModal()" class="btn btn-primary" style="width:100%; justify-content:center;">Pesan Paket Ini</a>
-    </div>
-  </div>
-
-  <footer>
-    <div class="footer-content">
-      <div class="footer-brand">
-        <h3>ARLENS.ID</h3>
-        <p>Base in Jombang, Jawa Timur</p>
-        <p style="margin-top:10px; font-size:0.85rem;">Abadikan Momen Berharga Anda Bersama Kami.</p>
-      </div>
-
-      <div class="footer-links">
-        <h4>Navigasi</h4>
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#products">Products</a></li>
-          <li><a href="#pricelist">Pricelist</a></li>
-          <li><a href="#contacts">Contact</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-links">
-        <h4>Layanan Jasa</h4>
-        <ul>
-          <li><a href="#products" onclick="switchTab('dokumentasi')">Dokumentasi</a></li>
-          <li><a href="#products" onclick="switchTab('photobooth')">Photobooth</a></li>
-          <li><a href="#products" onclick="switchTab('undangan')">Undangan Digital</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p>&copy; 2026 ARLENS.ID. All Rights Reserved.</p>
-    </div>
-  </footer>
-
-  <script>
-    /* ------------------------------------------
-       1. INTRO SCREEN & AUTOMATIC HIDE
-       ------------------------------------------ */
-    function skipIntro() {
-      const intro = document.getElementById('intro-screen');
-      intro.classList.add('hide');
-    }
-
-    // Auto skip after 4.5 seconds
-    setTimeout(() => {
-      skipIntro();
-    }, 4500);
-
-    /* ------------------------------------------
-       2. DARK MODE / LIGHT MODE TOGGLE
-       ------------------------------------------ */
-    function toggleTheme() {
-      document.body.classList.toggle('light-mode');
-      const icon = document.getElementById('theme-icon');
-      if (document.body.classList.contains('light-mode')) {
-        icon.className = 'fa-solid fa-sun';
-      } else {
-        icon.className = 'fa-solid fa-moon';
-      }
-    }
-
-    /* ------------------------------------------
-       3. 3D TILT EFFECT ON MOUSEMOVE
-       ------------------------------------------ */
-    // Phone Mockup 3D Tilt
-    const phone = document.getElementById('phoneMockup');
-    document.addEventListener('mousemove', (e) => {
-      const { innerWidth, innerHeight } = window;
-      const x = (e.clientX - innerWidth / 2) / 35;
-      const y = (e.clientY - innerHeight / 2) / 35;
-      if (phone) {
-        phone.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
-      }
-    });
-
-    // Logo 3D Card Tilt
-    const logoCard = document.getElementById('logo3DCard');
-    if (logoCard) {
-      logoCard.addEventListener('mousemove', (e) => {
-        const rect = logoCard.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        logoCard.style.transform = `rotateY(${x / 8}deg) rotateX(${-y / 8}deg)`;
-      });
-
-      logoCard.addEventListener('mouseleave', () => {
-        logoCard.style.transform = `rotateY(0deg) rotateX(0deg)`;
-      });
-    }
-
-    /* ------------------------------------------
-       4. SHOWCASE DATA & TABS
-       ------------------------------------------ */
-    const packageData = {
-      dokumentasi: [
-        {
-          name: "Premium Package",
-          price: "Harga Disesuaikan",
-          icon: "fa-solid fa-camera",
-          benefits: [
-            "1 Photographer Professional",
-            "Full Day Coverage (max 8 jam)",
-            "All Edited Photos (Google Drive Link)",
-            "1 Album Cetak 20 Halaman"
-          ]
-        },
-        {
-          name: "Eksklusif Package",
-          price: "Harga Disesuaikan",
-          icon: "fa-solid fa-video",
-          benefits: [
-            "2 Photographers & 1 Videographer",
-            "Cinematic Highlight Video (3-5 Menit)",
-            "All High-Res Edited Files",
-            "1 Exclusive Box Album + Flashdisk 32GB"
-          ]
-        },
-        {
-          name: "Ultimate Package",
-          price: "Harga Disesuaikan",
-          icon: "fa-solid fa-crown",
-          benefits: [
-            "Full Team (Photographers, Videographers & Drone)",
-            "Teaser Video 60 Detik (Instagram/TikTok)",
-            "Cinematic Movie Length (15-20 Menit)",
-            "2 Album Deluxe + Canvas Print Frame"
-          ]
+    <script>
+        // 1. AUTO CLOSE INTRO / SKIP INTRO
+        const introOverlay = document.getElementById('intro-overlay');
+        function closeIntro() {
+            introOverlay.style.opacity = '0';
+            introOverlay.style.visibility = 'hidden';
         }
-      ],
-      photobooth: [
-        {
-          name: "Photobooth QR",
-          price: "Hitungan Jam / Non-Print",
-          icon: "fa-solid fa-qrcode",
-          benefits: [
-            "High-Speed QR Softcopy Download",
-            "Unlimited Digital Shots (Sesuai Durasi Jam)",
-            "Custom Frame Overlay Branding",
-            "Professional Studio Lighting & Crew"
-          ]
-        },
-        {
-          name: "Photobooth Print Limited",
-          price: "Hitungan Jam + Kuota Lembar",
-          icon: "fa-solid fa-print",
-          benefits: [
-            "Cetak Foto Instant High Quality (Limited Lembar)",
-            "Pilihan Durasi Jam Opsional",
-            "Props & Aksesoris Lucu Lengkap",
-            "Free File Softcopy via QR / Drive"
-          ]
-        },
-        {
-          name: "Photobooth Unlimited Print",
-          price: "Hitungan Jam Unlimited Cetak",
-          icon: "fa-solid fa-infinity",
-          benefits: [
-            "Cetak Foto Sepuasnya Tanpa Batas (Sesuai Jam)",
-            "Fast Thermal Photo Printer",
-            "Custom Frame Layout Sesuai Tema Acara",
-            "1 Fun Crew + 1 Photographer Standby"
-          ]
+        // Auto close after 5 seconds if not skipped
+        setTimeout(() => {
+            closeIntro();
+        }, 5000);
+
+        // 2. DARK MODE & LIGHT MODE TOGGLE
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const htmlElement = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlElement.setAttribute('data-theme', newTheme);
+            themeToggleBtn.innerHTML = newTheme === 'dark' 
+                ? '<i class="fa-solid fa-moon"></i>' 
+                : '<i class="fa-solid fa-sun"></i>';
+        });
+
+        // 3. 3D INTERACTIVE HERO PHONE MOCKUP
+        const heroVisual = document.getElementById('heroVisual');
+        const phone3d = document.getElementById('phone3d');
+
+        heroVisual.addEventListener('mousemove', (e) => {
+            const rect = heroVisual.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            const rotateX = (-y / rect.height) * 30;
+            const rotateY = (x / rect.width) * 30;
+
+            phone3d.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        heroVisual.addEventListener('mouseleave', () => {
+            phone3d.style.transform = `rotateX(0deg) rotateY(0deg)`;
+        });
+
+        // 4. 3D INTERACTIVE ABOUT LOGO
+        const logo3d = document.getElementById('logo3d');
+        const aboutWrap = document.querySelector('.about-3d-logo-wrap');
+
+        aboutWrap.addEventListener('mousemove', (e) => {
+            const rect = aboutWrap.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            logo3d.style.transform = `rotateX(${(-y/rect.height)*35}deg) rotateY(${(x/rect.width)*35}deg)`;
+        });
+
+        aboutWrap.addEventListener('mouseleave', () => {
+            logo3d.style.transform = `rotateX(0deg) rotateY(0deg)`;
+        });
+
+        // 5. DATA PAKET & SHOWCASE DATA
+        const packageData = {
+            dokumentasi: [
+                {
+                    name: 'Premium',
+                    price: 'Sesuai Kebutuhan',
+                    img: 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        '1 Photographer Utama',
+                        'Cakupan Acara hingga 4 Jam',
+                        'Unlimited Photos Softcopy',
+                        'Editing Foto Pilihan (50 Foto)',
+                        'Flashdisk 16GB Exclusive Box'
+                    ]
+                },
+                {
+                    name: 'Ekslusif',
+                    price: 'Sesuai Kebutuhan',
+                    img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        '2 Photographers + 1 Videographer',
+                        'Cakupan Acara Full Day (s.d. 8 Jam)',
+                        'Cinematic Highlight Video (2-3 Menit)',
+                        '1 Cetak Album Magnetic 20 Hal',
+                        'Editing All Best Photos',
+                        'Flashdisk 32GB Exclusive Box'
+                    ]
+                },
+                {
+                    name: 'Ultimate',
+                    price: 'Sesuai Kebutuhan',
+                    img: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Full Team (3 Photo + 2 Video + Drone operator)',
+                        'Cakupan Acara Multiday / Unlimited',
+                        'Cinematic Video Teaser (1 Min) & Full Movie',
+                        '2 Custom Hardcover Magazine Album',
+                        'Cetak Bingkai Frameless 40x60cm',
+                        'Semua File HD via Google Drive & USB'
+                    ]
+                }
+            ],
+            photobooth: [
+                {
+                    name: 'Photobooth QR',
+                    price: 'Disesuaikan Jam Ops.',
+                    img: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Sistem Softcopy Instant QR Code Dynamic',
+                        'Pilihan Frame Overlay Custom Logo/Event',
+                        'Lighting Professional Studio Set',
+                        'Fun Fun Props & Aksesoris Foto',
+                        '1 Operator & 1 Photographer'
+                    ]
+                },
+                {
+                    name: 'Photobooth Print Limited',
+                    price: 'Disesuaikan Jam & Kertas Print',
+                    img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Cetak Cepat High Quality Thermal Printer',
+                        'Kuota Cetak Sesuai Pilihan (100 / 200 / 300 lembar)',
+                        'Free Custom Frame Layout & Overlay',
+                        'Lighting Studio & Props Lengkap',
+                        'Softcopy Scan QR Code untuk Tamu'
+                    ]
+                },
+                {
+                    name: 'Photobooth Unlimited Print',
+                    price: 'Disesuaikan Durasi Jam',
+                    img: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Cetak Cetak Sepuasnya (Unlimited) Dalam Durasi Jam',
+                        'High Speed Thermal Photo Printer',
+                        'Custom Border Design Bertema Event',
+                        'Operator & Photographer Ramah',
+                        'File Digital All High-Res via Cloud'
+                    ]
+                }
+            ],
+            undangan: [
+                {
+                    name: 'Silver',
+                    price: 'Sesuai Kebutuhan',
+                    img: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Tampilan Responsive Mobile-Friendly',
+                        'Hitung Mundur / Countdown Acara',
+                        'Navigasi Lokasi Google Maps Direct',
+                        'Fitur RSVP & Ucapan Tamu',
+                        'Masa Aktif Undangan 6 Bulan'
+                    ]
+                },
+                {
+                    name: 'Gold',
+                    price: 'Sesuai Kebutuhan',
+                    img: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Semua Fitur Paket Silver',
+                        'Galeri Foto (Up to 10 Foto)',
+                        'Integrasi Background Music / Audio Player',
+                        'Fitur Amplop Digital / Rekening / QRIS',
+                        'Kirim Nama Tamu Tanpa Batas (Nama Tamu kustom)'
+                    ]
+                },
+                {
+                    name: 'Diamond',
+                    price: 'Sesuai Kebutuhan',
+                    img: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Semua Fitur Paket Gold',
+                        'Fitur Video Prewedding Embed',
+                        'Love Story Timeline Section',
+                        'Filter Instagram Custom Frame Event',
+                        'Pengingat Kalender Google / Apple'
+                    ]
+                },
+                {
+                    name: 'Ultimate',
+                    price: 'Sesuai Kebutuhan',
+                    img: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80',
+                    benefits: [
+                        'Desain Custom Exclusively Sesuai Wish Request',
+                        'Sistem QR Code Check-in Tamu di Lokasi (Buku Tamu Digital)',
+                        'Domain Kustom Web (.com / .id)',
+                        'Masa Aktif Undangan Selamanya / 1 Tahun+',
+                        'Prioritas Support & Revision'
+                    ]
+                }
+            ]
+        };
+
+        const cardsGrid = document.getElementById('cardsGrid');
+
+        function renderTabContent(category) {
+            cardsGrid.innerHTML = '';
+            const items = packageData[category];
+
+            items.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}" class="card-img">
+                    <div class="card-category">${category.toUpperCase()}</div>
+                    <div class="card-title">${item.name}</div>
+                    <div class="card-price">${item.price}</div>
+                    <button class="card-btn" onclick="openModal('${category}', ${index})">
+                        View Details for Benefit <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                `;
+                cardsGrid.appendChild(card);
+            });
         }
-      ],
-      undangan: [
-        {
-          name: "Silver Package",
-          price: "Harga Disesuaikan",
-          icon: "fa-regular fa-paper-plane",
-          benefits: [
-            "Desain Responsive Mobile & Desktop",
-            "Hitung Mundur (Countdown Timer)",
-            "Navigasi Peta Lokasi (Google Maps)",
-            "Masa Aktif 3 Bulan"
-          ]
-        },
-        {
-          name: "Gold Package",
-          price: "Harga Disesuaikan",
-          icon: "fa-solid fa-gem",
-          benefits: [
-            "Semua Fitur Paket Silver",
-            "Background Music / Backsound Custom",
-            "Galeri Foto (max 10 Foto)",
-            "Form Konfirmasi RSVP via WhatsApp"
-          ]
-        },
-        {
-          name: "Diamond Package",
-          price: "Harga Disesuaikan",
-          icon: "fa-solid fa-star",
-          benefits: [
-            "Semua Fitur Paket Gold",
-            "Galeri Video & Story Timeline",
-            "Fitur Angpao Digital / Rekening Hadiah",
-            "Fitur Ucapan & Doa Real-time"
-          ]
-        },
-        {
-          name: "Ultimate Package",
-          price: "Harga Disesuaikan",
-          icon: "fa-solid fa-wand-magic-sparkles",
-          benefits: [
-            "Fitur Custom Desain Bebas / Tanpa Template",
-            "Fitur QR Code Scanner Tamu Undangan",
-            "Masa Aktif Aktif Selamanya",
-            "Prioritas Revisi & Fast Support"
-          ]
+
+        function switchTab(category, btnElement) {
+            if (btnElement) {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btnElement.classList.add('active');
+            }
+            renderTabContent(category);
         }
-      ]
-    };
 
-    function switchTab(category) {
-      // Update Tab Active UI
-      const buttons = document.querySelectorAll('.tab-btn');
-      buttons.forEach(btn => btn.classList.remove('active'));
-      event.currentTarget?.classList.add('active');
+        // Initialize First Tab
+        renderTabContent('dokumentasi');
 
-      const grid = document.getElementById('servicesGrid');
-      grid.innerHTML = '';
+        // 6. MODAL FUNCTIONS
+        const modalOverlay = document.getElementById('packageModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalBenefits = document.getElementById('modalBenefits');
 
-      const items = packageData[category] || [];
-      items.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'service-card';
-        card.innerHTML = `
-          <div>
-            <div class="card-icon"><i class="${item.icon}"></i></div>
-            <h3 class="card-title">${item.name}</h3>
-            <p class="card-price">${item.price}</p>
-          </div>
-          <button class="btn-detail" onclick="openModal('${item.name}', '${item.price}', ${JSON.stringify(item.benefits).replace(/"/g, '&quot;')})">
-            View Details for benefit
-          </button>
-        `;
-        grid.appendChild(card);
-      });
-    }
+        function openModal(category, index) {
+            const data = packageData[category][index];
+            modalTitle.innerText = `Paket ${data.name}`;
+            modalPrice.innerText = `Estimasi Harga: ${data.price}`;
 
-    // Initialize Default Tab
-    document.addEventListener('DOMContentLoaded', () => {
-      switchTab('dokumentasi');
-    });
+            modalBenefits.innerHTML = '';
+            data.benefits.forEach(benefit => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${benefit}`;
+                modalBenefits.appendChild(li);
+            });
 
-    /* ------------------------------------------
-       5. MODAL DETAIL BENEFIT
-       ------------------------------------------ */
-    function openModal(title, price, benefits) {
-      document.getElementById('modalTitle').innerText = title;
-      document.getElementById('modalPrice').innerText = price;
-      
-      const listContainer = document.getElementById('modalBenefits');
-      listContainer.innerHTML = '';
-      
-      benefits.forEach(b => {
-        const li = document.createElement('li');
-        li.innerHTML = `<i class="fa-solid fa-check"></i> ${b}`;
-        listContainer.appendChild(li);
-      });
+            modalOverlay.classList.add('active');
+        }
 
-      document.getElementById('benefitModal').classList.add('active');
-    }
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+        }
 
-    function closeModal() {
-      document.getElementById('benefitModal').classList.remove('active');
-    }
+        // 7. WHATSAPP FORM SUBMISSION
+        function sendToWhatsApp(e) {
+            e.preventDefault();
+            const nama = document.getElementById('nama').value;
+            const alamat = document.getElementById('alamat').value;
+            const pilihanPaket = document.getElementById('pilihanPaket').value;
+            const pesan = document.getElementById('pesan').value;
 
-    /* ------------------------------------------
-       6. DIRECT WHATSAPP MESSAGE FORMATTER
-       ------------------------------------------ */
-    function sendToWhatsApp(event) {
-      event.preventDefault();
-      
-      const nama = document.getElementById('nama').value;
-      const alamat = document.getElementById('alamat').value;
-      const paket = document.getElementById('paket').value;
-      const pesan = document.getElementById('pesan').value;
+            const whatsappNumber = '6285604613503';
+            
+            const formattedText = `Halo ARLENS.ID,%0A%0ASaya ingin mengajukan pertanyaan / pemesanan dengan detail berikut:%0A- *Nama*: ${encodeURIComponent(nama)}%0A- *Alamat*: ${encodeURIComponent(alamat)}%0A- *Pilihan Paket*: ${encodeURIComponent(pilihanPaket)}%0A- *Isi Pesan*: ${encodeURIComponent(pesan)}%0A%0AMohon info lebih lanjut. Terima kasih!`;
 
-      const phoneNumber = "6285604613503";
-
-      const formattedText = `Halo ARLENS.ID, saya ingin bertanya / memesan layanan:%0A%0A` +
-        `*Nama:* ${encodeURIComponent(nama)}%0A` +
-        `*Alamat/Lokasi:* ${encodeURIComponent(alamat)}%0A` +
-        `*Pilihan Paket:* ${encodeURIComponent(paket)}%0A` +
-        `*Isi Pesan:* ${encodeURIComponent(pesan)}`;
-
-      window.open(`https://wa.me/${phoneNumber}?text=${formattedText}`, '_blank');
-    }
-  </script>
+            window.open(`https://wa.me/${whatsappNumber}?text=${formattedText}`, '_blank');
+        }
+    </script>
 </body>
 </html>

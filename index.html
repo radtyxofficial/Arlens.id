@@ -726,7 +726,7 @@
             footer { padding: 50px 5% 30px 5%; }
         }
 
-        /* --- MODAL DETAIL PAKET --- */
+        /* --- MODAL DETAIL PAKET & STYLING JARAK CATATAN --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(6px);
@@ -750,8 +750,29 @@
         }
         .modal-title { font-size: 1.4rem; font-weight: 800; color: var(--accent-gold); margin-bottom: 5px; }
         .modal-price { font-size: 1.1rem; font-weight: 700; color: var(--accent-terracotta); margin-bottom: 20px; }
-        .modal-benefits li { font-size: 0.9rem; color: var(--text-cream); margin-bottom: 10px; display: flex; gap: 10px; }
+        
+        .modal-benefits { list-style: none; }
+        .modal-benefits li { 
+            font-size: 0.9rem; 
+            color: var(--text-cream); 
+            margin-bottom: 10px; 
+            display: flex; 
+            gap: 10px; 
+        }
         .modal-benefits li i { color: var(--accent-gold); flex-shrink: 0; margin-top: 3px; }
+
+        /* Styling Khusus untuk Catatan/Note agar ada jarak jelas */
+        .modal-benefits li.note-item {
+            margin-top: 18px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border-color);
+            font-size: 0.85rem;
+            color: var(--accent-terracotta);
+            font-weight: 600;
+        }
+        .modal-benefits li.note-item i {
+            color: var(--accent-terracotta);
+        }
     </style>
 </head>
 <body>
@@ -1049,33 +1070,38 @@
             aboutWrap.addEventListener('mouseleave', () => logo3d.style.transform = `rotateX(0deg) rotateY(0deg)`);
         }
 
-        // 5. DATA PAKET & SHOWCASE DATA (DIPERBARUI DENGAN PRICELIST PHOTOBOOTH TERBARU)
+        // 5. DATA PAKET & SHOWCASE DATA (DIPERBARUI DENGAN JARAK CATATAN KHUSUS)
         const packageData = {
             dokumentasi: [
                 {
                     name: 'PREMIUM', price: 'Rp. 400.000,00',
                     img: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=600&q=80',
-                    benefits: ['All file original', '30 File Edit (Retouch)', '4 Jam kerja']
+                    benefits: ['All file original', '30 File Edit (Retouch)', '4 Jam kerja'],
+                    notes: []
                 },
                 {
                     name: 'EKSLUSIF', price: 'Rp. 500.000,00',
                     img: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80',
-                    benefits: ['All file foto edit (color correction)', '25 File Edit (Retouch)', '4 Jam kerja (Max)']
+                    benefits: ['All file foto edit (color correction)', '25 File Edit (Retouch)', '4 Jam kerja (Max)'],
+                    notes: []
                 },
                 {
                     name: 'ULTIMATE', price: 'Rp. 600.000,00',
                     img: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80',
-                    benefits: ['All file foto edit (color correction)', '30 File Edit (Retouch)', '10 Jam kerja (Max)']
+                    benefits: ['All file foto edit (color correction)', '30 File Edit (Retouch)', '10 Jam kerja (Max)'],
+                    notes: []
                 },
                 {
                     name: 'Flash Disk (Add-on)', price: 'Rp. 120.000,00',
                     img: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&q=80',
-                    benefits: ['Flash Disk Custom', 'Isi: Foto Frame + File Original', 'Desain Eksklusif ARLENS.ID']
+                    benefits: ['Flash Disk Custom', 'Isi: Foto Frame + File Original', 'Desain Eksklusif ARLENS.ID'],
+                    notes: []
                 },
                 {
                     name: 'Buku Album (Add-on)', price: 'Rp. 350.000,00',
                     img: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80',
-                    benefits: ['Cetak Buku Album Berkualitas Tinggi', 'Layout & Desain Eksklusif', 'Penyimpanan Kenangan Abadi']
+                    benefits: ['Cetak Buku Album Berkualitas Tinggi', 'Layout & Desain Eksklusif', 'Penyimpanan Kenangan Abadi'],
+                    notes: []
                 }
             ],
             photobooth: [
@@ -1087,9 +1113,11 @@
                         '3 Hours: Rp. 500.000,00',
                         '4 Hours: Rp. 600.000,00',
                         '5 Hours: Rp. 700.000,00',
-                        '6 Hours: Rp. 800.000,00',
-                        'Setiap tambahan waktu: Rp. 100.000 / Jam',
-                        'Persiapan rakit 30-40 menit (diluar jam dipesan). Waktu mulai dihitung setelah perakitan selesai.'
+                        '6 Hours: Rp. 800.000,00'
+                    ],
+                    notes: [
+                        'Catatan: Setiap tambahan waktu dikenakan biaya sebesar 100k/Jam dari Harga Sesuai PriceList',
+                        'Catatan: Waktu persiapan rakit photobooth sekitar 30-40 menit (diluar jam yang dipesan). Waktu mulai dihitung setelah perakitan selesai.'
                     ]
                 },
                 {
@@ -1100,10 +1128,12 @@
                         '200 Print - Max 4 Hours: Rp. 1.300.000,00',
                         '300 Print - Max 5 Hours: Rp. 1.500.000,00',
                         '400 Print - Max 6 Hours: Rp. 1.800.000,00',
-                        '500 Print - Max 7 Hours: Rp. 2.000.000,00',
-                        'Setiap tambahan waktu: Rp. 150.000 / Jam',
-                        'Tambahan limited print (jika kuota habis): Rp. 150.000 / 50 print (termasuk tambahan waktu 30 menit)',
-                        'Persiapan rakit 30-40 menit (diluar jam dipesan).'
+                        '500 Print - Max 7 Hours: Rp. 2.000.000,00'
+                    ],
+                    notes: [
+                        'Catatan: Setiap tambahan waktu dikenakan biaya sebesar 150k/Jam dari Harga Sesuai PriceList',
+                        'Catatan: Waktu persiapan rakit photobooth sekitar 30-40 menit (diluar jam yang dipesan). Waktu mulai dihitung setelah perakitan selesai.',
+                        'Catatan: Tambahan limited print (jika kuota print habis) mulai dari 250k/50 print (termasuk tambahan waktu 30 menit)'
                     ]
                 },
                 {
@@ -1114,9 +1144,11 @@
                         '3 Hours: Rp. 1.900.000,00',
                         '4 Hours: Rp. 2.350.000,00',
                         '5 Hours: Rp. 2.800.000,00',
-                        '6 Hours: Rp. 3.750.000,00',
-                        'Setiap tambahan waktu: Rp. 300.000 / Jam',
-                        'Persiapan rakit 30-40 menit (diluar jam dipesan).'
+                        '6 Hours: Rp. 3.750.000,00'
+                    ],
+                    notes: [
+                        'Catatan: Setiap tambahan waktu dikenakan biaya sebesar 300k/Jam dari Harga Sesuai PriceList',
+                        'Catatan: Waktu persiapan rakit photobooth sekitar 30-40 menit (diluar jam yang dipesan). Waktu mulai dihitung setelah perakitan selesai.'
                     ]
                 },
                 {
@@ -1127,29 +1159,21 @@
                         'Flash Disk (Foto Frame): Rp. 60.000,00',
                         'Flash Disk (Foto Frame + Ori): Rp. 90.000,00',
                         'Buku Album: Rp. 350.000,00'
-                    ]
+                    ],
+                    notes: []
                 }
             ],
             undangan: [
                 {
-                    name: 'Silver', price: 'Sesuai Kebutuhan',
-                    img: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80',
-                    benefits: ['Tampilan Mobile-Friendly', 'Hitung Mundur Acara', 'Navigasi Google Maps', 'RSVP & Ucapan Tamu', 'Masa Aktif 6 Bulan']
-                },
-                {
-                    name: 'Gold', price: 'Sesuai Kebutuhan',
-                    img: 'https://images.unsplash.com/photo-1533470783457-36e6e8979102?auto=format&fit=crop&w=600&q=80',
-                    benefits: ['Semua Fitur Silver', 'Galeri Foto (Up to 10)', 'Audio Player (Music)', 'Amplop Digital / QRIS', 'Nama Tamu Custom (Unlimited)']
-                },
-                {
-                    name: 'Diamond', price: 'Sesuai Kebutuhan',
-                    img: 'https://images.unsplash.com/photo-1544531585-9847b68c8c86?auto=format&fit=crop&w=600&q=80',
-                    benefits: ['Semua Fitur Gold', 'Video Prewedding Embed', 'Love Story Timeline', 'Filter Instagram Custom', 'Pengingat Google Calendar']
-                },
-                {
-                    name: 'Ultimate', price: 'Sesuai Kebutuhan',
-                    img: 'https://images.unsplash.com/photo-1507290439931-a861b5a38200?auto=format&fit=crop&w=600&q=80',
-                    benefits: ['Desain Exclusively Custom', 'Sistem QR Check-in Tamu', 'Domain Kustom (.com/.id)', 'Masa Aktif Selamanya', 'Prioritas Support']
+                    name: 'Digital Invitation', price: 'COMING SOON',
+                    img: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80',
+                    benefits: [
+                        'Layanan Undangan Digital eksklusif sedang dalam tahap pengembangan akhir.',
+                        'Menghadirkan desain interaktif, elegan, dan fitur RSVP modern.',
+                        'Nantikan peluncuran resminya segera bersama ARLENS.ID!',
+                        'Hubungi admin via WhatsApp untuk informasi rilis dan penawaran khusus.'
+                    ],
+                    notes: []
                 }
             ]
         };
@@ -1169,7 +1193,7 @@
                     <div class="card-title">${item.name}</div>
                     <div class="card-price">${item.price}</div>
                     <button class="card-btn" onclick="openModal('${category}', ${index})">
-                        Lihat Benefit Detail <i class="fa-solid fa-arrow-right"></i>
+                        ${category === 'undangan' ? 'Info Peluncuran <i class="fa-solid fa-bell"></i>' : 'Lihat Benefit Detail <i class="fa-solid fa-arrow-right"></i>'}
                     </button>
                 `;
                 cardsGrid.appendChild(card);
@@ -1194,14 +1218,27 @@
 
         function openModal(category, index) {
             const data = packageData[category][index];
-            modalTitle.innerText = `Paket ${data.name}`;
+            modalTitle.innerText = category === 'undangan' ? 'Digital Invitation (COMING SOON)' : `Paket ${data.name}`;
             modalPrice.innerText = `Harga: ${data.price}`;
             modalBenefits.innerHTML = '';
+            
+            // Masukkan list benefit utama
             data.benefits.forEach(benefit => {
                 const li = document.createElement('li');
                 li.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${benefit}`;
                 modalBenefits.appendChild(li);
             });
+
+            // Masukkan catatan dengan styling jarak khusus jika ada
+            if (data.notes && data.notes.length > 0) {
+                data.notes.forEach(note => {
+                    const li = document.createElement('li');
+                    li.className = 'note-item';
+                    li.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${note}`;
+                    modalBenefits.appendChild(li);
+                });
+            }
+
             modalOverlay.classList.add('active');
         }
 

@@ -219,7 +219,7 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 8px; /* Jarak antar menu diperlebar agar bubble tidak bug */
+            gap: 8px;
             align-items: center;
             background: rgba(42, 51, 56, 0.25);
             padding: 5px 8px;
@@ -256,7 +256,7 @@
             color: var(--text-cream);
             font-weight: 500;
             font-size: 0.9rem;
-            padding: 7px 16px; /* Padding horizontal diperlebar */
+            padding: 7px 16px;
             border-radius: 20px;
             transition: color 0.3s ease;
             position: relative;
@@ -487,7 +487,6 @@
             perspective: 1000px;
         }
 
-        /* UKURAN LOGO 3D DIPERBESAR */
         .logo-3d-box {
             width: 330px;
             height: 330px;
@@ -874,6 +873,13 @@
             margin-bottom: 20px;
         }
 
+        .footer-logo {
+            height: 42px;
+            width: auto;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
         .footer-brand h3 {
             font-size: 1.3rem;
             font-weight: 800;
@@ -1232,7 +1238,7 @@
     <footer class="reveal-section" id="footer">
         <div class="footer-grid">
             <div class="footer-brand">
-                <h3>ARLENS.ID</h3>
+                <img src="https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG" alt="ARLENS.ID Logo Abu" class="footer-logo">
                 <p>Karya seni visual yang natural, estetik, dan tak lekang oleh waktu.</p>
                 <p style="margin-top: 8px; color: var(--accent-gold); font-weight: 600; font-size: 0.82rem;">Base in Jombang, Jawa Timur</p>
             </div>

@@ -582,6 +582,13 @@
             background-color: #ffffff;
         }
 
+        /* KHUSUS UNTUK GAMBAR FLASH DISK & BUKU ALBUM AGAR FULL TANPA BG PUTIH */
+        .card-img.transparent-bg {
+            background-color: transparent !important;
+            padding: 0 !important;
+            object-fit: cover !important;
+        }
+
         .card-title {
             font-size: 1.15rem;
             font-weight: 700;
@@ -1529,9 +1536,6 @@
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const htmlElement = document.documentElement;
         
-        const headerLogo2D = document.getElementById('headerLogo2D');
-        const logoUrlNew = 'https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG'; 
-
         themeToggleBtn.addEventListener('click', () => {
             const currentTheme = htmlElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -1563,30 +1567,35 @@
                 {
                     name: 'PREMIUM', price: 'Rp. 400.000,00',
                     img: logoNewWhiteBg,
+                    isTransparent: false,
                     benefits: ['All file original', '30 File Edit (Retouch)', '4 Jam kerja'],
                     notes: []
                 },
                 {
                     name: 'EKSLUSIF', price: 'Rp. 500.000,00',
                     img: logoNewWhiteBg,
+                    isTransparent: false,
                     benefits: ['All file foto edit (color correction)', '25 File Edit (Retouch)', '4 Jam kerja (Max)'],
                     notes: []
                 },
                 {
                     name: 'ULTIMATE', price: 'Rp. 600.000,00',
                     img: logoNewWhiteBg,
+                    isTransparent: false,
                     benefits: ['All file foto edit (color correction)', '30 File Edit (Retouch)', '10 Jam kerja (Max)'],
                     notes: []
                 },
                 {
                     name: 'Flash Disk (Add-on)', price: 'Rp. 120.000,00',
                     img: 'https://lh3.googleusercontent.com/d/1JUzVynZzKvW5bLYGdD_T2KT8FA7CJXhs',
+                    isTransparent: true,
                     benefits: ['Flash Disk Custom', 'Isi: Foto Frame + File Original', 'Desain Eksklusif ARLENS.ID'],
                     notes: []
                 },
                 {
                     name: 'Buku Album (Add-on)', price: 'Rp. 350.000,00',
                     img: 'https://lh3.googleusercontent.com/d/1-Go1hJkA-sdHfnpW8tsErGuJH4ieLUqo',
+                    isTransparent: true,
                     benefits: ['Cetak Buku Album Berkualitas Tinggi', 'Layout & Desain Eksklusif', 'Penyimpanan Kenangan Abadi'],
                     notes: []
                 }
@@ -1595,6 +1604,7 @@
                 {
                     name: 'Paket QR Only', price: 'Mulai Rp. 400.000,00',
                     img: logoNewWhiteBg,
+                    isTransparent: false,
                     benefits: [
                         '2 Hours: Rp. 400.000,00',
                         '3 Hours: Rp. 500.000,00',
@@ -1610,6 +1620,7 @@
                 {
                     name: 'Paket Limited Print', price: 'Mulai Rp. 1.000.000,00',
                     img: logoNewWhiteBg,
+                    isTransparent: false,
                     benefits: [
                         '100 Print - Max 3 Hours: Rp. 1.000.000,00',
                         '200 Print - Max 4 Hours: Rp. 1.300.000,00',
@@ -1626,6 +1637,7 @@
                 {
                     name: 'Paket Unlimited Print', price: 'Mulai Rp. 1.450.000,00',
                     img: logoNewWhiteBg,
+                    isTransparent: false,
                     benefits: [
                         '2 Hours: Rp. 1.450.000,00',
                         '3 Hours: Rp. 1.900.000,00',
@@ -1641,6 +1653,7 @@
                 {
                     name: 'Paket Tambahan (Add-on)', price: 'Mulai Rp. 30.000,00',
                     img: logoNewWhiteBg,
+                    isTransparent: false,
                     benefits: [
                         'Tambahan Template: Rp. 30.000,00',
                         'Flash Disk (Foto Frame): Rp. 60.000,00',
@@ -1654,6 +1667,7 @@
                 {
                     name: 'Digital Invitation', price: 'COMING SOON',
                     img: logoNewWhiteBg,
+                    isTransparent: false,
                     benefits: [
                         'Layanan Undangan Digital eksklusif sedang dalam tahap pengembangan akhir.',
                         'Menghadirkan desain interaktif, elegan, dan fitur RSVP modern.',
@@ -1751,8 +1765,10 @@
             items.forEach((item, index) => {
                 const card = document.createElement('div');
                 card.className = 'card';
+                const imgClass = item.isTransparent ? 'card-img transparent-bg' : 'card-img';
+                
                 card.innerHTML = `
-                    <img src="${item.img}" alt="${item.name}" class="card-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400/ffffff/121d21?text=ARLENS.ID';">
+                    <img src="${item.img}" alt="${item.name}" class="${imgClass}" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400/ffffff/121d21?text=ARLENS.ID';">
                     <div class="card-category">${category.toUpperCase()}</div>
                     <div class="card-title">${item.name}</div>
                     <div class="card-price">${item.price}</div>

@@ -1033,7 +1033,7 @@
     <div id="intro-overlay">
         <div class="intro-welcome">WELCOME TO</div>
         <div class="intro-brand">
-            <img src="https://lh3.googleusercontent.com/d/1-VsXB7QToVlaYd4JTP_bods9H4NzWizG" alt="Logo Arlens" class="intro-logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x100/121d21/e5ac31?text=ARLENS.ID';">
+            <img src="https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG" alt="Logo Arlens" class="intro-logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x100/121d21/e5ac31?text=ARLENS.ID';">
             <p class="intro-tagline">"Rayakan Setiap Moment Bahagia Bersama Kami"</p>
         </div>
         <button class="skip-btn" id="skipIntroBtn" onclick="closeIntro()">Skip Intro <i class="fa-solid fa-forward"></i></button>
@@ -1042,7 +1042,7 @@
     <!-- 2. HEADER MINIMALIS + HAMBURGER MENU -->
     <header>
         <a href="#home" class="logo-container">
-            <img src="https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw" id="headerLogo2D" alt="ARLENS 2D Logo" class="logo-2d" onerror="this.onerror=null; this.src='https://via.placeholder.com/40/e5ac31/121d21?text=A';">
+            <img src="https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG" id="headerLogo2D" alt="ARLENS 2D Logo" class="logo-2d" onerror="this.onerror=null; this.src='https://via.placeholder.com/40/e5ac31/121d21?text=A';">
         </a>
 
         <nav id="navbar">
@@ -1530,8 +1530,7 @@
         const htmlElement = document.documentElement;
         
         const headerLogo2D = document.getElementById('headerLogo2D');
-        const darkLogoUrl = 'https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw'; 
-        const lightLogoUrl = 'https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG'; 
+        const logoUrlNew = 'https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG'; 
 
         themeToggleBtn.addEventListener('click', () => {
             const currentTheme = htmlElement.getAttribute('data-theme');
@@ -1540,8 +1539,6 @@
             themeToggleBtn.innerHTML = newTheme === 'dark' 
                 ? '<i class="fa-solid fa-moon"></i>' 
                 : '<i class="fa-solid fa-sun"></i>';
-            
-            headerLogo2D.src = newTheme === 'dark' ? darkLogoUrl : lightLogoUrl;
         });
 
         // --- 7. 3D INTERACTIVE ABOUT LOGO ---
@@ -1559,25 +1556,25 @@
         }
 
         // --- 8. DATA PAKET PRICELIST ---
-        const logo2DWhiteBg = 'https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw';
+        const logoNewWhiteBg = 'https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG';
 
         const packageData = {
             dokumentasi: [
                 {
                     name: 'PREMIUM', price: 'Rp. 400.000,00',
-                    img: logo2DWhiteBg,
+                    img: logoNewWhiteBg,
                     benefits: ['All file original', '30 File Edit (Retouch)', '4 Jam kerja'],
                     notes: []
                 },
                 {
                     name: 'EKSLUSIF', price: 'Rp. 500.000,00',
-                    img: logo2DWhiteBg,
+                    img: logoNewWhiteBg,
                     benefits: ['All file foto edit (color correction)', '25 File Edit (Retouch)', '4 Jam kerja (Max)'],
                     notes: []
                 },
                 {
                     name: 'ULTIMATE', price: 'Rp. 600.000,00',
-                    img: logo2DWhiteBg,
+                    img: logoNewWhiteBg,
                     benefits: ['All file foto edit (color correction)', '30 File Edit (Retouch)', '10 Jam kerja (Max)'],
                     notes: []
                 },
@@ -1597,7 +1594,7 @@
             photobooth: [
                 {
                     name: 'Paket QR Only', price: 'Mulai Rp. 400.000,00',
-                    img: logo2DWhiteBg,
+                    img: logoNewWhiteBg,
                     benefits: [
                         '2 Hours: Rp. 400.000,00',
                         '3 Hours: Rp. 500.000,00',
@@ -1612,7 +1609,7 @@
                 },
                 {
                     name: 'Paket Limited Print', price: 'Mulai Rp. 1.000.000,00',
-                    img: logo2DWhiteBg,
+                    img: logoNewWhiteBg,
                     benefits: [
                         '100 Print - Max 3 Hours: Rp. 1.000.000,00',
                         '200 Print - Max 4 Hours: Rp. 1.300.000,00',
@@ -1628,7 +1625,7 @@
                 },
                 {
                     name: 'Paket Unlimited Print', price: 'Mulai Rp. 1.450.000,00',
-                    img: logo2DWhiteBg,
+                    img: logoNewWhiteBg,
                     benefits: [
                         '2 Hours: Rp. 1.450.000,00',
                         '3 Hours: Rp. 1.900.000,00',
@@ -1643,7 +1640,7 @@
                 },
                 {
                     name: 'Paket Tambahan (Add-on)', price: 'Mulai Rp. 30.000,00',
-                    img: logo2DWhiteBg,
+                    img: logoNewWhiteBg,
                     benefits: [
                         'Tambahan Template: Rp. 30.000,00',
                         'Flash Disk (Foto Frame): Rp. 60.000,00',
@@ -1656,7 +1653,7 @@
             undangan: [
                 {
                     name: 'Digital Invitation', price: 'COMING SOON',
-                    img: logo2DWhiteBg,
+                    img: logoNewWhiteBg,
                     benefits: [
                         'Layanan Undangan Digital eksklusif sedang dalam tahap pengembangan akhir.',
                         'Menghadirkan desain interaktif, elegan, dan fitur RSVP modern.',

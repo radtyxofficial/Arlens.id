@@ -576,10 +576,10 @@
             width: 100%;
             height: 180px;
             border-radius: 10px;
-            object-fit: contain; /* Menggunakan contain agar logo tampil penuh dan proporsional */
-            padding: 15px; /* Memberi jarak agar logo putih tidak terlalu memenuhi tepi */
+            object-fit: contain;
+            padding: 15px;
             margin-bottom: 15px;
-            background-color: #ffffff; /* Background putih bersih untuk thumbnail */
+            background-color: #ffffff;
         }
 
         .card-title {
@@ -1393,13 +1393,22 @@
         window.addEventListener('scroll', triggerAutoPlayOnce);
 
 
-        // --- 2. AUTO CLOSE INTRO / SKIP INTRO & MENGUNCI SCROLL SAAT LOAD ---
+        // --- 2. AUTO CLOSE INTRO / SKIP INTRO & MENGUNCI/MEMBUKA SCROLL ---
         document.body.style.overflow = 'hidden'; 
 
         const introOverlay = document.getElementById('intro-overlay');
+        let introClosed = false;
         
         function closeIntro() {
-            introOverlay.style.opacity = '0';
+            if (introClosed) return;
+            introClosed = true;
+
+            if (introOverlay) {
+                introOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    introOverlay.style.display = 'none';
+                }, 800);
+            }
             document.body.style.overflow = ''; 
             
             if (!isMusicPlaying) {
@@ -1407,11 +1416,11 @@
                     updateMusicUI(true);
                 }).catch(e => {});
             }
-
-            setTimeout(() => introOverlay.style.visibility = 'hidden', 800);
         }
         
+        // Auto close setelah 4.5 detik
         setTimeout(closeIntro, 4500);
+
 
         // --- 3. SCROLL REVEAL ANIMATION (INTERSECTION OBSERVER) ---
         const observerOptions = {
@@ -1848,8 +1857,6 @@
 
         const lightboxModal = document.getElementById('lightboxModal');
         const lightboxImg = document.getElementById('lightboxImg');
-
-        const logo2DWhiteBg = 'https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw';
 
         function openLightbox(imgSrc) {
             lightboxImg.src = imgSrc;

@@ -75,13 +75,14 @@
             transform: translateY(0);
         }
 
-        /* --- INTRO SCREEN --- */
+        /* --- INTRO SCREEN (DIPERBAIKI AGAR TIDAK BOCOR DI HP) --- */
         #intro-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
+            min-height: -webkit-fill-available;
             background-color: #121d21;
             background-image: 
                 linear-gradient(rgba(229, 172, 49, 0.04) 1px, transparent 1px),
@@ -95,15 +96,17 @@
             text-align: center;
             padding: 20px;
             transition: opacity 0.8s ease, visibility 0.8s ease;
+            overflow: hidden;
         }
 
         .intro-welcome {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
-            letter-spacing: 6px;
+            letter-spacing: 4px;
             color: #e5ac31;
             opacity: 0;
             animation: welcomeAnim 2.2s ease forwards;
+            padding: 0 15px;
         }
 
         .intro-brand {
@@ -114,34 +117,36 @@
             opacity: 0;
             transform: scale(0.9);
             animation: brandAnim 2.5s ease 2s forwards;
+            padding: 0 15px;
+            width: 100%;
         }
 
         .intro-logo {
-            max-width: 180px;
+            max-width: 160px;
             height: auto;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             filter: drop-shadow(0 0 15px rgba(229, 172, 49, 0.4));
         }
 
         .intro-tagline {
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             color: #edebde;
             letter-spacing: 1px;
         }
 
         .skip-btn {
             position: absolute;
-            bottom: 30px;
-            right: 30px;
-            background: rgba(42, 51, 56, 0.8);
+            bottom: 25px;
+            right: 25px;
+            background: rgba(42, 51, 56, 0.9);
             border: 1px solid #b7785c;
             color: #edebde;
-            padding: 10px 22px;
+            padding: 8px 18px;
             border-radius: 30px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             transition: all 0.3s ease;
             backdrop-filter: blur(5px);
@@ -1316,7 +1321,7 @@
             aboutWrap.addEventListener('mouseleave', () => logo3d.style.transform = `rotateX(0deg) rotateY(0deg)`);
         }
 
-        // 7. DATA PAKET PRICELIST (Menggunakan Gambar dari Google Drive Anda)
+        // 7. DATA PAKET PRICELIST
         const packageData = {
             dokumentasi: [
                 {

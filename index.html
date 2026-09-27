@@ -293,7 +293,7 @@
             display: none;
         }
 
-        /* --- SECTION PADDING COMPACT --- */
+        /* --- SECTION PADDING COMPACT & RAPI --- */
         section {
             position: relative;
             background-color: var(--bg-main);
@@ -313,13 +313,13 @@
         }
 
         .section-padded {
-            padding: 50px 8%;
+            padding: 40px 8% 20px 8%;
         }
 
         /* --- HERO SECTION --- */
         .hero {
-            min-height: 90vh;
-            padding: 120px 8% 40px 8%;
+            min-height: 85vh;
+            padding: 110px 8% 30px 8%;
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
             align-items: center;
@@ -412,7 +412,7 @@
         /* --- ABOUT SECTION --- */
         .section-title {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .section-title h2 {
@@ -432,7 +432,7 @@
         }
 
         .about-section {
-            padding: 50px 8%;
+            padding: 40px 8%;
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
             gap: 40px;
@@ -472,20 +472,19 @@
             filter: drop-shadow(0 10px 20px rgba(255, 255, 255, 0.2)) drop-shadow(0 15px 30px rgba(0, 0, 0, 0.5));
         }
 
-        /* --- PRODUCTS, PRICELISTS & PORTFOLIO TABS --- */
+        /* --- PRODUCTS, PRICELISTS & PORTFOLIO TABS (GRID FIX) --- */
         .tab-navigation {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 30px;
+            align-items: center;
+            gap: 10px;
+            margin: 0 auto;
             flex-wrap: wrap;
             background: var(--bg-card);
-            padding: 8px;
+            padding: 8px 16px;
             border-radius: 50px;
             border: 1px solid var(--border-color);
-            max-width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
+            width: fit-content;
             backdrop-filter: blur(10px);
         }
 
@@ -493,12 +492,13 @@
             background: transparent;
             border: 1px solid transparent;
             color: var(--text-cream);
-            padding: 9px 22px;
+            padding: 9px 20px;
             border-radius: 30px;
             font-weight: 600;
             font-size: 0.88rem;
             cursor: pointer;
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            white-space: nowrap;
         }
 
         .tab-btn:hover {
@@ -855,7 +855,7 @@
             font-size: 0.85rem;
         }
 
-        /* --- MUSIC BUBBLE BUTTON --- */
+        /* --- MUSIC BUBBLE BUTTON (FIXED SHAPE TO ROUND) --- */
         .music-bubble {
             position: fixed;
             bottom: 30px;
@@ -865,7 +865,7 @@
             background: linear-gradient(135deg, var(--accent-copper), var(--accent-gold));
             color: #121d21;
             border: 2px solid var(--border-color);
-            border-radius: 50%;
+            border-radius: 50%; /* Memastikan bentuknya lingkaran penuh secara presisi */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -906,7 +906,7 @@
             nav a { font-size: 1.2rem; font-weight: 700; width: 100%; text-align: center; }
             nav a.active { background: rgba(229, 172, 49, 0.15); border-radius: 20px; }
             
-            .hero, .about-section { grid-template-columns: 1fr; text-align: center; padding: 100px 5% 30px 5%; }
+            .hero, .about-section { grid-template-columns: 1fr; text-align: center; padding: 90px 5% 20px 5%; }
             .hero-text p { margin: 0 auto 20px auto; text-align: center; }
             .hero-cta { justify-content: center; }
             .about-content p { text-align: center; }
@@ -925,13 +925,13 @@
             .hero-text h1 { font-size: 1.8rem; }
             .hero-text p { font-size: 0.85rem; margin-bottom: 20px; }
             .section-title h2 { font-size: 1.5rem; }
-            .section-padded { padding: 40px 5%; }
-            .about-section { padding: 40px 5%; gap: 20px; }
+            .section-padded { padding: 30px 5% 15px 5%; }
+            .about-section { padding: 30px 5%; gap: 20px; }
             .logo-3d-box { width: 200px; height: 200px; }
             .logo-3d-box img { max-width: 150px; }
             .cards-grid { grid-template-columns: 1fr; }
             .photo-row { grid-template-columns: 1fr; }
-            .contact-section { padding: 40px 5%; }
+            .contact-section { padding: 30px 5%; }
             footer { padding: 30px 5% 20px 5%; }
             .music-bubble { bottom: 25px; left: 20px; width: 45px; height: 45px; font-size: 1.05rem; }
         }
@@ -1720,7 +1720,7 @@
             
             if (gallery && gallery.albums.length > 0) {
                 let html = `
-                    <div class="section-title" style="margin-bottom: 25px;">
+                    <div class="section-title" style="margin-bottom: 20px;">
                         <p>Galeri & Portfolio</p>
                         <h2>${gallery.title}</h2>
                     </div>

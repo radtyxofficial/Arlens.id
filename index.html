@@ -296,7 +296,7 @@
             border: 2px solid var(--border-color);
         }
 
-        /* Hero GIF Visual tanpa Bingkai HP */
+        /* Hero Floating GIF Visual tanpa Kotak/Latar Belakang */
         .hero-visual {
             display: flex;
             justify-content: center;
@@ -306,25 +306,21 @@
 
         .hero-gif-container {
             width: 100%;
-            max-width: 340px;
-            border-radius: 24px;
-            overflow: hidden;
-            border: 2px solid var(--border-color);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 25px var(--glow-color);
-            background: var(--bg-card);
-            transition: transform 0.3s ease;
+            max-width: 380px;
+            animation: floatAnim 4s ease-in-out infinite;
         }
 
-        .hero-gif-container:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-gold);
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
         }
 
         .hero-gif-img {
             width: 100%;
             height: auto;
             display: block;
-            object-fit: cover;
+            object-fit: contain;
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)) drop-shadow(0 0 20px var(--glow-color));
         }
 
         /* --- ABOUT SECTION --- */
@@ -730,7 +726,7 @@
             .hero-text h1 { font-size: 2rem; }
             .hero-text p { font-size: 0.9rem; margin-bottom: 25px; }
             .btn { width: 100%; }
-            .hero-gif-container { max-width: 260px; margin: 0 auto; }
+            .hero-gif-container { max-width: 280px; margin: 0 auto; }
             .section-title h2 { font-size: 1.7rem; }
             .about-section { padding: 60px 5%; gap: 30px; }
             .logo-3d-box { width: 220px; height: 220px; }
@@ -846,7 +842,7 @@
 
         <div class="hero-visual">
             <div class="hero-gif-container">
-                <img src="https://lh3.googleusercontent.com/d/1H6cpXgW29EDKlscI92t74KC4ABnWWNjA" alt="Preview Animasi GIF Arlens" class="hero-gif-img">
+                <img src="https://lh3.googleusercontent.com/d/1I4Ga0Kq_wAdd_R-8HiRw-TS_2cNH_6gD" alt="Floating Animation GIF Arlens" class="hero-gif-img">
             </div>
         </div>
     </section>

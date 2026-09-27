@@ -975,7 +975,8 @@
 <body>
 
     <!-- AUDIO PLAYER & FLOATING BUBBLE BUTTON -->
-    <audio id="bgMusic" src="https://docs.google.com/uc?export=download&id=1E8N819kolwR5j4ZMXjMVyft4wGTqHI6W" loop preload="auto"></audio>
+    <!-- Ganti URL di src dengan tautan raw GitHub musik Anda -->
+    <audio id="bgMusic" src="MASUKKAN_LINK_RAW_GITHUB_MUSIK_ANDA_DI_SINI" loop preload="auto"></audio>
     
     <button id="musicToggle" class="music-bubble" title="Play/Pause Music">
         <i class="fa-solid fa-volume-xmark"></i>
@@ -1222,7 +1223,7 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // --- 0. MUSIC PLAYER LOGIC (FIXED) ---
+        // --- 0. MUSIC PLAYER LOGIC ---
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
         const musicIcon = musicToggle.querySelector('i');
@@ -1257,7 +1258,6 @@
             toggleMusic();
         });
 
-        // Auto-play trigger pada sentuhan / klik pertama di layar
         function triggerAutoPlayOnce() {
             if (!isMusicPlaying) {
                 bgMusic.play().then(() => {
@@ -1283,7 +1283,6 @@
             introOverlay.style.opacity = '0';
             document.body.style.overflow = ''; 
             
-            // Coba paksa putar musik saat intro ditutup
             if (!isMusicPlaying) {
                 bgMusic.play().then(() => {
                     updateMusicUI(true);

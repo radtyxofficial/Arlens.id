@@ -197,14 +197,14 @@
             transition: all 0.3s ease;
         }
 
-        /* Container Nav dengan Indikator Bubble Geser */
+        /* Container Nav dengan Indikator Bubble Geser yang Smooth */
         nav ul {
             display: flex;
             list-style: none;
-            gap: 6px;
+            gap: 4px;
             align-items: center;
             background: rgba(42, 51, 56, 0.25);
-            padding: 5px;
+            padding: 4px;
             border-radius: 40px;
             border: 1px solid var(--border-color);
             backdrop-filter: blur(8px);
@@ -218,19 +218,20 @@
         /* Efek Sliding Bubble Glass */
         .nav-indicator {
             position: absolute;
-            top: 5px;
-            bottom: 5px;
+            top: 4px;
+            bottom: 4px;
             left: 0;
             width: 0;
-            background: rgba(229, 172, 49, 0.2);
-            border: 1px solid rgba(229, 172, 49, 0.4);
+            background: rgba(229, 172, 49, 0.22);
+            border: 1px solid rgba(229, 172, 49, 0.45);
             box-shadow: 0 4px 15px rgba(229, 172, 49, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-radius: 30px;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
             z-index: 1;
             pointer-events: none;
+            will-change: transform, width;
         }
 
         nav a {
@@ -791,7 +792,7 @@
             [data-theme="light"] nav { background: rgba(237, 235, 222, 0.98); }
             nav.menu-open { top: 0; }
             nav ul { flex-direction: column; gap: 15px; text-align: center; background: transparent; border: none; width: 80%; }
-            .nav-indicator { display: none; } /* Nonaktifkan indikator geser di mode HP vertikal demi kerapian */
+            .nav-indicator { display: none; } 
             nav a { font-size: 1.25rem; font-weight: 700; width: 100%; text-align: center; }
             nav a.active { background: rgba(229, 172, 49, 0.15); border-radius: 20px; }
             
@@ -899,7 +900,7 @@
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#products" class="nav-link">Products</a></li>
                 <li><a href="#pricelist" class="nav-link">Pricelist</a></li>
-                <li><a href="#galleryContainer" class="nav-link">Portfolio</a></li>
+                <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
                 <li><a href="#contacts" class="nav-link">Contacts</a></li>
             </ul>
         </nav>
@@ -974,9 +975,11 @@
             <!-- JS Injecting Content Automatically -->
         </div>
 
-        <!-- Galeri Portfolio Dinamis akan Muncul Disini -->
-        <div id="galleryContainer">
-            <!-- JS Injecting Gallery Content Automatically -->
+        <!-- Galeri Portfolio Dinamis akan Muncul Disini dengan ID Portfolio yang Jelas -->
+        <div id="portfolio">
+            <div id="galleryContainer">
+                <!-- JS Injecting Gallery Content Automatically -->
+            </div>
         </div>
     </section>
 
@@ -1069,7 +1072,7 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#products">Products</a></li>
                     <li><a href="#pricelist">Pricelist</a></li>
-                    <li><a href="#galleryContainer">Portfolio</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
                 </ul>
             </div>
 
@@ -1127,20 +1130,23 @@
             observer.observe(section);
         });
 
-        // 3. NAV SLIDING BUBBLE & SCROLL SPY ACTIVE SYNC
+        // 3. ACCURATE SCROLL SPY & SMOOTH BUBBLE SLIDING ANIMATION
         const navLinks = document.querySelectorAll('.nav-link');
         const navIndicator = document.getElementById('navIndicator');
 
         function updateIndicator(activeLink) {
             if (!navIndicator || window.innerWidth <= 992) return;
+            const parentList = activeLink.parentElement.parentElement;
             const linkRect = activeLink.getBoundingClientRect();
-            const parentRect = activeLink.parentElement.parentElement.getBoundingClientRect();
+            const parentRect = parentList.getBoundingClientRect();
             
-            navIndicator.style.width = `${linkRect.width}px`;
-            navIndicator.style.left = `${linkRect.left - parentRect.left}px`;
+            const leftOffset = linkRect.left - parentRect.left;
+            const width = linkRect.width;
+
+            navIndicator.style.transform = `translateX(${leftOffset}px)`;
+            navIndicator.style.width = `${width}px`;
         }
 
-        // Jalankan saat pertama kali load
         window.addEventListener('load', () => {
             const activeLink = document.querySelector('.nav-link.active') || navLinks[0];
             updateIndicator(activeLink);
@@ -1151,27 +1157,33 @@
             if (activeLink) updateIndicator(activeLink);
         });
 
-        // Scroll Spy otomatis matikan tombol lama & nyalakan yang sesuai dengan section aktif
-        const sections = document.querySelectorAll('section[id], footer[id], div[id="galleryContainer"]');
-        
+        // Mapping section spesifik agar tidak tertukar
+        const sectionMap = [
+            { id: 'home', link: document.querySelector('a[href="#home"]') },
+            { id: 'about', link: document.querySelector('a[href="#about"]') },
+            { id: 'products', link: document.querySelector('a[href="#products"]') },
+            { id: 'pricelist', link: document.querySelector('a[href="#pricelist"]') },
+            { id: 'portfolio', link: document.querySelector('a[href="#portfolio"]') },
+            { id: 'contacts', link: document.querySelector('a[href="#contacts"]') }
+        ];
+
         window.addEventListener('scroll', () => {
-            let scrollY = window.pageYOffset;
+            let scrollY = window.pageYOffset + 200;
 
-            navLinks.forEach(link => {
-                const targetId = link.getAttribute('href').substring(1);
-                const targetSection = document.getElementById(targetId);
-
-                if (targetSection) {
-                    const sectionTop = targetSection.offsetTop - 150;
-                    const sectionHeight = targetSection.offsetHeight;
-
-                    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+            for (let i = sectionMap.length - 1; i >= 0; i--) {
+                const element = document.getElementById(sectionMap[i].id);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    if (scrollY >= offsetTop) {
                         navLinks.forEach(l => l.classList.remove('active'));
-                        link.classList.add('active');
-                        updateIndicator(link);
+                        if (sectionMap[i].link) {
+                            sectionMap[i].link.classList.add('active');
+                            updateIndicator(sectionMap[i].link);
+                        }
+                        break;
                     }
                 }
-            });
+            }
         });
 
         navLinks.forEach(link => {
@@ -1210,8 +1222,8 @@
         const htmlElement = document.documentElement;
         
         const headerLogo2D = document.getElementById('headerLogo2D');
-        const darkLogoUrl = 'https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw'; // Logo Putih (Dark Mode)
-        const lightLogoUrl = 'https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG'; // Logo Hitam (Light Mode)
+        const darkLogoUrl = 'https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw'; 
+        const lightLogoUrl = 'https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG'; 
 
         themeToggleBtn.addEventListener('click', () => {
             const currentTheme = htmlElement.getAttribute('data-theme');

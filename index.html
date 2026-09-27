@@ -975,11 +975,10 @@
 <body>
 
     <!-- AUDIO PLAYER & FLOATING BUBBLE BUTTON -->
-    <audio id="bgMusic" loop>
-        <source src="https://docs.google.com/uc?export=download&id=1E8N819kolwR5j4ZMXjMVyft4wGTqHI6W" type="audio/mpeg">
-    </audio>
+    <audio id="bgMusic" src="https://drive.google.com/uc?export=download&id=1E8N819kolwR5j4ZMXjMVyft4wGTqHI6W" loop preload="auto"></audio>
+    
     <button id="musicToggle" class="music-bubble" title="Play/Pause Music">
-        <i class="fa-solid fa-music"></i>
+        <i class="fa-solid fa-volume-xmark"></i>
     </button>
 
     <!-- 1. OPENING / INTRO OVERLAY -->
@@ -1223,49 +1222,68 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // --- 0. MUSIC PLAYER LOGIC ---
+        // --- 0. MUSIC PLAYER LOGIC (UPDATED) ---
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
         const musicIcon = musicToggle.querySelector('i');
         let isMusicPlaying = false;
+        let interactionDone = false;
 
-        function toggleMusic() {
-            if (isMusicPlaying) {
-                bgMusic.pause();
-                musicIcon.className = 'fa-solid fa-volume-xmark';
-                musicToggle.classList.remove('playing');
-            } else {
-                bgMusic.play().catch(e => console.log("Autoplay blocked by browser until user interacts."));
+        function playAudio() {
+            if (!interactionDone) interactionDone = true;
+            bgMusic.play().then(() => {
+                isMusicPlaying = true;
                 musicIcon.className = 'fa-solid fa-music';
                 musicToggle.classList.add('playing');
-            }
-            isMusicPlaying = !isMusicPlaying;
+            }).catch(err => {
+                console.warn("Pemutaran audio diblokir atau file gagal dimuat.", err);
+            });
         }
 
-        musicToggle.addEventListener('click', toggleMusic);
-
-        // Auto-play music on first interaction to bypass browser autoplay policies
-        function startMusicInteraction() {
-            if (!isMusicPlaying) {
-                toggleMusic();
-            }
-            document.removeEventListener('click', startMusicInteraction);
-            document.removeEventListener('touchstart', startMusicInteraction);
+        function pauseAudio() {
+            bgMusic.pause();
+            isMusicPlaying = false;
+            musicIcon.className = 'fa-solid fa-volume-xmark';
+            musicToggle.classList.remove('playing');
         }
-        
-        document.addEventListener('click', startMusicInteraction);
-        document.addEventListener('touchstart', startMusicInteraction);
+
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // Mencegah bentrok dengan listener dokumen
+            if (isMusicPlaying) {
+                pauseAudio();
+            } else {
+                playAudio();
+            }
+        });
+
+        // Trigger musik menyala pertama kali saat user berinteraksi
+        function onFirstInteraction() {
+            if (!interactionDone && !isMusicPlaying) {
+                playAudio();
+            }
+            // Hapus event listener agar tidak dipanggil berulang kali
+            document.removeEventListener('click', onFirstInteraction);
+            document.removeEventListener('touchstart', onFirstInteraction);
+            document.removeEventListener('scroll', onFirstInteraction);
+        }
+
+        document.addEventListener('click', onFirstInteraction);
+        document.addEventListener('touchstart', onFirstInteraction);
+        document.addEventListener('scroll', onFirstInteraction);
 
 
         // --- 1. AUTO CLOSE INTRO / SKIP INTRO & MENGUNCI SCROLL SAAT LOAD ---
         document.body.style.overflow = 'hidden'; 
 
         const introOverlay = document.getElementById('intro-overlay');
+        
         function closeIntro() {
             introOverlay.style.opacity = '0';
             document.body.style.overflow = ''; 
+            playAudio(); // Memastikan musik terputar jika tombol skip di klik
             setTimeout(() => introOverlay.style.visibility = 'hidden', 800);
         }
+        
         setTimeout(closeIntro, 4500);
 
         // --- 2. SCROLL REVEAL ANIMATION (INTERSECTION OBSERVER) ---

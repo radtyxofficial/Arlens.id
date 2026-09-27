@@ -582,7 +582,6 @@
             background-color: #ffffff;
         }
 
-        /* KHUSUS UNTUK GAMBAR FLASH DISK & BUKU ALBUM AGAR FULL TANPA BG PUTIH */
         .card-img.transparent-bg {
             background-color: transparent !important;
             padding: 0 !important;
@@ -693,7 +692,7 @@
             transform: scale(1.05);
         }
 
-        /* --- LIGHTBOX MODAL UNTUK MEMPERBESAR FOTO --- */
+        /* --- LIGHTBOX MODAL --- */
         .lightbox-overlay {
             position: fixed;
             top: 0;
@@ -1418,6 +1417,12 @@
             }
             document.body.style.overflow = ''; 
             
+            // Perbarui posisi indicator navbar pas setelah intro ditutup
+            setTimeout(() => {
+                const activeLink = document.querySelector('.nav-link.active') || navLinks[0];
+                updateIndicator(activeLink);
+            }, 100);
+            
             if (!isMusicPlaying) {
                 bgMusic.play().then(() => {
                     updateMusicUI(true);
@@ -1463,9 +1468,11 @@
             navIndicator.style.width = `${width}px`;
         }
 
+        // Inisialisasi posisi bubble indicator saat halaman selesai dimuat
         window.addEventListener('load', () => {
             const activeLink = document.querySelector('.nav-link.active') || navLinks[0];
             updateIndicator(activeLink);
+            setTimeout(() => updateIndicator(activeLink), 150);
         });
 
         window.addEventListener('resize', () => {

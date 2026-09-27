@@ -1249,22 +1249,22 @@
         resizeCanvas();
 
         const snowflakes = [];
-        const maxSnowflakes = 45; // Jumlah butiran salju diatur pas agar estetik dan tidak padat
+        const maxSnowflakes = 45;
 
         for (let i = 0; i < maxSnowflakes; i++) {
             snowflakes.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                radius: Math.random() * 2.2 + 0.8, // Ukuran bervariasi halus (kecil ke sedang)
+                radius: Math.random() * 2.2 + 0.8,
                 density: Math.random() * maxSnowflakes,
-                speedY: Math.random() * 0.7 + 0.4, // Kecepatan jatuh pelan dan syahdu
-                speedX: Math.random() * 0.4 - 0.2  // Efek goyangan angin lembut ke kiri/kanan
+                speedY: Math.random() * 0.7 + 0.4,
+                speedX: Math.random() * 0.4 - 0.2
             });
         }
 
         function drawSnow() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.75)'; // Warna putih semi-transparan yang estetik
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
             ctx.beginPath();
             for (let i = 0; i < snowflakes.length; i++) {
                 let sf = snowflakes[i];
@@ -1283,12 +1283,10 @@
                 sf.y += sf.speedY;
                 sf.x += Math.sin(angle + sf.density) * 0.4 + sf.speedX;
 
-                // Jika salju melewati batas bawah layar, kembalikan ke atas secara acak
                 if (sf.y > canvas.height + 10) {
                     sf.y = -10;
                     sf.x = Math.random() * canvas.width;
                 }
-                // Jika melewati batas samping, bungkus posisinya
                 if (sf.x > canvas.width + 10) {
                     sf.x = -10;
                 } else if (sf.x < -10) {
@@ -1799,7 +1797,6 @@
             const message = `Halo ARLENS.ID 👋🏻%0A%0ASaya ingin bertanya mengenai ketersediaan dan detail untuk layanan *${encodeURIComponent(packageName)}* pada acara saya.%0A%0AMohon infonya, terima kasih😇❣️`;
             modalWhatsAppBtn.href = `https://wa.me/${whatsappNumber}?text=${message}`;
 
-            modalOverlay.classList.0('active') ? modalOverlay.classList.remove('active') : modalOverlay.classList.add('active');
             modalOverlay.classList.add('active');
         }
 

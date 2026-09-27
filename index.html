@@ -75,7 +75,7 @@
             transform: translateY(0);
         }
 
-        /* --- INTRO SCREEN (DIPERBAIKI AGAR TIDAK BOCOR DI HP) --- */
+        /* --- INTRO SCREEN --- */
         #intro-overlay {
             position: fixed;
             top: 0;
@@ -84,7 +84,7 @@
             bottom: 0;
             width: 100%;
             height: 100%;
-            height: 100dvh; /* Dynamic Viewport Height untuk mengatasi browser bar */
+            height: 100dvh; 
             background-color: #121d21;
             background-image: 
                 linear-gradient(rgba(229, 172, 49, 0.04) 1px, transparent 1px),
@@ -140,7 +140,7 @@
 
         .skip-btn {
             position: absolute;
-            bottom: max(40px, env(safe-area-inset-bottom)); /* Mencegah tabrakan dengan home bar di iOS */
+            bottom: max(40px, env(safe-area-inset-bottom));
             right: 25px;
             background: rgba(42, 51, 56, 0.9);
             border: 1px solid #b7785c;
@@ -843,6 +843,41 @@
             font-size: 0.85rem;
         }
 
+        /* --- MUSIC BUBBLE BUTTON --- */
+        .music-bubble {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-copper), var(--accent-gold));
+            color: #121d21;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px var(--glow-color);
+            z-index: 99990; /* Dibawah intro screen saat awal, tapi diatas konten lain */
+            transition: all 0.3s ease;
+        }
+
+        .music-bubble:hover {
+            transform: scale(1.1);
+        }
+
+        .music-bubble.playing i {
+            animation: pulseMusic 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseMusic {
+            0% { transform: scale(0.9); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(0.9); }
+        }
+
         /* --- RESPONSIVE MOBILE TWEAKS --- */
         @media (max-width: 992px) {
             .mobile-menu-btn { display: flex; }
@@ -886,6 +921,7 @@
             .photo-row { grid-template-columns: 1fr; }
             .contact-section { padding: 40px 5%; }
             footer { padding: 30px 5% 20px 5%; }
+            .music-bubble { bottom: 25px; left: 20px; width: 45px; height: 45px; font-size: 1.05rem; }
         }
 
         /* --- MODAL DETAIL PAKET --- */
@@ -938,6 +974,14 @@
 </head>
 <body>
 
+    <!-- AUDIO PLAYER & FLOATING BUBBLE BUTTON -->
+    <audio id="bgMusic" loop>
+        <source src="https://docs.google.com/uc?export=download&id=1E8N819kolwR5j4ZMXjMVyft4wGTqHI6W" type="audio/mpeg">
+    </audio>
+    <button id="musicToggle" class="music-bubble" title="Play/Pause Music">
+        <i class="fa-solid fa-music"></i>
+    </button>
+
     <!-- 1. OPENING / INTRO OVERLAY -->
     <div id="intro-overlay">
         <div class="intro-welcome">WELCOME TO</div>
@@ -945,7 +989,7 @@
             <img src="https://lh3.googleusercontent.com/d/1-VsXB7QToVlaYd4JTP_bods9H4NzWizG" alt="Logo Arlens" class="intro-logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x100/121d21/e5ac31?text=ARLENS.ID';">
             <p class="intro-tagline">"Rayakan Setiap Moment Bahagia Bersama Kami"</p>
         </div>
-        <button class="skip-btn" onclick="closeIntro()">Skip Intro <i class="fa-solid fa-forward"></i></button>
+        <button class="skip-btn" id="skipIntroBtn" onclick="closeIntro()">Skip Intro <i class="fa-solid fa-forward"></i></button>
     </div>
 
     <!-- 2. HEADER MINIMALIS + HAMBURGER MENU -->
@@ -1179,18 +1223,52 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // 1. AUTO CLOSE INTRO / SKIP INTRO & MENGUNCI SCROLL SAAT LOAD 
-        document.body.style.overflow = 'hidden'; // Kunci scroll di awal agar tidak bisa ditarik/bocor
+        // --- 0. MUSIC PLAYER LOGIC ---
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicIcon = musicToggle.querySelector('i');
+        let isMusicPlaying = false;
+
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicIcon.className = 'fa-solid fa-volume-xmark';
+                musicToggle.classList.remove('playing');
+            } else {
+                bgMusic.play().catch(e => console.log("Autoplay blocked by browser until user interacts."));
+                musicIcon.className = 'fa-solid fa-music';
+                musicToggle.classList.add('playing');
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+
+        musicToggle.addEventListener('click', toggleMusic);
+
+        // Auto-play music on first interaction to bypass browser autoplay policies
+        function startMusicInteraction() {
+            if (!isMusicPlaying) {
+                toggleMusic();
+            }
+            document.removeEventListener('click', startMusicInteraction);
+            document.removeEventListener('touchstart', startMusicInteraction);
+        }
+        
+        document.addEventListener('click', startMusicInteraction);
+        document.addEventListener('touchstart', startMusicInteraction);
+
+
+        // --- 1. AUTO CLOSE INTRO / SKIP INTRO & MENGUNCI SCROLL SAAT LOAD ---
+        document.body.style.overflow = 'hidden'; 
 
         const introOverlay = document.getElementById('intro-overlay');
         function closeIntro() {
             introOverlay.style.opacity = '0';
-            document.body.style.overflow = ''; // Mengembalikan fungsi scroll saat intro selesai
+            document.body.style.overflow = ''; 
             setTimeout(() => introOverlay.style.visibility = 'hidden', 800);
         }
         setTimeout(closeIntro, 4500);
 
-        // 2. SCROLL REVEAL ANIMATION (INTERSECTION OBSERVER)
+        // --- 2. SCROLL REVEAL ANIMATION (INTERSECTION OBSERVER) ---
         const observerOptions = {
             threshold: 0.15
         };
@@ -1207,7 +1285,7 @@
             observer.observe(section);
         });
 
-        // 3. ACCURATE SCROLL SPY & SMOOTH BUBBLE SLIDING ANIMATION
+        // --- 3. ACCURATE SCROLL SPY & SMOOTH BUBBLE SLIDING ANIMATION ---
         const navLinks = document.querySelectorAll('.nav-link');
         const navIndicator = document.getElementById('navIndicator');
 
@@ -1270,7 +1348,7 @@
             });
         });
 
-        // 4. MOBILE MENU HAMBURGER
+        // --- 4. MOBILE MENU HAMBURGER ---
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navbar = document.getElementById('navbar');
 
@@ -1293,7 +1371,7 @@
             });
         });
 
-        // 5. DARK MODE & LIGHT MODE TOGGLE
+        // --- 5. DARK MODE & LIGHT MODE TOGGLE ---
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const htmlElement = document.documentElement;
         
@@ -1312,7 +1390,7 @@
             headerLogo2D.src = newTheme === 'dark' ? darkLogoUrl : lightLogoUrl;
         });
 
-        // 6. 3D INTERACTIVE ABOUT LOGO
+        // --- 6. 3D INTERACTIVE ABOUT LOGO ---
         const logo3d = document.getElementById('logo3d');
         const aboutWrap = document.querySelector('.about-3d-logo-wrap');
 
@@ -1326,7 +1404,7 @@
             aboutWrap.addEventListener('mouseleave', () => logo3d.style.transform = `rotateX(0deg) rotateY(0deg)`);
         }
 
-        // 7. DATA PAKET PRICELIST
+        // --- 7. DATA PAKET PRICELIST ---
         const packageData = {
             dokumentasi: [
                 {
@@ -1434,7 +1512,7 @@
             ]
         };
 
-        // 8. DATA GALERI DINAMIS
+        // --- 8. DATA GALERI DINAMIS ---
         const galleryData = {
             dokumentasi: {
                 title: 'Hasil Dokumentasi Kami',
@@ -1580,7 +1658,7 @@
 
         renderTabContent('dokumentasi');
 
-        // 9. MODAL DETAIL PAKET & LIGHTBOX ZOOM FOTO
+        // --- 9. MODAL DETAIL PAKET & LIGHTBOX ZOOM FOTO ---
         const modalOverlay = document.getElementById('packageModal');
         const modalTitle = document.getElementById('modalTitle');
         const modalPrice = document.getElementById('modalPrice');
@@ -1621,7 +1699,6 @@
             modalOverlay.classList.remove('active');
         }
 
-        // Fungsi Lightbox Galeri Foto
         const lightboxModal = document.getElementById('lightboxModal');
         const lightboxImg = document.getElementById('lightboxImg');
 
@@ -1634,7 +1711,7 @@
             lightboxModal.classList.remove('active');
         }
 
-        // 10. WHATSAPP FORM SUBMISSION
+        // --- 10. WHATSAPP FORM SUBMISSION ---
         function sendToWhatsApp(e) {
             e.preventDefault();
             const nama = document.getElementById('nama').value;

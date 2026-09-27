@@ -219,10 +219,10 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 4px;
+            gap: 8px; /* Jarak antar menu diperlebar agar bubble tidak bug */
             align-items: center;
             background: rgba(42, 51, 56, 0.25);
-            padding: 4px;
+            padding: 5px 8px;
             border-radius: 40px;
             border: 1px solid var(--border-color);
             backdrop-filter: blur(8px);
@@ -235,8 +235,8 @@
 
         .nav-indicator {
             position: absolute;
-            top: 4px;
-            bottom: 4px;
+            top: 5px;
+            bottom: 5px;
             left: 0;
             width: 0;
             background: rgba(229, 172, 49, 0.22);
@@ -256,11 +256,12 @@
             color: var(--text-cream);
             font-weight: 500;
             font-size: 0.9rem;
-            padding: 7px 15px;
+            padding: 7px 16px; /* Padding horizontal diperlebar */
             border-radius: 20px;
             transition: color 0.3s ease;
             position: relative;
             z-index: 2;
+            white-space: nowrap;
         }
 
         nav a:hover, nav a.active {
@@ -486,9 +487,10 @@
             perspective: 1000px;
         }
 
+        /* UKURAN LOGO 3D DIPERBESAR */
         .logo-3d-box {
-            width: 260px;
-            height: 260px;
+            width: 330px;
+            height: 330px;
             background: transparent;
             display: flex;
             justify-content: center;
@@ -498,13 +500,13 @@
         }
 
         .logo-3d-box img {
-            max-width: 200px;
+            max-width: 270px;
             height: auto;
-            transform: translateZ(30px);
-            filter: drop-shadow(0 10px 20px rgba(255, 255, 255, 0.2)) drop-shadow(0 15px 30px rgba(0, 0, 0, 0.5));
+            transform: translateZ(40px);
+            filter: drop-shadow(0 12px 25px rgba(255, 255, 255, 0.25)) drop-shadow(0 20px 35px rgba(0, 0, 0, 0.6));
         }
 
-        /* --- PRODUCTS, PRICELISTS & PORTFOLIO TABS (GRID FIX) --- */
+        /* --- PRODUCTS, PRICELISTS & PORTFOLIO TABS --- */
         .tab-navigation {
             display: flex;
             justify-content: center;
@@ -950,6 +952,8 @@
             .hero-cta { justify-content: center; }
             .about-content p { text-align: center; }
             .about-3d-logo-wrap { order: -1; }
+            .logo-3d-box { width: 260px; height: 260px; }
+            .logo-3d-box img { max-width: 210px; }
             .contact-container, .footer-grid { grid-template-columns: 1fr; }
             .photo-row { grid-template-columns: 1fr; }
         }
@@ -966,8 +970,6 @@
             .section-title h2 { font-size: 1.5rem; }
             .section-padded { padding: 30px 5% 15px 5%; }
             .about-section { padding: 30px 5%; gap: 20px; }
-            .logo-3d-box { width: 200px; height: 200px; }
-            .logo-3d-box img { max-width: 150px; }
             .cards-grid { grid-template-columns: 1fr; }
             .photo-row { grid-template-columns: 1fr; }
             .contact-section { padding: 30px 5%; }
@@ -1417,7 +1419,6 @@
             }
             document.body.style.overflow = ''; 
             
-            // Perbarui posisi indicator navbar pas setelah intro ditutup
             setTimeout(() => {
                 const activeLink = document.querySelector('.nav-link.active') || navLinks[0];
                 updateIndicator(activeLink);
@@ -1430,7 +1431,6 @@
             }
         }
         
-        // Auto close setelah 4.5 detik
         setTimeout(closeIntro, 4500);
 
 
@@ -1468,7 +1468,6 @@
             navIndicator.style.width = `${width}px`;
         }
 
-        // Inisialisasi posisi bubble indicator saat halaman selesai dimuat
         window.addEventListener('load', () => {
             const activeLink = document.querySelector('.nav-link.active') || navLinks[0];
             updateIndicator(activeLink);

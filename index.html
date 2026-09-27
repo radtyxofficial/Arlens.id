@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARLENS.ID | Creative Visual & Digital Invitation</title>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -342,51 +340,11 @@
             z-index: 10;
         }
 
-        .invitation-preview {
+        .invitation-preview-gif {
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(18,29,33,0.4), rgba(42,51,56,0.95)), url('https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=600&q=80') center/cover;
-            padding: 40px 20px 20px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            text-align: center;
-            color: #edebde;
-            box-sizing: border-box;
-        }
-
-        .inv-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 0.9rem;
-            color: #e5ac31;
-            margin-top: 15px;
-            letter-spacing: 1px;
-        }
-
-        .inv-names {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin: 5px 0;
-            color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
-
-        .inv-badge {
-            background: rgba(229, 172, 49, 0.2);
-            border: 1px solid #e5ac31;
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: #e5ac31;
-            margin-bottom: 10px;
-            animation: pulseGlow 2s infinite alternate;
-            backdrop-filter: blur(4px);
-        }
-
-        @keyframes pulseGlow {
-            from { box-shadow: 0 0 5px rgba(229, 172, 49, 0.3); }
-            to { box-shadow: 0 0 15px rgba(229, 172, 49, 0.8); }
+            object-fit: cover;
+            display: block;
         }
 
         /* --- ABOUT SECTION --- */
@@ -856,7 +814,6 @@
 </head>
 <body>
 
-    <!-- 1. OPENING / INTRO OVERLAY -->
     <div id="intro-overlay">
         <div class="intro-welcome">WELCOME TO</div>
         <div class="intro-brand">
@@ -866,7 +823,6 @@
         <button class="skip-btn" onclick="closeIntro()">Skip Intro <i class="fa-solid fa-forward"></i></button>
     </div>
 
-    <!-- 2. HEADER MINIMALIS + HAMBURGER MENU -->
     <header>
         <a href="#home" class="logo-container">
             <img src="https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw" id="headerLogo2D" alt="ARLENS 2D Logo" class="logo-2d" onerror="this.onerror=null; this.src='https://via.placeholder.com/40/e5ac31/121d21?text=A';">
@@ -893,7 +849,6 @@
         </div>
     </header>
 
-    <!-- 3. HERO SECTION -->
     <section class="hero" id="home">
         <div class="hero-text">
             <h1>RAYAKAN SETIAP MOMENT BAHAGIA BERSAMA <span>ARLENS.ID</span></h1>
@@ -910,19 +865,12 @@
             <div class="phone-mockup-wrap" id="phone3d">
                 <div class="phone-notch"></div>
                 <div class="phone-screen">
-                    <div class="invitation-preview">
-                        <div class="inv-title">Undangan Digital</div>
-                        <div>
-                            <div class="inv-names">Romeo & Juliet</div>
-                        </div>
-                        <div class="inv-badge"><i class="fa-solid fa-envelope-open-text"></i> Live Preview GIF</div>
-                    </div>
+                    <img src="https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG2" alt="Undangan Digital GIF" class="invitation-preview-gif">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 4. ABOUT SECTION -->
     <section class="about-section" id="about">
         <div class="about-3d-logo-wrap">
             <div class="logo-3d-box" id="logo3d">
@@ -944,7 +892,6 @@
         </div>
     </section>
 
-    <!-- 5. PRODUCTS, PRICELISTS & DYNAMIC GALLERY SECTION -->
     <section class="products-section" id="products">
         <div class="section-title">
             <p>Pilihan Paket Terbaik</p>
@@ -957,18 +904,13 @@
             <button class="tab-btn" onclick="switchTab('undangan', this)">Undangan Digital</button>
         </div>
 
-        <!-- Cards Pricelist Dinamis -->
         <div class="cards-grid" id="cardsGrid">
-            <!-- JS Injecting Content Automatically -->
-        </div>
+            </div>
 
-        <!-- Galeri Portfolio Dinamis akan Muncul Disini -->
         <div id="galleryContainer">
-            <!-- JS Injecting Gallery Content Automatically -->
-        </div>
+            </div>
     </section>
 
-    <!-- 6. CONTACT & MESSAGE SECTION -->
     <section class="contact-section" id="contacts">
         <div class="section-title">
             <p>Mari Berkolaborasi</p>
@@ -1041,7 +983,6 @@
         </div>
     </section>
 
-    <!-- 7. FOOTER -->
     <footer>
         <div class="footer-grid">
             <div class="footer-brand">
@@ -1071,24 +1012,21 @@
             </div>
         </div>
         <div style="text-align: center; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 20px;">
-            &copy; 2026 ARLENS.ID. All Rights Reserved.
+            © 2026 ARLENS.ID. All Rights Reserved.
         </div>
     </footer>
 
-    <!-- MODAL DETAIL PAKET -->
     <div class="modal-overlay" id="packageModal">
         <div class="modal-box">
             <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-title" id="modalTitle">Nama Paket</div>
             <div class="modal-price" id="modalPrice">Harga Paket</div>
             <ul class="modal-benefits" id="modalBenefits">
-                <!-- Benefit list populated via JS -->
-            </ul>
+                </ul>
             <a href="#" id="modalWhatsAppBtn" target="_blank" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: 15px;"><i class="fa-brands fa-whatsapp"></i> Pesan Paket Ini</a>
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
         // 1. AUTO CLOSE INTRO / SKIP INTRO
         const introOverlay = document.getElementById('intro-overlay');

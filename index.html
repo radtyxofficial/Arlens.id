@@ -14,7 +14,7 @@
     <style>
         :root {
             --bg-main: #121d21;
-            --bg-alt: #18272c;
+            --bg-alt: #172429;
             --bg-card: rgba(42, 51, 56, 0.7);
             --bg-card-solid: #2a3338;
             --accent-copper: #975a41;
@@ -30,7 +30,7 @@
 
         [data-theme="light"] {
             --bg-main: #edebde;
-            --bg-alt: #e3e0ce;
+            --bg-alt: #e3dfd0;
             --bg-card: rgba(255, 255, 255, 0.85);
             --bg-card-solid: #ffffff;
             --accent-copper: #975a41;
@@ -200,21 +200,38 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 28px;
+            gap: 12px;
             align-items: center;
+            background: rgba(42, 51, 56, 0.25);
+            padding: 6px 10px;
+            border-radius: 40px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(8px);
         }
 
+        [data-theme="light"] nav ul {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        /* --- BUBBLE GLASS EFFECT (iPhone Style) --- */
         nav a {
             text-decoration: none;
             color: var(--text-cream);
             font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
+            font-size: 0.9rem;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
         }
 
         nav a:hover, nav a.active {
             color: var(--accent-gold);
+            background: rgba(229, 172, 49, 0.15);
+            box-shadow: 0 4px 15px rgba(229, 172, 49, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 172, 49, 0.3);
         }
 
         .header-actions {
@@ -246,12 +263,20 @@
         /* --- SECTION GRADIENT BLENDING WRAPPERS --- */
         section {
             position: relative;
-            background: var(--bg-main);
+            background-color: var(--bg-main);
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 32px 32px;
         }
 
-        /* Menggunakan transisi gradasi halus antar section (menggantikan garis patah) */
         section.alternate-bg {
-            background: linear-gradient(180deg, var(--bg-main) 0%, var(--bg-alt) 15%, var(--bg-alt) 85%, var(--bg-main) 100%);
+            background-color: var(--bg-alt);
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(180deg, var(--bg-main) 0%, var(--bg-alt) 12%, var(--bg-alt) 88%, var(--bg-main) 100%);
+            background-size: 32px 32px, 32px 32px, auto;
         }
 
         /* --- HERO SECTION --- */
@@ -423,27 +448,44 @@
         .tab-navigation {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 14px;
             margin-bottom: 40px;
             flex-wrap: wrap;
+            background: var(--bg-card);
+            padding: 10px;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            max-width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            backdrop-filter: blur(10px);
         }
 
+        /* BUBBLE GLASS EFFECT UNTUK TAB PRODUCT & PRICELIST */
         .tab-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
+            background: transparent;
+            border: 1px solid transparent;
             color: var(--text-cream);
             padding: 10px 24px;
             border-radius: 30px;
             font-weight: 600;
             font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .tab-btn:hover, .tab-btn.active {
-            background: var(--accent-copper);
-            color: #ffffff;
-            border-color: var(--accent-copper);
+        .tab-btn:hover {
+            color: var(--accent-gold);
+            background: rgba(229, 172, 49, 0.1);
+        }
+
+        .tab-btn.active {
+            background: rgba(229, 172, 49, 0.2);
+            color: var(--accent-gold);
+            border: 1px solid rgba(229, 172, 49, 0.4);
+            box-shadow: 0 6px 20px rgba(229, 172, 49, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .cards-grid {
@@ -730,7 +772,7 @@
             }
             [data-theme="light"] nav { background: rgba(237, 235, 222, 0.98); }
             nav.menu-open { top: 0; }
-            nav ul { flex-direction: column; gap: 25px; text-align: center; }
+            nav ul { flex-direction: column; gap: 15px; text-align: center; background: transparent; border: none; }
             nav a { font-size: 1.25rem; font-weight: 700; }
             
             .hero, .about-section { grid-template-columns: 1fr; text-align: center; padding: 120px 5% 50px 5%; }
@@ -871,7 +913,7 @@
         </div>
     </section>
 
-    <!-- 4. ABOUT SECTION (Dengan Transisi Gradasi Halus) -->
+    <!-- 4. ABOUT SECTION -->
     <section class="about-section alternate-bg reveal-section" id="about">
         <div class="about-content">
             <div class="section-title" style="text-align: left; margin-bottom: 20px;">
@@ -917,7 +959,7 @@
         </div>
     </section>
 
-    <!-- 6. CONTACT & MESSAGE SECTION (Dengan Transisi Gradasi Halus) -->
+    <!-- 6. CONTACT & MESSAGE SECTION -->
     <section class="contact-section alternate-bg reveal-section" id="contacts">
         <div class="section-title">
             <p>Mari Berkolaborasi</p>

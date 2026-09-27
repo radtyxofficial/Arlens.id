@@ -346,24 +346,24 @@
         }
 
         .section-padded {
-            padding: 40px 8% 20px 8%;
+            padding: 50px 8% 25px 8%;
         }
 
-        /* --- HERO SECTION --- */
+        /* --- HERO SECTION (DIPERLUAS & DIBERI RUANG LEGA) --- */
         .hero {
-            min-height: 85vh;
-            padding: 110px 8% 30px 8%;
+            min-height: 95vh;
+            padding: 140px 8% 80px 8%;
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
             align-items: center;
-            gap: 30px;
+            gap: 40px;
         }
 
         .hero-text h1 {
-            font-size: 2.6rem;
-            line-height: 1.2;
+            font-size: 2.8rem;
+            line-height: 1.25;
             font-weight: 800;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: var(--text-cream);
             letter-spacing: -0.5px;
         }
@@ -376,10 +376,10 @@
         }
 
         .hero-text p {
-            font-size: 1rem;
+            font-size: 1.05rem;
             color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 25px;
+            line-height: 1.75;
+            margin-bottom: 30px;
             max-width: 600px;
         }
 
@@ -442,14 +442,14 @@
             filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)) drop-shadow(0 0 20px var(--glow-color));
         }
 
-        /* --- ABOUT SECTION --- */
+        /* --- ABOUT SECTION (DENGAN JARAK & SELA LEBIH LEBAR) --- */
         .section-title {
             text-align: center;
             margin-bottom: 20px;
         }
 
         .section-title h2 {
-            font-size: 2rem;
+            font-size: 2.1rem;
             font-weight: 800;
             color: var(--text-cream);
             letter-spacing: 0.5px;
@@ -465,18 +465,19 @@
         }
 
         .about-section {
-            padding: 40px 8%;
+            padding: 80px 8% 70px 8%;
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
-            gap: 40px;
+            gap: 50px;
             align-items: center;
+            border-top: 1px solid var(--border-color);
         }
 
         .about-content p {
             color: var(--text-muted);
-            line-height: 1.7;
-            font-size: 0.95rem;
-            margin-bottom: 15px;
+            line-height: 1.9;
+            font-size: 1rem;
+            margin-bottom: 20px;
             text-align: justify;
         }
 
@@ -954,8 +955,8 @@
             nav a { font-size: 1.2rem; font-weight: 700; width: 100%; text-align: center; }
             nav a.active { background: rgba(229, 172, 49, 0.15); border-radius: 20px; }
             
-            .hero, .about-section { grid-template-columns: 1fr; text-align: center; padding: 90px 5% 20px 5%; }
-            .hero-text p { margin: 0 auto 20px auto; text-align: center; }
+            .hero, .about-section { grid-template-columns: 1fr; text-align: center; padding: 110px 5% 50px 5%; }
+            .hero-text p { margin: 0 auto 25px auto; text-align: center; }
             .hero-cta { justify-content: center; }
             .about-content p { text-align: center; }
             .about-3d-logo-wrap { order: -1; }
@@ -973,14 +974,14 @@
             .intro-welcome { font-size: 1.8rem; }
             .intro-tagline { font-size: 1rem; }
             .hero-text h1 { font-size: 1.8rem; }
-            .hero-text p { font-size: 0.85rem; margin-bottom: 20px; }
-            .section-title h2 { font-size: 1.5rem; }
-            .section-padded { padding: 30px 5% 15px 5%; }
-            .about-section { padding: 30px 5%; gap: 20px; }
+            .hero-text p { font-size: 0.9rem; margin-bottom: 20px; }
+            .section-title h2 { font-size: 1.6rem; }
+            .section-padded { padding: 40px 5% 20px 5%; }
+            .about-section { padding: 50px 5%; gap: 30px; }
             .cards-grid { grid-template-columns: 1fr; }
             .photo-row { grid-template-columns: 1fr; }
-            .contact-section { padding: 30px 5%; }
-            footer { padding: 30px 5% 20px 5%; }
+            .contact-section { padding: 40px 5%; }
+            footer { padding: 35px 5% 20px 5%; }
             .music-bubble { bottom: 25px; left: 20px; width: 45px; height: 45px; font-size: 1.05rem; }
         }
 
@@ -1082,7 +1083,7 @@
         </div>
     </header>
 
-    <!-- 3. HERO SECTION -->
+    <!-- 3. HERO SECTION (HOME) -->
     <section class="hero reveal-section" id="home">
         <div class="hero-text">
             <h1>RAYAKAN SETIAP MOMENT BAHAGIA BERSAMA <span>ARLENS.ID</span></h1>
@@ -1112,7 +1113,7 @@
     <!-- 4. ABOUT SECTION -->
     <section class="about-section alternate-bg reveal-section" id="about">
         <div class="about-content">
-            <div class="section-title" style="text-align: left; margin-bottom: 15px;">
+            <div class="section-title" style="text-align: left; margin-bottom: 20px;">
                 <p>Mengenal Kami</p>
                 <h2>Tentang ARLENS.ID</h2>
             </div>
@@ -1495,12 +1496,10 @@
             { id: 'contacts', link: document.querySelector('a[href="#contacts"]') }
         ];
 
-        // Perbaikan Scroll Spy agar akurat mendeteksi Home saat di posisi paling atas
         window.addEventListener('scroll', () => {
             let scrollY = window.pageYOffset;
 
-            // Jika posisi scroll masih di atas (kurang dari 200px), paksa aktif ke Home
-            if (scrollY < 150) {
+            if (scrollY < 180) {
                 navLinks.forEach(l => l.classList.remove('active'));
                 if (sectionMap[0].link) {
                     sectionMap[0].link.classList.add('active');

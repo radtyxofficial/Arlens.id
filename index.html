@@ -878,6 +878,7 @@
             width: auto;
             object-fit: contain;
             margin-bottom: 10px;
+            transition: all 0.3s ease;
         }
 
         .footer-brand h3 {
@@ -1238,7 +1239,7 @@
     <footer class="reveal-section" id="footer">
         <div class="footer-grid">
             <div class="footer-brand">
-                <img src="https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG" alt="ARLENS.ID Logo Abu" class="footer-logo">
+                <img src="https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw" id="footerLogo" alt="ARLENS.ID Logo" class="footer-logo">
                 <p>Karya seni visual yang natural, estetik, dan tak lekang oleh waktu.</p>
                 <p style="margin-top: 8px; color: var(--accent-gold); font-weight: 600; font-size: 0.82rem;">Base in Jombang, Jawa Timur</p>
             </div>
@@ -1544,17 +1545,32 @@
             });
         });
 
-        // --- 6. DARK MODE & LIGHT MODE TOGGLE ---
+        // --- 6. DARK MODE & LIGHT MODE TOGGLE (LOGIC GANTI LOGO HEADER & FOOTER) ---
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const htmlElement = document.documentElement;
+        const headerLogo2D = document.getElementById('headerLogo2D');
+        const footerLogo = document.getElementById('footerLogo');
+        
+        const logoDarkUrl = 'https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw';
+        const logoLightUrl = 'https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG';
         
         themeToggleBtn.addEventListener('click', () => {
             const currentTheme = htmlElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             htmlElement.setAttribute('data-theme', newTheme);
+            
             themeToggleBtn.innerHTML = newTheme === 'dark' 
                 ? '<i class="fa-solid fa-moon"></i>' 
                 : '<i class="fa-solid fa-sun"></i>';
+
+            // Ubah logo Header & Footer otomatis berdasarkan mode
+            if (newTheme === 'light') {
+                if(headerLogo2D) headerLogo2D.src = logoLightUrl;
+                if(footerLogo) footerLogo.src = logoLightUrl;
+            } else {
+                if(headerLogo2D) headerLogo2D.src = logoDarkUrl;
+                if(footerLogo) footerLogo.src = logoDarkUrl;
+            }
         });
 
         // --- 7. 3D INTERACTIVE ABOUT LOGO ---

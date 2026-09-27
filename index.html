@@ -460,8 +460,8 @@
             filter: drop-shadow(0 10px 20px rgba(255, 255, 255, 0.2)) drop-shadow(0 15px 30px rgba(0, 0, 0, 0.5));
         }
 
-        /* --- PRODUCTS & SHOWCASE TABS --- */
-        .products-section {
+        /* --- PRODUCTS, PRICELISTS & PORTFOLIO SECTIONS (TERPISAH) --- */
+        .section-padded {
             padding: 80px 8%;
         }
 
@@ -580,7 +580,6 @@
 
         /* --- HASIL GALERI (DYNAMIC) --- */
         #galleryContainer {
-            margin-top: 80px;
             animation: fadeIn 0.5s ease;
         }
 
@@ -957,34 +956,39 @@
         </div>
     </section>
 
-    <!-- 5. PRODUCTS, PRICELISTS & DYNAMIC GALLERY SECTION -->
-    <section class="products-section reveal-section" id="products">
+    <!-- 5. PRODUCTS SECTION -->
+    <section class="section-padded reveal-section" id="products">
         <div class="section-title">
-            <p>Pilihan Paket Terbaik</p>
-            <h2>Layanan & Produk</h2>
+            <p>Pilihan Layanan Kami</p>
+            <h2>Layanan Arlens.ID</h2>
         </div>
-
+        <!-- Tab Navigasi Kategori (Mengatur Pricelist & Portfolio Sekaligus) -->
         <div class="tab-navigation">
             <button class="tab-btn active" onclick="switchTab('dokumentasi', this)">Dokumentasi (Photo Only)</button>
             <button class="tab-btn" onclick="switchTab('photobooth', this)">Photobooth</button>
             <button class="tab-btn" onclick="switchTab('undangan', this)">Undangan Digital</button>
         </div>
+    </section>
 
-        <!-- Cards Pricelist Dinamis (Dipisah ID nya agar tidak bentrok) -->
-        <div id="pricelist" style="padding-top: 10px;"></div>
+    <!-- 6. PRICE LIST SECTION (Terpisah Mandiri) -->
+    <section class="section-padded alternate-bg reveal-section" id="pricelist">
+        <div class="section-title">
+            <p>Rincian Harga</p>
+            <h2>Price List</h2>
+        </div>
         <div class="cards-grid" id="cardsGrid">
             <!-- JS Injecting Content Automatically -->
         </div>
+    </section>
 
-        <!-- Galeri Portfolio Dinamis -->
-        <div id="portfolio" style="padding-top: 40px;">
-            <div id="galleryContainer">
-                <!-- JS Injecting Gallery Content Automatically -->
-            </div>
+    <!-- 7. PORTFOLIO / GALLERY SECTION (Terpisah Mandiri) -->
+    <section class="section-padded reveal-section" id="portfolio">
+        <div id="galleryContainer">
+            <!-- JS Injecting Gallery Content Automatically -->
         </div>
     </section>
 
-    <!-- 6. CONTACT & MESSAGE SECTION -->
+    <!-- 8. CONTACT & MESSAGE SECTION -->
     <section class="contact-section alternate-bg reveal-section" id="contacts">
         <div class="section-title">
             <p>Mari Berkolaborasi</p>
@@ -1057,7 +1061,7 @@
         </div>
     </section>
 
-    <!-- 7. FOOTER -->
+    <!-- 9. FOOTER -->
     <footer class="reveal-section" id="footer">
         <div class="footer-grid">
             <div class="footer-brand">
@@ -1158,7 +1162,7 @@
             if (activeLink) updateIndicator(activeLink);
         });
 
-        // Pemetaan section mandiri agar posisi tombol akurat
+        // Pemetaan section mandiri secara akurat karena sudah terpisah
         const sectionMap = [
             { id: 'home', link: document.querySelector('a[href="#home"]') },
             { id: 'about', link: document.querySelector('a[href="#about"]') },
@@ -1462,7 +1466,7 @@
             
             if (gallery && gallery.albums.length > 0) {
                 let html = `
-                    <div class="section-title" style="margin-top: 40px; margin-bottom: 30px;">
+                    <div class="section-title" style="margin-bottom: 30px;">
                         <p>Galeri & Portfolio</p>
                         <h2>${gallery.title}</h2>
                     </div>

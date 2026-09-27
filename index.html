@@ -293,6 +293,38 @@
             display: none;
         }
 
+        /* --- NOTICE BANNER (UJI COBA / COMING SOON) --- */
+        .trial-notice {
+            background: linear-gradient(135deg, rgba(151, 90, 65, 0.2), rgba(229, 172, 49, 0.2));
+            border: 1px dashed var(--accent-gold);
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: blur(8px);
+        }
+
+        .trial-notice i {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .trial-notice p {
+            font-size: 0.88rem;
+            color: var(--text-cream);
+            line-height: 1.5;
+            margin: 0 !important;
+            text-align: left !important;
+        }
+
+        .trial-notice p span {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
         /* --- SECTION PADDING COMPACT & RAPI --- */
         section {
             position: relative;
@@ -855,7 +887,7 @@
             font-size: 0.85rem;
         }
 
-        /* --- MUSIC BUBBLE BUTTON (FIXED SHAPE TO ROUND) --- */
+        /* --- MUSIC BUBBLE BUTTON --- */
         .music-bubble {
             position: fixed;
             bottom: 30px;
@@ -865,7 +897,7 @@
             background: linear-gradient(135deg, var(--accent-copper), var(--accent-gold));
             color: #121d21;
             border: 2px solid var(--border-color);
-            border-radius: 50%; /* Memastikan bentuknya lingkaran penuh secara presisi */
+            border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -1041,6 +1073,13 @@
             <p>
                 Abadikan setiap momen berharga Anda menjadi karya seni visual yang natural dan elegan. Melalui layanan Dokumentasi, Photobooth, dan Undangan Digital, kami menghadirkan pengalaman unik yang dirancang penuh presisi untuk hari spesial Anda.
             </p>
+            
+            <!-- PEMBERITAHUAN COMING SOON / UJI COBA -->
+            <div class="trial-notice">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <p><span>STATUS: COMING SOON (UJI COBA).</span> Website dan seluruh layanan jasa kreatif kami saat ini masih dalam tahap proses pengembangan akhir.</p>
+            </div>
+
             <div class="hero-cta">
                 <a href="#products" class="btn btn-primary"><i class="fa-solid fa-camera"></i> Lihat Layanan</a>
                 <a href="https://wa.me/6285604613503" target="_blank" class="btn btn-secondary"><i class="fa-brands fa-whatsapp"></i> Hubungi Kami</a>

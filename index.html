@@ -961,7 +961,7 @@
     <section class="products-section reveal-section" id="products">
         <div class="section-title">
             <p>Pilihan Paket Terbaik</p>
-            <h2 id="pricelist">Layanan & Price List</h2>
+            <h2>Layanan & Produk</h2>
         </div>
 
         <div class="tab-navigation">
@@ -970,13 +970,14 @@
             <button class="tab-btn" onclick="switchTab('undangan', this)">Undangan Digital</button>
         </div>
 
-        <!-- Cards Pricelist Dinamis -->
+        <!-- Cards Pricelist Dinamis (Dipisah ID nya agar tidak bentrok) -->
+        <div id="pricelist" style="padding-top: 10px;"></div>
         <div class="cards-grid" id="cardsGrid">
             <!-- JS Injecting Content Automatically -->
         </div>
 
-        <!-- Galeri Portfolio Dinamis akan Muncul Disini dengan ID Portfolio yang Jelas -->
-        <div id="portfolio">
+        <!-- Galeri Portfolio Dinamis -->
+        <div id="portfolio" style="padding-top: 40px;">
             <div id="galleryContainer">
                 <!-- JS Injecting Gallery Content Automatically -->
             </div>
@@ -1057,7 +1058,7 @@
     </section>
 
     <!-- 7. FOOTER -->
-    <footer class="reveal-section">
+    <footer class="reveal-section" id="footer">
         <div class="footer-grid">
             <div class="footer-brand">
                 <h3>ARLENS.ID</h3>
@@ -1157,7 +1158,7 @@
             if (activeLink) updateIndicator(activeLink);
         });
 
-        // Mapping section spesifik agar tidak tertukar
+        // Pemetaan section mandiri agar posisi tombol akurat
         const sectionMap = [
             { id: 'home', link: document.querySelector('a[href="#home"]') },
             { id: 'about', link: document.querySelector('a[href="#about"]') },
@@ -1168,7 +1169,7 @@
         ];
 
         window.addEventListener('scroll', () => {
-            let scrollY = window.pageYOffset + 200;
+            let scrollY = window.pageYOffset + 250;
 
             for (let i = sectionMap.length - 1; i >= 0; i--) {
                 const element = document.getElementById(sectionMap[i].id);
@@ -1461,7 +1462,7 @@
             
             if (gallery && gallery.albums.length > 0) {
                 let html = `
-                    <div class="section-title" style="margin-top: 80px; margin-bottom: 30px;">
+                    <div class="section-title" style="margin-top: 40px; margin-bottom: 30px;">
                         <p>Galeri & Portfolio</p>
                         <h2>${gallery.title}</h2>
                     </div>

@@ -559,13 +559,19 @@
             width: 100%;
         }
 
-        /* --- HASIL PHOTOBOOTH PORTFOLIO SECTION --- */
-        .portfolio-section {
-            padding: 80px 8%;
+        /* --- HASIL GALERI (DYNAMIC) --- */
+        #galleryContainer {
+            margin-top: 80px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .event-album-container {
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 20px;
@@ -623,7 +629,6 @@
         /* --- CONTACT & MESSAGE SECTION --- */
         .contact-section {
             padding: 80px 8%;
-            background: rgba(0, 0, 0, 0.15);
         }
 
         .contact-container {
@@ -795,7 +800,6 @@
             .about-content p { font-size: 0.9rem; }
             .products-section { padding: 60px 5%; }
             .cards-grid { grid-template-columns: 1fr; }
-            .portfolio-section { padding: 60px 5%; }
             .photo-row { grid-template-columns: 1fr; }
             .contact-section { padding: 60px 5%; }
             footer { padding: 50px 5% 30px 5%; }
@@ -874,7 +878,7 @@
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#products" class="nav-link">Products</a></li>
                 <li><a href="#pricelist" class="nav-link">Pricelist</a></li>
-                <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                <li><a href="#galleryContainer" class="nav-link">Portfolio</a></li>
                 <li><a href="#contacts" class="nav-link">Contacts</a></li>
             </ul>
         </nav>
@@ -940,7 +944,7 @@
         </div>
     </section>
 
-    <!-- 5. PRODUCTS & PRICELISTS SHOWCASE SECTION -->
+    <!-- 5. PRODUCTS, PRICELISTS & DYNAMIC GALLERY SECTION -->
     <section class="products-section" id="products">
         <div class="section-title">
             <p>Pilihan Paket Terbaik</p>
@@ -953,50 +957,18 @@
             <button class="tab-btn" onclick="switchTab('undangan', this)">Undangan Digital</button>
         </div>
 
+        <!-- Cards Pricelist Dinamis -->
         <div class="cards-grid" id="cardsGrid">
             <!-- JS Injecting Content Automatically -->
         </div>
-    </section>
 
-    <!-- 6. HASIL PHOTOBOOTH (PORTFOLIO ALBUM SECTION) -->
-    <section class="portfolio-section" id="portfolio">
-        <div class="section-title">
-            <p>Galeri Dokumentasi & Event</p>
-            <h2>Hasil Photobooth Kami</h2>
-        </div>
-
-        <!-- Album Event 1: MPLS SMAN 1 Sukawati -->
-        <div class="event-album-container">
-            <div class="event-album-title">
-                <i class="fa-solid fa-camera-retro"></i> MPLS SMAN 1 Sukawati
-            </div>
-            <div class="photo-row">
-                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1hssNsQHPSLovqGlTq0VpnkqTRNFL7Urb" alt="MPLS SMAN 1 Sukawati 1" loading="lazy"></div>
-                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1Onf2Uo4ec_UdX_08_5bsovwj87wT7PHU" alt="MPLS SMAN 1 Sukawati 2" loading="lazy"></div>
-                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1nZM47UZZ_3kxeuTb7dQBKCuGbbDNL62r" alt="MPLS SMAN 1 Sukawati 3" loading="lazy"></div>
-                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1ltYqNj1SoaOxmCmRj1tGNGL2Xu7Fd0Qq" alt="MPLS SMAN 1 Sukawati 4" loading="lazy"></div>
-                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1K1oMhqCkkNNuwBab3aPnLLZB5eswAcYM" alt="MPLS SMAN 1 Sukawati 5" loading="lazy"></div>
-                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1OpSmhcQALMdL4K8WHA-KnJ_SI6CNBx6j" alt="MPLS SMAN 1 Sukawati 6" loading="lazy"></div>
-            </div>
-        </div>
-
-        <!-- Album Event 2: Jegeg Bagus SMAN 1 Sukawati -->
-        <div class="event-album-container">
-            <div class="event-album-title">
-                <i class="fa-solid fa-award"></i> Jegeg Bagus SMAN 1 Sukawati
-            </div>
-            <div class="photo-row">
-                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1yQT_5vR9RtysBbQIm9yPvAnlWOopRueH" alt="Jegeg Bagus SMAN 1 Sukawati 1" loading="lazy"></div>
-                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1GF-neiFIolz0CsJmzOSJDjn79KC3CwSg" alt="Jegeg Bagus SMAN 1 Sukawati 2" loading="lazy"></div>
-                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/12ZBPCAmMbd3QXitinNa9qClkVdbyKLR6" alt="Jegeg Bagus SMAN 1 Sukawati 3" loading="lazy"></div>
-                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1rmKPkjRJarlPTelRq_VsxMpv3HRXhEmJ" alt="Jegeg Bagus SMAN 1 Sukawati 4" loading="lazy"></div>
-                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1c-UrY33soXT9BLFDfolzhHpuH0XmazFL" alt="Jegeg Bagus SMAN 1 Sukawati 5" loading="lazy"></div>
-                <div class="photo-item"><img src="https://lh3.googleusercontent.com/d/1Ox7qR96JCAffIMuBHDqy3WFktOXisr3s" alt="Jegeg Bagus SMAN 1 Sukawati 6" loading="lazy"></div>
-            </div>
+        <!-- Galeri Portfolio Dinamis akan Muncul Disini -->
+        <div id="galleryContainer">
+            <!-- JS Injecting Gallery Content Automatically -->
         </div>
     </section>
 
-    <!-- 7. CONTACT & MESSAGE SECTION -->
+    <!-- 6. CONTACT & MESSAGE SECTION -->
     <section class="contact-section" id="contacts">
         <div class="section-title">
             <p>Mari Berkolaborasi</p>
@@ -1069,7 +1041,7 @@
         </div>
     </section>
 
-    <!-- 8. FOOTER -->
+    <!-- 7. FOOTER -->
     <footer>
         <div class="footer-grid">
             <div class="footer-brand">
@@ -1085,16 +1057,16 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#products">Products</a></li>
                     <li><a href="#pricelist">Pricelist</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#galleryContainer">Portfolio</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
                 <h4>Layanan Kami</h4>
                 <ul>
-                    <li><a href="#products" onclick="switchTab('dokumentasi')">Dokumentasi</a></li>
-                    <li><a href="#products" onclick="switchTab('photobooth')">Photobooth</a></li>
-                    <li><a href="#products" onclick="switchTab('undangan')">Undangan Digital</a></li>
+                    <li><a href="#products" onclick="switchTab('dokumentasi', document.querySelectorAll('.tab-btn')[0])">Dokumentasi</a></li>
+                    <li><a href="#products" onclick="switchTab('photobooth', document.querySelectorAll('.tab-btn')[1])">Photobooth</a></li>
+                    <li><a href="#products" onclick="switchTab('undangan', document.querySelectorAll('.tab-btn')[2])">Undangan Digital</a></li>
                 </ul>
             </div>
         </div>
@@ -1193,7 +1165,7 @@
             aboutWrap.addEventListener('mouseleave', () => logo3d.style.transform = `rotateX(0deg) rotateY(0deg)`);
         }
 
-        // 5. DATA PAKET & SHOWCASE DATA
+        // 5. DATA PAKET PRICELIST
         const packageData = {
             dokumentasi: [
                 {
@@ -1301,9 +1273,87 @@
             ]
         };
 
+        // 6. DATA GALERI DINAMIS
+        const galleryData = {
+            dokumentasi: {
+                title: 'Hasil Dokumentasi Kami',
+                albums: [
+                    {
+                        eventName: 'Wisuda Sayu Widiana',
+                        icon: 'fa-graduation-cap',
+                        photos: [
+                            'https://lh3.googleusercontent.com/d/1m3BKo62NV2S9Ho7Xo9PBNROswq4-qzgi',
+                            'https://lh3.googleusercontent.com/d/1zm1RVa4JHfeLfQgroNwCOga09gL119pf',
+                            'https://lh3.googleusercontent.com/d/1aW5O89W6MaCqr0DRfPStVngD47X4rrxO',
+                            'https://lh3.googleusercontent.com/d/1WjwAtZflylBXKI1JwNYTUR9jgdhcneLa',
+                            'https://lh3.googleusercontent.com/d/1xPykVu01l7socn75ka_d7BRMLFZMF-JU',
+                            'https://lh3.googleusercontent.com/d/1CP_5xpaOP1Z61vJgC-aElyV6jJWkqP-P'
+                        ]
+                    },
+                    {
+                        eventName: 'Wisuda Komang Risa',
+                        icon: 'fa-graduation-cap',
+                        photos: [
+                            'https://lh3.googleusercontent.com/d/1qQBuQZnQBvWRu8Qq68z5o1EJNY8H1U3t',
+                            'https://lh3.googleusercontent.com/d/1iKYHl3sY2gTSO9W2INLjOTpmq3jfwAOY',
+                            'https://lh3.googleusercontent.com/d/1FtZOxt7SAgq44jaZ_M3Ia4dbxNor_y0S',
+                            'https://lh3.googleusercontent.com/d/1FhtpzBwBaiMch9OBbgKNSGJPVqkP8QI5',
+                            'https://lh3.googleusercontent.com/d/16Z1PnZifhQQoBLBKEooKiQKkkfrQ4mBR',
+                            'https://lh3.googleusercontent.com/d/13Bk5eI9Ys-8DvBWqqG4dJhtM-2dm4CGq'
+                        ]
+                    }
+                ]
+            },
+            photobooth: {
+                title: 'Hasil Photobooth Kami',
+                albums: [
+                    {
+                        eventName: 'MPLS SMAN 1 Sukawati',
+                        icon: 'fa-camera-retro',
+                        photos: [
+                            'https://lh3.googleusercontent.com/d/1hssNsQHPSLovqGlTq0VpnkqTRNFL7Urb',
+                            'https://lh3.googleusercontent.com/d/1Onf2Uo4ec_UdX_08_5bsovwj87wT7PHU',
+                            'https://lh3.googleusercontent.com/d/1nZM47UZZ_3kxeuTb7dQBKCuGbbDNL62r',
+                            'https://lh3.googleusercontent.com/d/1ltYqNj1SoaOxmCmRj1tGNGL2Xu7Fd0Qq',
+                            'https://lh3.googleusercontent.com/d/1K1oMhqCkkNNuwBab3aPnLLZB5eswAcYM',
+                            'https://lh3.googleusercontent.com/d/1OpSmhcQALMdL4K8WHA-KnJ_SI6CNBx6j'
+                        ]
+                    },
+                    {
+                        eventName: 'Jegeg Bagus SMAN 1 Sukawati',
+                        icon: 'fa-award',
+                        photos: [
+                            'https://lh3.googleusercontent.com/d/1yQT_5vR9RtysBbQIm9yPvAnlWOopRueH',
+                            'https://lh3.googleusercontent.com/d/1GF-neiFIolz0CsJmzOSJDjn79KC3CwSg',
+                            'https://lh3.googleusercontent.com/d/12ZBPCAmMbd3QXitinNa9qClkVdbyKLR6',
+                            'https://lh3.googleusercontent.com/d/1rmKPkjRJarlPTelRq_VsxMpv3HRXhEmJ',
+                            'https://lh3.googleusercontent.com/d/1c-UrY33soXT9BLFDfolzhHpuH0XmazFL',
+                            'https://lh3.googleusercontent.com/d/1Ox7qR96JCAffIMuBHDqy3WFktOXisr3s'
+                        ]
+                    }
+                ]
+            },
+            undangan: {
+                title: 'Sample Undangan Digital',
+                albums: [
+                    {
+                        eventName: 'Preview Undangan (Coming Soon)',
+                        icon: 'fa-envelope-open-text',
+                        photos: [
+                            'https://images.unsplash.com/photo-1544531585-9847b68c8c86?auto=format&fit=crop&w=600&q=80',
+                            'https://images.unsplash.com/photo-1533470783457-36e6e8979102?auto=format&fit=crop&w=600&q=80',
+                            'https://images.unsplash.com/photo-1507290439931-a861b5a38200?auto=format&fit=crop&w=600&q=80'
+                        ]
+                    }
+                ]
+            }
+        };
+
         const cardsGrid = document.getElementById('cardsGrid');
+        const galleryContainer = document.getElementById('galleryContainer');
 
         function renderTabContent(category) {
+            // 1. Render Cards Pricelist
             cardsGrid.innerHTML = '';
             const items = packageData[category];
 
@@ -1321,6 +1371,44 @@
                 `;
                 cardsGrid.appendChild(card);
             });
+
+            // 2. Render Gallery Dinamis Berdasarkan Tab Terpilih
+            galleryContainer.innerHTML = '';
+            const gallery = galleryData[category];
+            
+            if (gallery && gallery.albums.length > 0) {
+                let html = `
+                    <div class="section-title" style="margin-top: 80px; margin-bottom: 30px;">
+                        <p>Galeri & Portfolio</p>
+                        <h2>${gallery.title}</h2>
+                    </div>
+                `;
+
+                gallery.albums.forEach(album => {
+                    html += `
+                    <div class="event-album-container">
+                        <div class="event-album-title">
+                            <i class="fa-solid ${album.icon}"></i> ${album.eventName}
+                        </div>
+                        <div class="photo-row">
+                    `;
+                    
+                    album.photos.forEach(photo => {
+                        html += `
+                            <div class="photo-item">
+                                <img src="${photo}" alt="Portfolio ${album.eventName}" loading="lazy">
+                            </div>
+                        `;
+                    });
+
+                    html += `
+                        </div>
+                    </div>
+                    `;
+                });
+
+                galleryContainer.innerHTML = html;
+            }
         }
 
         function switchTab(category, btnElement) {
@@ -1331,9 +1419,10 @@
             renderTabContent(category);
         }
 
+        // Initialize First Tab Render
         renderTabContent('dokumentasi');
 
-        // 6. MODAL FUNCTIONS & DYNAMIC WHATSAPP URL
+        // 7. MODAL FUNCTIONS & DYNAMIC WHATSAPP URL
         const modalOverlay = document.getElementById('packageModal');
         const modalTitle = document.getElementById('modalTitle');
         const modalPrice = document.getElementById('modalPrice');
@@ -1377,7 +1466,7 @@
             modalOverlay.classList.remove('active');
         }
 
-        // 7. WHATSAPP FORM SUBMISSION
+        // 8. WHATSAPP FORM SUBMISSION (DI BAGIAN CONTACTS)
         function sendToWhatsApp(e) {
             e.preventDefault();
             const nama = document.getElementById('nama').value;

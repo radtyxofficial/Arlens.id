@@ -61,6 +61,18 @@
             background-size: 32px 32px;
             overflow-x: hidden;
             transition: background-color 0.4s ease, color 0.4s ease;
+            position: relative;
+        }
+
+        /* --- SNOWFALL EFFECT STYLING --- */
+        #snow-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
         }
 
         /* --- SCROLL REVEAL ANIMATION CLASSES --- */
@@ -974,6 +986,9 @@
 </head>
 <body>
 
+    <!-- CANVAS UNTUK EFEK SALJU TURUN -->
+    <canvas id="snow-canvas"></canvas>
+
     <!-- AUDIO PLAYER & FLOATING BUBBLE BUTTON -->
     <audio id="bgMusic" src="https://github.com/radtyxofficial/Arlens.id/raw/main/Janam%20Janam%20Instrumen.mp3" loop preload="auto"></audio>
     
@@ -1222,7 +1237,74 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // --- 0. MUSIC PLAYER LOGIC ---
+        // --- 0. SNOWFALL EFFECT LOGIC ---
+        const canvas = document.getElementById('snow-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const snowflakes = [];
+        const maxSnowflakes = 45; // Jumlah butiran salju diatur pas agar estetik dan tidak padat
+
+        for (let i = 0; i < maxSnowflakes; i++) {
+            snowflakes.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2.2 + 0.8, // Ukuran bervariasi halus (kecil ke sedang)
+                density: Math.random() * maxSnowflakes,
+                speedY: Math.random() * 0.7 + 0.4, // Kecepatan jatuh pelan dan syahdu
+                speedX: Math.random() * 0.4 - 0.2  // Efek goyangan angin lembut ke kiri/kanan
+            });
+        }
+
+        function drawSnow() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.75)'; // Warna putih semi-transparan yang estetik
+            ctx.beginPath();
+            for (let i = 0; i < snowflakes.length; i++) {
+                let sf = snowflakes[i];
+                ctx.moveTo(sf.x, sf.y);
+                ctx.arc(sf.x, sf.y, sf.radius, 0, Math.PI * 2, true);
+            }
+            ctx.fill();
+            updateSnow();
+        }
+
+        let angle = 0;
+        function updateSnow() {
+            angle += 0.01;
+            for (let i = 0; i < snowflakes.length; i++) {
+                let sf = snowflakes[i];
+                sf.y += sf.speedY;
+                sf.x += Math.sin(angle + sf.density) * 0.4 + sf.speedX;
+
+                // Jika salju melewati batas bawah layar, kembalikan ke atas secara acak
+                if (sf.y > canvas.height + 10) {
+                    sf.y = -10;
+                    sf.x = Math.random() * canvas.width;
+                }
+                // Jika melewati batas samping, bungkus posisinya
+                if (sf.x > canvas.width + 10) {
+                    sf.x = -10;
+                } else if (sf.x < -10) {
+                    sf.x = canvas.width + 10;
+                }
+            }
+        }
+
+        function loopSnow() {
+            drawSnow();
+            requestAnimationFrame(loopSnow);
+        }
+        loopSnow();
+
+
+        // --- 1. MUSIC PLAYER LOGIC ---
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
         const musicIcon = musicToggle.querySelector('i');
@@ -1273,7 +1355,7 @@
         window.addEventListener('scroll', triggerAutoPlayOnce);
 
 
-        // --- 1. AUTO CLOSE INTRO / SKIP INTRO & MENGUNCI SCROLL SAAT LOAD ---
+        // --- 2. AUTO CLOSE INTRO / SKIP INTRO & MENGUNCI SCROLL SAAT LOAD ---
         document.body.style.overflow = 'hidden'; 
 
         const introOverlay = document.getElementById('intro-overlay');
@@ -1293,7 +1375,7 @@
         
         setTimeout(closeIntro, 4500);
 
-        // --- 2. SCROLL REVEAL ANIMATION (INTERSECTION OBSERVER) ---
+        // --- 3. SCROLL REVEAL ANIMATION (INTERSECTION OBSERVER) ---
         const observerOptions = {
             threshold: 0.15
         };
@@ -1310,7 +1392,7 @@
             observer.observe(section);
         });
 
-        // --- 3. ACCURATE SCROLL SPY & SMOOTH BUBBLE SLIDING ANIMATION ---
+        // --- 4. ACCURATE SCROLL SPY & SMOOTH BUBBLE SLIDING ANIMATION ---
         const navLinks = document.querySelectorAll('.nav-link');
         const navIndicator = document.getElementById('navIndicator');
 
@@ -1373,7 +1455,7 @@
             });
         });
 
-        // --- 4. MOBILE MENU HAMBURGER ---
+        // --- 5. MOBILE MENU HAMBURGER ---
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navbar = document.getElementById('navbar');
 
@@ -1396,7 +1478,7 @@
             });
         });
 
-        // --- 5. DARK MODE & LIGHT MODE TOGGLE ---
+        // --- 6. DARK MODE & LIGHT MODE TOGGLE ---
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const htmlElement = document.documentElement;
         
@@ -1415,7 +1497,7 @@
             headerLogo2D.src = newTheme === 'dark' ? darkLogoUrl : lightLogoUrl;
         });
 
-        // --- 6. 3D INTERACTIVE ABOUT LOGO ---
+        // --- 7. 3D INTERACTIVE ABOUT LOGO ---
         const logo3d = document.getElementById('logo3d');
         const aboutWrap = document.querySelector('.about-3d-logo-wrap');
 
@@ -1429,7 +1511,7 @@
             aboutWrap.addEventListener('mouseleave', () => logo3d.style.transform = `rotateX(0deg) rotateY(0deg)`);
         }
 
-        // --- 7. DATA PAKET PRICELIST ---
+        // --- 8. DATA PAKET PRICELIST ---
         const packageData = {
             dokumentasi: [
                 {
@@ -1537,7 +1619,7 @@
             ]
         };
 
-        // --- 8. DATA GALERI DINAMIS ---
+        // --- 9. DATA GALERI DINAMIS ---
         const galleryData = {
             dokumentasi: {
                 title: 'Hasil Dokumentasi Kami',
@@ -1683,7 +1765,7 @@
 
         renderTabContent('dokumentasi');
 
-        // --- 9. MODAL DETAIL PAKET & LIGHTBOX ZOOM FOTO ---
+        // --- 10. MODAL DETAIL PAKET & LIGHTBOX ZOOM FOTO ---
         const modalOverlay = document.getElementById('packageModal');
         const modalTitle = document.getElementById('modalTitle');
         const modalPrice = document.getElementById('modalPrice');
@@ -1717,6 +1799,7 @@
             const message = `Halo ARLENS.ID 👋🏻%0A%0ASaya ingin bertanya mengenai ketersediaan dan detail untuk layanan *${encodeURIComponent(packageName)}* pada acara saya.%0A%0AMohon infonya, terima kasih😇❣️`;
             modalWhatsAppBtn.href = `https://wa.me/${whatsappNumber}?text=${message}`;
 
+            modalOverlay.classList.0('active') ? modalOverlay.classList.remove('active') : modalOverlay.classList.add('active');
             modalOverlay.classList.add('active');
         }
 
@@ -1736,7 +1819,7 @@
             lightboxModal.classList.remove('active');
         }
 
-        // --- 10. WHATSAPP FORM SUBMISSION ---
+        // --- 11. WHATSAPP FORM SUBMISSION ---
         function sendToWhatsApp(e) {
             e.preventDefault();
             const nama = document.getElementById('nama').value;

@@ -1316,7 +1316,7 @@
             aboutWrap.addEventListener('mouseleave', () => logo3d.style.transform = `rotateX(0deg) rotateY(0deg)`);
         }
 
-        // 7. DATA PAKET PRICELIST
+        // 7. DATA PAKET PRICELIST (Menggunakan Gambar dari Google Drive Anda)
         const packageData = {
             dokumentasi: [
                 {
@@ -1339,13 +1339,13 @@
                 },
                 {
                     name: 'Flash Disk (Add-on)', price: 'Rp. 120.000,00',
-                    img: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&q=80',
+                    img: 'https://lh3.googleusercontent.com/d/1JUzVynZzKvW5bLYGdD_T2KT8FA7CJXhs',
                     benefits: ['Flash Disk Custom', 'Isi: Foto Frame + File Original', 'Desain Eksklusif ARLENS.ID'],
                     notes: []
                 },
                 {
                     name: 'Buku Album (Add-on)', price: 'Rp. 350.000,00',
-                    img: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80',
+                    img: 'https://lh3.googleusercontent.com/d/1-Go1hJkA-sdHfnpW8tsErGuJH4ieLUqo',
                     benefits: ['Cetak Buku Album Berkualitas Tinggi', 'Layout & Desain Eksklusif', 'Penyimpanan Kenangan Abadi'],
                     notes: []
                 }
@@ -1511,7 +1511,7 @@
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `
-                    <img src="${item.img}" alt="${item.name}" class="card-img">
+                    <img src="${item.img}" alt="${item.name}" class="card-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400/121d21/e5ac31?text=ARLENS.ID';">
                     <div class="card-category">${category.toUpperCase()}</div>
                     <div class="card-title">${item.name}</div>
                     <div class="card-price">${item.price}</div>
@@ -1545,7 +1545,7 @@
                     album.photos.forEach(photo => {
                         html += `
                             <div class="photo-item" onclick="openLightbox('${photo}')">
-                                <img src="${photo}" alt="Portfolio ${album.eventName}" loading="lazy">
+                                <img src="${photo}" alt="Portfolio ${album.eventName}" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x450/121d21/e5ac31?text=ARLENS.ID';">
                             </div>
                         `;
                     });

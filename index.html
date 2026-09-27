@@ -348,9 +348,21 @@
         .about-section {
             padding: 80px 8%;
             display: grid;
-            grid-template-columns: 0.8fr 1.2fr;
+            grid-template-columns: 1.1fr 0.9fr;
             gap: 50px;
             align-items: center;
+        }
+
+        .about-content {
+            text-align: left;
+        }
+
+        .about-content p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            text-align: justify;
         }
 
         .about-3d-logo-wrap {
@@ -361,33 +373,22 @@
         }
 
         .logo-3d-box {
-            width: 260px;
-            height: 260px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
+            width: 300px;
+            height: 300px;
+            background: transparent;
+            border: none;
             display: flex;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 15px 35px var(--shadow-subtle);
             transform-style: preserve-3d;
             transition: transform 0.2s ease-out;
         }
 
         .logo-3d-box img {
-            max-width: 170px;
+            max-width: 230px;
             height: auto;
             transform: translateZ(40px);
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
-        }
-
-        .about-content p {
-            color: var(--text-muted);
-            line-height: 1.8;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            text-align: justify;
+            filter: drop-shadow(0 10px 20px rgba(255, 255, 255, 0.2)) drop-shadow(0 15px 30px rgba(0, 0, 0, 0.5));
         }
 
         /* --- PRODUCTS & SHOWCASE TABS --- */
@@ -711,8 +712,11 @@
             .hero { grid-template-columns: 1fr; text-align: center; padding: 120px 5% 50px 5%; }
             .hero-text p { margin: 0 auto 30px auto; }
             .hero-cta { justify-content: center; }
-            .about-section, .contact-container, .footer-grid { grid-template-columns: 1fr; }
+            .about-section { grid-template-columns: 1fr; text-align: center; }
+            .about-content { text-align: center; }
+            .about-content p { text-align: center; }
             .about-3d-logo-wrap { order: -1; }
+            .contact-container, .footer-grid { grid-template-columns: 1fr; }
             .photo-row { grid-template-columns: 1fr; }
         }
 
@@ -729,8 +733,7 @@
             .hero-gif-container { max-width: 280px; margin: 0 auto; }
             .section-title h2 { font-size: 1.7rem; }
             .about-section { padding: 60px 5%; gap: 30px; }
-            .logo-3d-box { width: 220px; height: 220px; }
-            .logo-3d-box img { max-width: 140px; }
+            .logo-3d-box img { max-width: 180px; }
             .about-content p { font-size: 0.9rem; }
             .products-section { padding: 60px 5%; }
             .cards-grid { grid-template-columns: 1fr; }
@@ -849,12 +852,6 @@
 
     <!-- 4. ABOUT SECTION -->
     <section class="about-section" id="about">
-        <div class="about-3d-logo-wrap">
-            <div class="logo-3d-box" id="logo3d">
-                <img src="https://lh3.googleusercontent.com/d/1-VsXB7QToVlaYd4JTP_bods9H4NzWizG" alt="Logo Arlens 3D" onerror="this.onerror=null; this.src='https://via.placeholder.com/170/2a3338/e5ac31?text=ARLENS+3D';">
-            </div>
-        </div>
-
         <div class="about-content">
             <div class="section-title" style="text-align: left; margin-bottom: 20px;">
                 <p>Mengenal Kami</p>
@@ -866,6 +863,12 @@
             <p>
                 Berawal dari kecintaan pada seni visual, ARLENS.ID kini telah dipercaya untuk menangani berbagai acara mulai dari pernikahan, lamaran, ulang tahun, hingga acara perusahaan. Pendekatan kami tidak hanya sekadar memotret, tetapi juga menceritakan kisah Anda melalui bingkai foto dan video yang jujur, estetik, dan tak lekang oleh waktu.
             </p>
+        </div>
+
+        <div class="about-3d-logo-wrap">
+            <div class="logo-3d-box" id="logo3d">
+                <img src="https://lh3.googleusercontent.com/d/1-VsXB7QToVlaYd4JTP_bods9H4NzWizG" alt="Logo Arlens 3D" onerror="this.onerror=null; this.src='https://via.placeholder.com/230/121d21/e5ac31?text=ARLENS+3D';">
+            </div>
         </div>
     </section>
 
@@ -1374,6 +1377,7 @@
             const message = `Halo ARLENS.ID 👋🏻%0A%0ASaya ingin bertanya mengenai ketersediaan dan detail untuk layanan *${encodeURIComponent(packageName)}* pada acara saya.%0A%0AMohon infonya, terima kasih😇❣️`;
             modalWhatsAppBtn.href = `https://wa.me/${whatsappNumber}?text=${message}`;
 
+            modalOverlay.classList.0('active') ? modalOverlay.classList.remove('active') : modalOverlay.classList.add('active');
             modalOverlay.classList.add('active');
         }
 

@@ -2,7 +2,7 @@
 <html lang="id" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ARLENS.ID | Creative Visual & Digital Invitation</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -80,15 +80,17 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            min-height: -webkit-fill-available;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            height: 100dvh; /* Dynamic Viewport Height untuk mengatasi browser bar */
             background-color: #121d21;
             background-image: 
                 linear-gradient(rgba(229, 172, 49, 0.04) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(229, 172, 49, 0.04) 1px, transparent 1px);
             background-size: 30px 30px;
-            z-index: 99999;
+            z-index: 999999;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -138,7 +140,7 @@
 
         .skip-btn {
             position: absolute;
-            bottom: 25px;
+            bottom: max(40px, env(safe-area-inset-bottom)); /* Mencegah tabrakan dengan home bar di iOS */
             right: 25px;
             background: rgba(42, 51, 56, 0.9);
             border: 1px solid #b7785c;
@@ -1177,10 +1179,13 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // 1. AUTO CLOSE INTRO / SKIP INTRO
+        // 1. AUTO CLOSE INTRO / SKIP INTRO & MENGUNCI SCROLL SAAT LOAD 
+        document.body.style.overflow = 'hidden'; // Kunci scroll di awal agar tidak bisa ditarik/bocor
+
         const introOverlay = document.getElementById('intro-overlay');
         function closeIntro() {
             introOverlay.style.opacity = '0';
+            document.body.style.overflow = ''; // Mengembalikan fungsi scroll saat intro selesai
             setTimeout(() => introOverlay.style.visibility = 'hidden', 800);
         }
         setTimeout(closeIntro, 4500);

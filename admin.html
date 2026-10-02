@@ -89,6 +89,12 @@
         .btn-secondary { background: var(--bg-input); color: var(--text-cream); border: 1px solid var(--border-color); }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
+        /* --- PREVIEW THUMBNAIL KECIL --- */
+        .thumbnail-preview {
+            width: 80px; height: 80px; border-radius: 8px; border: 1px solid var(--border-color);
+            object-fit: contain; background: #fff; margin-top: 8px; display: block; padding: 5px;
+        }
+
         /* --- INVOICE PRINT SECTION --- */
         #invoicePreview { background: #ffffff; color: #121d21; padding: 40px; border-radius: 8px; margin-top: 20px; display: none; }
         .invoice-header { display: flex; justify-content: space-between; border-bottom: 2px solid #121d21; padding-bottom: 20px; margin-bottom: 30px; }
@@ -155,12 +161,12 @@
         <!-- PANEL: DASHBOARD -->
         <div class="panel active" id="dashboard">
             <h2 class="page-title">Ikhtisar Admin</h2>
-            <p style="color: var(--text-muted); line-height: 1.6;">Selamat datang di Dashboard Admin ARLENS.ID. Sistem ini sekarang telah terhubung secara Real-Time dengan Firebase Database. Perubahan harga di sini akan langsung merubah tampilan di halaman pengunjung secara otomatis.</p>
+            <p style="color: var(--text-muted); line-height: 1.6;">Selamat datang di Dashboard Admin ARLENS.ID. Di sini Anda dapat memperbarui harga paket, thumbnail/gambar produk, dan membuat invoice cetak secara real-time.</p>
         </div>
 
-        <!-- PANEL: KELOLA HARGA -->
+        <!-- PANEL: KELOLA HARGA & THUMBNAIL -->
         <div class="panel" id="kelola-harga">
-            <h2 class="page-title">Kelola Pricelist & Produk</h2>
+            <h2 class="page-title">Kelola Pricelist & Thumbnail Produk</h2>
             <div class="grid-2">
                 <div class="form-group">
                     <label>Pilih Kategori Layanan</label>
@@ -172,13 +178,13 @@
                 </div>
                 <div class="form-group">
                     <label>ID / Kode Paket (Tanpa Spasi)</label>
-                    <input type="text" class="form-control" id="idPaket" placeholder="Contoh: premium_01" value="premium">
-                    <small style="color:var(--text-muted); font-size:0.75rem;">*ID ini berfungsi sebagai penamaan unik di database.</small>
+                    <input type="text" class="form-control" id="idPaket" placeholder="Contoh: premium" value="premium">
+                    <small style="color:var(--text-muted); font-size:0.75rem;">*Digunakan sebagai kunci unik di database.</small>
                 </div>
             </div>
 
             <div class="form-group">
-                <label>Nama Paket (Tampil di Web)</label>
+                <label>Nama Paket / Produk</label>
                 <input type="text" class="form-control" id="namaPaket" value="PREMIUM">
             </div>
 
@@ -188,8 +194,10 @@
                     <input type="text" class="form-control" id="hargaPaket" value="Rp. 400.000,00">
                 </div>
                 <div class="form-group">
-                    <label>URL Gambar Produk</label>
-                    <input type="text" class="form-control" id="gambarPaket" value="https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG">
+                    <label>URL Thumbnail / Gambar Produk</label>
+                    <input type="text" class="form-control" id="gambarPaket" value="https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG" oninput="updateThumbPreview(this.value)">
+                    <small style="color:var(--text-muted); font-size:0.75rem;">*Pratinjau Thumbnail:</small>
+                    <img id="thumbPreview" src="https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG" class="thumbnail-preview" alt="Preview">
                 </div>
             </div>
 
@@ -243,7 +251,6 @@
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
-        // Konfigurasi Firebase Asli Anda
         const firebaseConfig = {
             apiKey: "AIzaSyBnaFOFKMPXa683ByiYAW3a5p144RfOKcI",
             authDomain: "arlens-portofolio.firebaseapp.com",
@@ -282,7 +289,7 @@
                     btnLoginAction.innerText = "Berhasil Masuk!";
                     loginErrorMsg.style.display = 'none';
                 })
-                .catch((error) => {
+                .catch(() => {
                     btnLoginAction.innerText = "Masuk ke Dashboard";
                     loginErrorMsg.style.display = 'block';
                     loginErrorMsg.innerText = "Gagal login! Pastikan Email & Password benar.";
@@ -294,7 +301,7 @@
             signOut(auth).then(() => { window.scrollTo(0,0); });
         });
 
-        // --- DATABASE LOGIC ---
+        // --- DATABASE LOGIC (SIMPAN HARGA & THUMBNAIL) ---
         const btnSimpanDB = document.getElementById('btnSimpanDB');
         const statusSimpan = document.getElementById('statusSimpan');
 
@@ -328,7 +335,7 @@
                     lastUpdate: new Date().toISOString()
                 });
                 
-                statusSimpan.innerText = "✅ Data berhasil disimpan secara permanen di Database!";
+                statusSimpan.innerText = "✅ Data harga & thumbnail berhasil disimpan di Database!";
                 statusSimpan.style.color = "#2ecc71";
                 btnSimpanDB.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Simpan ke Database';
                 setTimeout(() => { statusSimpan.innerText = ""; }, 3000);
@@ -357,6 +364,16 @@
     </script>
 
     <script>
+        // --- PREVIEW THUMBNAIL REALTIME ---
+        function updateThumbPreview(url) {
+            const preview = document.getElementById('thumbPreview');
+            if(url.trim() !== "") {
+                preview.src = url;
+            } else {
+                preview.src = 'https://via.placeholder.com/100?text=No+Image';
+            }
+        }
+
         // --- INVOICE GENERATOR ---
         function generateInvoice() {
             const nama = document.getElementById('invNama').value || 'Nama Kosong';

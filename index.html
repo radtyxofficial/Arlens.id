@@ -326,7 +326,7 @@
             font-weight: 700;
         }
 
-        /* --- SECTION PADDING COMPACT & RAPI --- */
+        /* --- SECTION PADDING --- */
         section {
             position: relative;
             background-color: var(--bg-main);
@@ -349,7 +349,7 @@
             padding: 50px 8% 25px 8%;
         }
 
-        /* --- HERO SECTION (DIPERLUAS & DIBERI RUANG LEGA) --- */
+        /* --- HERO SECTION --- */
         .hero {
             min-height: 95vh;
             padding: 140px 8% 80px 8%;
@@ -442,7 +442,7 @@
             filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)) drop-shadow(0 0 20px var(--glow-color));
         }
 
-        /* --- ABOUT SECTION (DENGAN JARAK & SELA LEBIH LEBAR) --- */
+        /* --- ABOUT SECTION --- */
         .section-title {
             text-align: center;
             margin-bottom: 20px;
@@ -1152,7 +1152,8 @@
             <h2>Price List</h2>
         </div>
         <div class="cards-grid" id="cardsGrid">
-            <!-- JS Injecting Content Automatically -->
+            <!-- Data akan dimuat otomatis dari Firebase Firestore -->
+            <p style="text-align: center; color: var(--text-muted); grid-column: 1/-1;">Memuat data pricelist...</p>
         </div>
     </section>
 
@@ -1291,7 +1292,66 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- FIREBASE & JAVASCRIPT LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBnaFOFKMPXa683ByiYAW3a5p144RfOKcI",
+            authDomain: "arlens-portofolio.firebaseapp.com",
+            projectId: "arlens-portofolio",
+            storageBucket: "arlens-portofolio.firebasestorage.app",
+            messagingSenderId: "104940044026",
+            appId: "1:104940044026:web:8956c198f34598bafe5343",
+            measurementId: "G-1RVNQXEH1G"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Global variable untuk menampung data dari database
+        window.firebasePackages = {
+            dokumentasi: [],
+            photobooth: [],
+            undangan: []
+        };
+
+        // Fungsi mengambil data dari Firestore
+        async function fetchPackagesFromFirebase() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "pricelist"));
+                
+                // Reset penampung
+                window.firebasePackages = { dokumentasi: [], photobooth: [], undangan: [] };
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    if (data.kategori && window.firebasePackages[data.kategori]) {
+                        window.firebasePackages[data.kategori].push(data);
+                    }
+                });
+
+                // Render ulang tab aktif saat data berhasil ditarik
+                const activeBtn = document.querySelector('.tab-btn.active');
+                let currentCategory = 'dokumentasi';
+                if(activeBtn) {
+                    const text = activeBtn.innerText.toLowerCase();
+                    if(text.includes('photobooth')) currentCategory = 'photobooth';
+                    else if(text.includes('undangan')) currentCategory = 'undangan';
+                }
+                renderTabContent(currentCategory);
+
+            } catch (error) {
+                console.error("Gagal mengambil data dari Firebase:", error);
+            }
+        }
+
+        // Panggil fungsi saat halaman dimuat
+        fetchPackagesFromFirebase();
+        window.fetchPackagesFromFirebase = fetchPackagesFromFirebase;
+    </script>
+
     <script>
         // --- 0. SNOWFALL EFFECT LOGIC ---
         const canvas = document.getElementById('snow-canvas');
@@ -1598,126 +1658,6 @@
             aboutWrap.addEventListener('mouseleave', () => logo3d.style.transform = `rotateX(0deg) rotateY(0deg)`);
         }
 
-        // --- 8. DATA PAKET PRICELIST ---
-        const logoNewWhiteBg = 'https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG';
-
-        const packageData = {
-            dokumentasi: [
-                {
-                    name: 'PREMIUM', price: 'Rp. 400.000,00',
-                    img: logoNewWhiteBg,
-                    isTransparent: false,
-                    benefits: ['All file original', '30 File Edit (Retouch)', '4 Jam kerja'],
-                    notes: []
-                },
-                {
-                    name: 'EKSLUSIF', price: 'Rp. 500.000,00',
-                    img: logoNewWhiteBg,
-                    isTransparent: false,
-                    benefits: ['All file foto edit (color correction)', '25 File Edit (Retouch)', '4 Jam kerja (Max)'],
-                    notes: []
-                },
-                {
-                    name: 'ULTIMATE', price: 'Rp. 600.000,00',
-                    img: logoNewWhiteBg,
-                    isTransparent: false,
-                    benefits: ['All file foto edit (color correction)', '30 File Edit (Retouch)', '10 Jam kerja (Max)'],
-                    notes: []
-                },
-                {
-                    name: 'Flash Disk (Add-on)', price: 'Rp. 120.000,00',
-                    img: 'https://lh3.googleusercontent.com/d/1JUzVynZzKvW5bLYGdD_T2KT8FA7CJXhs',
-                    isTransparent: true,
-                    benefits: ['Flash Disk Custom', 'Isi: Foto Frame + File Original', 'Desain Eksklusif ARLENS.ID'],
-                    notes: []
-                },
-                {
-                    name: 'Buku Album (Add-on)', price: 'Rp. 350.000,00',
-                    img: 'https://lh3.googleusercontent.com/d/1-Go1hJkA-sdHfnpW8tsErGuJH4ieLUqo',
-                    isTransparent: true,
-                    benefits: ['Cetak Buku Album Berkualitas Tinggi', 'Layout & Desain Eksklusif', 'Penyimpanan Kenangan Abadi'],
-                    notes: []
-                }
-            ],
-            photobooth: [
-                {
-                    name: 'Paket QR Only', price: 'Mulai Rp. 400.000,00',
-                    img: logoNewWhiteBg,
-                    isTransparent: false,
-                    benefits: [
-                        '2 Hours: Rp. 400.000,00',
-                        '3 Hours: Rp. 500.000,00',
-                        '4 Hours: Rp. 600.000,00',
-                        '5 Hours: Rp. 700.000,00',
-                        '6 Hours: Rp. 800.000,00'
-                    ],
-                    notes: [
-                        'Catatan: Setiap tambahan waktu dikenakan biaya sebesar 100k/Jam dari Harga Sesuai PriceList',
-                        'Catatan: Waktu persiapan rakit photobooth sekitar 30-40 menit (diluar jam yang dipesan). Waktu mulai dihitung setelah perakitan selesai.'
-                    ]
-                },
-                {
-                    name: 'Paket Limited Print', price: 'Mulai Rp. 1.000.000,00',
-                    img: logoNewWhiteBg,
-                    isTransparent: false,
-                    benefits: [
-                        '100 Print - Max 3 Hours: Rp. 1.000.000,00',
-                        '200 Print - Max 4 Hours: Rp. 1.300.000,00',
-                        '300 Print - Max 5 Hours: Rp. 1.500.000,00',
-                        '400 Print - Max 6 Hours: Rp. 1.800.000,00',
-                        '500 Print - Max 7 Hours: Rp. 2.000.000,00'
-                    ],
-                    notes: [
-                        'Catatan: Setiap tambahan waktu dikenakan biaya sebesar 150k/Jam dari Harga Sesuai PriceList',
-                        'Catatan: Waktu persiapan rakit photobooth sekitar 30-40 menit (diluar jam yang dipesan). Waktu mulai dihitung setelah perakitan selesai.',
-                        'Catatan: Tambahan limited print (jika kuota print habis) mulai dari 250k/50 print (termasuk tambahan waktu 30 menit)'
-                    ]
-                },
-                {
-                    name: 'Paket Unlimited Print', price: 'Mulai Rp. 1.450.000,00',
-                    img: logoNewWhiteBg,
-                    isTransparent: false,
-                    benefits: [
-                        '2 Hours: Rp. 1.450.000,00',
-                        '3 Hours: Rp. 1.900.000,00',
-                        '4 Hours: Rp. 2.350.000,00',
-                        '5 Hours: Rp. 2.800.000,00',
-                        '6 Hours: Rp. 3.750.000,00'
-                    ],
-                    notes: [
-                        'Catatan: Setiap tambahan waktu dikenakan biaya sebesar 300k/Jam dari Harga Sesuai PriceList',
-                        'Catatan: Waktu persiapan rakit photobooth sekitar 30-40 menit (diluar jam yang dipesan). Waktu mulai dihitung setelah perakitan selesai.'
-                    ]
-                },
-                {
-                    name: 'Paket Tambahan (Add-on)', price: 'Mulai Rp. 30.000,00',
-                    img: logoNewWhiteBg,
-                    isTransparent: false,
-                    benefits: [
-                        'Tambahan Template: Rp. 30.000,00',
-                        'Flash Disk (Foto Frame): Rp. 60.000,00',
-                        'Flash Disk (Foto Frame + Ori): Rp. 90.000,00',
-                        'Buku Album: Rp. 350.000,00'
-                    ],
-                    notes: []
-                }
-            ],
-            undangan: [
-                {
-                    name: 'Digital Invitation', price: 'COMING SOON',
-                    img: logoNewWhiteBg,
-                    isTransparent: false,
-                    benefits: [
-                        'Layanan Undangan Digital eksklusif sedang dalam tahap pengembangan akhir.',
-                        'Menghadirkan desain interaktif, elegan, dan fitur RSVP modern.',
-                        'Nantikan peluncuran resminya segera bersama ARLENS.ID!',
-                        'Hubungi admin via WhatsApp untuk informasi rilis dan penawaran khusus.'
-                    ],
-                    notes: []
-                }
-            ]
-        };
-
         // --- 9. DATA GALERI DINAMIS ---
         const galleryData = {
             dokumentasi: {
@@ -1799,24 +1739,30 @@
 
         function renderTabContent(category) {
             cardsGrid.innerHTML = '';
-            const items = packageData[category];
+            
+            // Ambil data dari Firebase jika ada, jika kosong berikan array kosong
+            const items = (window.firebasePackages && window.firebasePackages[category]) ? window.firebasePackages[category] : [];
 
-            items.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                const imgClass = item.isTransparent ? 'card-img transparent-bg' : 'card-img';
-                
-                card.innerHTML = `
-                    <img src="${item.img}" alt="${item.name}" class="${imgClass}" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400/ffffff/121d21?text=ARLENS.ID';">
-                    <div class="card-category">${category.toUpperCase()}</div>
-                    <div class="card-title">${item.name}</div>
-                    <div class="card-price">${item.price}</div>
-                    <button class="card-btn" onclick="openModal('${category}', ${index})">
-                        ${category === 'undangan' ? 'Info Peluncuran <i class="fa-solid fa-bell"></i>' : 'Lihat Benefit Detail <i class="fa-solid fa-arrow-right"></i>'}
-                    </button>
-                `;
-                cardsGrid.appendChild(card);
-            });
+            if (items.length === 0) {
+                cardsGrid.innerHTML = `<p style="text-align: center; color: var(--text-muted); grid-column: 1/-1;">Belum ada data paket untuk kategori ini. Silakan tambahkan melalui halaman Admin.</p>`;
+            } else {
+                items.forEach((item, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    const imgClass = item.isTransparent ? 'card-img transparent-bg' : 'card-img';
+                    
+                    card.innerHTML = `
+                        <img src="${item.img}" alt="${item.name}" class="${imgClass}" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400/ffffff/121d21?text=ARLENS.ID';">
+                        <div class="card-category">${category.toUpperCase()}</div>
+                        <div class="card-title">${item.name}</div>
+                        <div class="card-price">${item.price}</div>
+                        <button class="card-btn" onclick="openModal('${category}', ${index})">
+                            ${category === 'undangan' ? 'Info Peluncuran <i class="fa-solid fa-bell"></i>' : 'Lihat Benefit Detail <i class="fa-solid fa-arrow-right"></i>'}
+                        </button>
+                    `;
+                    cardsGrid.appendChild(card);
+                });
+            }
 
             galleryContainer.innerHTML = '';
             const gallery = galleryData[category];
@@ -1864,8 +1810,6 @@
             renderTabContent(category);
         }
 
-        renderTabContent('dokumentasi');
-
         // --- 10. MODAL DETAIL PAKET & LIGHTBOX ---
         const modalOverlay = document.getElementById('packageModal');
         const modalTitle = document.getElementById('modalTitle');
@@ -1874,24 +1818,17 @@
         const modalWhatsAppBtn = document.getElementById('modalWhatsAppBtn');
 
         function openModal(category, index) {
-            const data = packageData[category][index];
+            const data = window.firebasePackages[category][index];
             const packageName = category === 'undangan' ? 'Digital Invitation' : `Paket ${data.name}`;
             
             modalTitle.innerText = packageName;
             modalPrice.innerText = category === 'undangan' ? `Status: ${data.price}` : `Harga: ${data.price}`;
             modalBenefits.innerHTML = '';
             
-            data.benefits.forEach(benefit => {
-                const li = document.createElement('li');
-                li.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${benefit}`;
-                modalBenefits.appendChild(li);
-            });
-
-            if (data.notes && data.notes.length > 0) {
-                data.notes.forEach(note => {
+            if(data.benefits && Array.isArray(data.benefits)) {
+                data.benefits.forEach(benefit => {
                     const li = document.createElement('li');
-                    li.className = 'note-item';
-                    li.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${note}`;
+                    li.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${benefit}`;
                     modalBenefits.appendChild(li);
                 });
             }

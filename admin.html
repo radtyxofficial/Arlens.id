@@ -81,10 +81,11 @@
         .thumbnail-preview { width: 80px; height: 80px; border-radius: 8px; border: 1px solid var(--border-color); object-fit: contain; background: #fff; margin-top: 8px; display: block; padding: 5px; }
 
         /* --- TABLE STYLING --- */
-        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: var(--bg-input); border-radius: 8px; overflow: hidden; }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 10px; background: var(--bg-input); border-radius: 8px; overflow: hidden; margin-bottom: 30px; }
         .admin-table th, .admin-table td { padding: 12px 15px; text-align: left; font-size: 0.9rem; border-bottom: 1px solid var(--border-color); }
-        .admin-table th { background: rgba(0,0,0,0.2); color: var(--accent-gold); font-weight: 700; }
+        .admin-table th { background: rgba(0,0,0,0.3); color: var(--accent-gold); font-weight: 700; }
         .admin-table td img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; background: #fff; }
+        .category-header { background: rgba(229, 172, 49, 0.15) !important; color: var(--accent-gold); font-weight: 800; font-size: 1rem; text-transform: uppercase; }
 
         /* --- INVOICE PRINT SECTION --- */
         #invoicePreview { background: #ffffff; color: #121d21; padding: 40px; border-radius: 8px; margin-top: 20px; display: none; }
@@ -157,7 +158,7 @@
                         <option value="undangan">Undangan Digital</option>
                     </select>
                 </div>
-                <div class="form-group"><label>Kode Paket (Tanpa Spasi)</label><input type="text" class="form-control" id="idPaket" placeholder="Contoh: premium"></div>
+                <div class="form-group"><label>Kode Paket (Tanpa Spasi)</label><input type="text" class="form-control" id="idPaket" placeholder="Contoh: qr_2jam"></div>
                 <div class="form-group">
                     <label>Urutan Tampil (Angka)</label>
                     <input type="number" class="form-control" id="urutanPaket" placeholder="1" value="1">
@@ -165,8 +166,8 @@
             </div>
             
             <div class="grid-2">
-                <div class="form-group"><label>Nama Paket</label><input type="text" class="form-control" id="namaPaket" placeholder="Contoh: PREMIUM"></div>
-                <div class="form-group"><label>Deskripsi Singkat (Rekomendasi Acara)</label><input type="text" class="form-control" id="deskripsiPaket" placeholder="Contoh: Cocok untuk acara intimate/lamaran"></div>
+                <div class="form-group"><label>Nama Paket</label><input type="text" class="form-control" id="namaPaket" placeholder="Contoh: QR Only - 2 Hours"></div>
+                <div class="form-group"><label>Deskripsi Singkat (Rekomendasi Acara)</label><input type="text" class="form-control" id="deskripsiPaket" placeholder="Contoh: Cocok untuk acara casual"></div>
             </div>
             
             <div class="grid-2">
@@ -182,12 +183,9 @@
             <p id="statusSimpan" style="margin-top:10px; font-size:0.85rem; color:var(--accent-gold);"></p>
 
             <div style="margin-top: 40px;">
-                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; color: var(--accent-gold);">Daftar Paket (Terurut)</h3>
-                <div style="overflow-x: auto;">
-                    <table class="admin-table">
-                        <thead><tr><th>Urutan</th><th>Kategori</th><th>Nama Paket</th><th>Harga</th><th style="text-align: center;">Aksi</th></tr></thead>
-                        <tbody id="pricelistTableBody"><tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Memuat data...</td></tr></tbody>
-                    </table>
+                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; color: var(--accent-gold);">Daftar Paket Terkelompok Per Kategori</h3>
+                <div style="overflow-x: auto;" id="containerTabelPricelist">
+                    <!-- Tabel akan dirender secara otomatis terpisah per kategori -->
                 </div>
             </div>
         </div>
@@ -232,7 +230,7 @@
                 </div>
 
                 <div class="form-group" style="margin-top: 25px; border-top: 1px solid var(--border-color); padding-top: 20px;">
-                    <label>Item Tambahan (Overtime, Flashdisk, dll)</label>
+                    <label>Item Tambahan (Overtime, Flashdisk, Album, dll)</label>
                     <div id="customItemsList"></div>
                     <button type="button" class="btn btn-secondary" onclick="addCustomItemRow()"><i class="fa-solid fa-plus"></i> Tambah Charge Lain</button>
                 </div>
@@ -321,14 +319,17 @@
 
         document.getElementById('btnLogoutAction').addEventListener('click', (e) => { e.preventDefault(); signOut(auth); });
 
-        // --- LOAD PRICELIST AMAN (DENGAN URUTAN & DESKRIPSI) ---
+        // --- LOAD & RENDER TABEL TERPISAH PER KATEGORI ---
         async function loadPricelistData() {
             try {
                 const qSnap = await getDocs(collection(db, "pricelist"));
-                const tbody = document.getElementById('pricelistTableBody');
-                tbody.innerHTML = ''; window.dbAllPackages = [];
+                const container = document.getElementById('containerTabelPricelist');
+                container.innerHTML = ''; window.dbAllPackages = [];
                 
-                if (qSnap.empty) { tbody.innerHTML = `<tr><td colspan="5" style="text-align: center;">Belum ada paket.</td></tr>`; return; }
+                if (qSnap.empty) { 
+                    container.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px;">Belum ada paket tersimpan.</div>`; 
+                    return; 
+                }
 
                 qSnap.forEach((docSnap) => {
                     const data = docSnap.data();
@@ -340,29 +341,56 @@
                     }
                     data.priceValue = finalPriceVal;
                     data.order = data.order || 99;
-                    
                     window.dbAllPackages.push({ id: docSnap.id, ...data });
                 });
 
+                // Urutkan data berdasarkan kategori & urutan
                 window.dbAllPackages.sort((a, b) => {
                     if(a.kategori < b.kategori) return -1;
                     if(a.kategori > b.kategori) return 1;
                     return a.order - b.order;
                 });
 
-                window.dbAllPackages.forEach(data => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td><strong>#${data.order}</strong></td>
-                        <td><span style="text-transform: uppercase; font-weight: 700; font-size: 0.75rem; color: var(--accent-gold);">${data.kategori}</span></td>
-                        <td>${data.name}</td>
-                        <td>Rp ${data.priceValue.toLocaleString('id-ID')}</td>
-                        <td style="text-align: center;">
-                            <button class="btn btn-edit" onclick="window.panggilEdit('${data.id}')"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-danger" onclick="window.hapusPaket('${data.id}')"><i class="fa-solid fa-trash"></i></button>
-                        </td>
+                // Kelompokkan unik berdasarkan kategori
+                const kategoriList = [...new Set(window.dbAllPackages.map(p => p.kategori))];
+
+                kategoriList.forEach(kat => {
+                    const paketsInKat = window.dbAllPackages.filter(p => p.kategori === kat);
+                    
+                    let tableHTML = `
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="5" class="category-header"><i class="fa-solid fa-layer-group"></i> Kategori: ${kat.toUpperCase()}</th>
+                                </tr>
+                                <tr>
+                                    <th style="width: 80px;">Urutan</th>
+                                    <th>Nama Paket</th>
+                                    <th>Deskripsi</th>
+                                    <th>Harga</th>
+                                    <th style="text-align: center; width: 120px;">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                     `;
-                    tbody.appendChild(tr);
+
+                    paketsInKat.forEach(data => {
+                        tableHTML += `
+                            <tr>
+                                <td><strong>#${data.order}</strong></td>
+                                <td>${data.name}</td>
+                                <td style="color: var(--text-muted); font-size: 0.85rem;">${data.desc || '-'}</td>
+                                <td>Rp ${data.priceValue.toLocaleString('id-ID')}</td>
+                                <td style="text-align: center; white-space: nowrap;">
+                                    <button class="btn btn-edit" onclick="window.panggilEdit('${data.id}')"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="btn btn-danger" onclick="window.hapusPaket('${data.id}')"><i class="fa-solid fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    tableHTML += `</tbody></table>`;
+                    container.innerHTML += tableHTML;
                 });
 
                 if(document.getElementById('selectedServicesList').children.length === 0) window.addServiceRow();
@@ -378,7 +406,7 @@
                 document.getElementById('idPaket').value = docId.replace(`${pkg.kategori}_`, '');
                 document.getElementById('urutanPaket').value = pkg.order || 1;
                 document.getElementById('namaPaket').value = pkg.name;
-                document.getElementById('deskripsiPaket').value = pkg.desc || ''; // Mengisi otomatis kolom deskripsi
+                document.getElementById('deskripsiPaket').value = pkg.desc || '';
                 document.getElementById('hargaPaketNum').value = pkg.priceValue;
                 document.getElementById('gambarPaket').value = pkg.img || '';
                 document.getElementById('thumbPreview').src = pkg.img || 'https://via.placeholder.com/100';
@@ -408,7 +436,7 @@
             const idPaket = document.getElementById('idPaket').value.replace(/\s+/g, '').toLowerCase();
             const orderNum = parseInt(document.getElementById('urutanPaket').value) || 1;
             const namaPaket = document.getElementById('namaPaket').value;
-            const deskripsi = document.getElementById('deskripsiPaket').value; // Ambil nilai kolom deskripsi baru
+            const deskripsi = document.getElementById('deskripsiPaket').value;
             const hargaNum = parseFloat(document.getElementById('hargaPaketNum').value) || 0;
             const hargaFormatted = `Rp. ${hargaNum.toLocaleString('id-ID')},00`;
             const gambar = document.getElementById('gambarPaket').value;
@@ -422,7 +450,6 @@
                 loadPricelistData();
                 document.getElementById('statusSimpan').innerText = "Berhasil disimpan!";
                 
-                // Kosongkan form setelah simpan
                 document.getElementById('idPaket').value = '';
                 document.getElementById('namaPaket').value = '';
                 document.getElementById('deskripsiPaket').value = '';
@@ -602,7 +629,7 @@
         window.addCustomItemRow = function() {
             const container = document.getElementById('customItemsList');
             const div = document.createElement('div'); div.className = 'grid-invoice';
-            div.innerHTML = `<div class="form-group" style="margin-bottom:0;"><input type="text" class="form-control custom-name" placeholder="Misal: Denda Overtime / Flashdisk"></div><div class="form-group" style="margin-bottom:0;"><input type="number" class="form-control custom-price" placeholder="0" value="0"></div><button type="button" class="btn btn-danger" onclick="this.parentElement.remove()" style="height: 45px;"><i class="fa-solid fa-trash"></i></button>`;
+            div.innerHTML = `<div class="form-group" style="margin-bottom:0;"><input type="text" class="form-control custom-name" placeholder="Misal: Denda Overtime / Flashdisk / Tambahan Waktu"></div><div class="form-group" style="margin-bottom:0;"><input type="number" class="form-control custom-price" placeholder="0" value="0"></div><button type="button" class="btn btn-danger" onclick="this.parentElement.remove()" style="height: 45px;"><i class="fa-solid fa-trash"></i></button>`;
             container.appendChild(div);
         }
     </script>

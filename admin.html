@@ -90,7 +90,7 @@
         .btn-danger { background: #e74c3c; color: #fff; padding: 6px 12px; font-size: 0.8rem; }
         .btn-edit { background: #3498db; color: #fff; padding: 6px 12px; font-size: 0.8rem; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .grid-3 { display: grid; grid-template-columns: 2fr 1fr auto; gap: 10px; align-items: flex-end; margin-bottom: 10px; }
+        .grid-invoice { display: grid; grid-template-columns: 2fr 1fr auto; gap: 10px; align-items: flex-end; margin-bottom: 10px; }
 
         .thumbnail-preview {
             width: 80px; height: 80px; border-radius: 8px; border: 1px solid var(--border-color);
@@ -170,7 +170,7 @@
         <!-- PANEL: DASHBOARD -->
         <div class="panel active" id="dashboard">
             <h2 class="page-title">Ikhtisar Admin</h2>
-            <p style="color: var(--text-muted); line-height: 1.6;">Kelola paket pricelist, portfolio galeri, dan buat invoice profesional dengan multi-layanan serta tambahan biaya/flashdisk.</p>
+            <p style="color: var(--text-muted); line-height: 1.6;">Pricelist, portofolio, dan invoice kini terhubung otomatis dengan harga yang akurat sesuai database.</p>
         </div>
 
         <!-- PANEL: KELOLA HARGA -->
@@ -196,7 +196,7 @@
             </div>
             <div class="grid-2">
                 <div class="form-group">
-                    <label>Harga (Angka saja, misal: 400000)</label>
+                    <label>Harga (Angka Saja, misal: 400000)</label>
                     <input type="number" class="form-control" id="hargaPaketNum" placeholder="400000">
                 </div>
                 <div class="form-group">
@@ -259,7 +259,7 @@
             <p id="statusPort" style="margin-top:10px; font-size:0.85rem; color:var(--accent-gold);"></p>
         </div>
 
-        <!-- PANEL: BUAT INVOICE (DENGAN MULTI LAYANAN & TAMBAHAN) -->
+        <!-- PANEL: BUAT INVOICE (SINKRON OTOMATIS) -->
         <div class="panel" id="buat-invoice">
             <h2 class="page-title">Buat Invoice Pelanggan</h2>
             <div class="form-panel">
@@ -269,17 +269,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Pilih & Tambah Layanan dari Pricelist (Bisa Pilih Lebih dari Satu)</label>
-                    <div id="selectedServicesList">
-                        <!-- Baris layanan dinamis -->
-                    </div>
+                    <label>Pilih Layanan dari Pricelist (Harga otomatis sesuai database)</label>
+                    <div id="selectedServicesList"></div>
                     <button type="button" class="btn btn-secondary" onclick="addServiceRow()" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Tambah Layanan Lain</button>
                 </div>
 
                 <div class="form-group" style="margin-top: 25px; border-top: 1px solid var(--border-color); padding-top: 20px;">
-                    <label>Item Tambahan / Other (Flashdisk, Album Buku, dll)</label>
+                    <label>Item Tambahan / Other / Charge (Flashdisk, Album, Transport, dll)</label>
                     <div id="customItemsList"></div>
-                    <button type="button" class="btn btn-secondary" onclick="addCustomItemRow()"><i class="fa-solid fa-plus"></i> Tambah Item Lain / Charge</button>
+                    <button type="button" class="btn btn-secondary" onclick="addCustomItemRow()"><i class="fa-solid fa-plus"></i> Tambah Charge / Item Lain</button>
                 </div>
 
                 <div style="margin-top: 30px; display: flex; gap: 10px;">
@@ -306,9 +304,7 @@
                             <th style="text-align: right;">Subtotal</th>
                         </tr>
                     </thead>
-                    <tbody id="printTableBody">
-                        <!-- Diisi via JS -->
-                    </tbody>
+                    <tbody id="printTableBody"></tbody>
                 </table>
                 <div class="invoice-total">TOTAL TAGIHAN: <span id="printTotal">Rp 0</span></div>
                 <p style="margin-top: 50px; text-align: center; font-size: 0.85rem; color: #a0aab0;">Terima kasih telah mempercayakan dokumentasi momen berharga Anda kepada ARLENS.ID.</p>
@@ -338,7 +334,6 @@
 
         window.dbAllPackages = [];
 
-        // --- LOGIN AUTH ---
         const loginOverlay = document.getElementById('loginOverlay');
         const btnLoginAction = document.getElementById('btnLoginAction');
         const loginErrorMsg = document.getElementById('loginErrorMsg');
@@ -393,14 +388,13 @@
                         <td>${data.name}</td>
                         <td>${typeof data.price === 'number' ? 'Rp ' + data.price.toLocaleString('id-ID') : data.price}</td>
                         <td style="text-align: center; white-space: nowrap;">
-                            <button class="btn btn-edit" onclick="window.editPricelist('${docId}', '${data.kategori}', '${data.name}', '${data.price}', '${data.img}', '${(data.benefits || []).join(', ')}')"><i class="fa-solid fa-pen"></i> Edit</button>
+                            <button class="btn btn-edit" onclick="window.editPricelist('${docId}', '${data.kategori}', '${data.name}', '${data.priceValue || 0}', '${data.img}', '${(data.benefits || []).join(', ')}')"><i class="fa-solid fa-pen"></i> Edit</button>
                             <button class="btn btn-danger" onclick="window.deletePricelist('${docId}')"><i class="fa-solid fa-trash"></i> Hapus</button>
                         </td>
                     `;
                     tbody.appendChild(tr);
                 });
 
-                // Inisialisasi baris pertama di invoice jika kosong
                 if(document.getElementById('selectedServicesList').children.length === 0) {
                     addServiceRow();
                 }
@@ -414,7 +408,6 @@
             }
         }
 
-        // --- SIMPAN / PERBARUI PRICELIST ---
         const btnSimpanDB = document.getElementById('btnSimpanDB');
         const statusSimpan = document.getElementById('statusSimpan');
 
@@ -446,16 +439,12 @@
             }
         });
 
-        window.editPricelist = function(docId, kategori, name, price, img, benefits) {
+        window.editPricelist = function(docId, kategori, name, priceVal, img, benefits) {
             document.getElementById('kategoriLayanan').value = kategori;
             const idPart = docId.replace(`${kategori}_`, '');
             document.getElementById('idPaket').value = idPart;
             document.getElementById('namaPaket').value = name;
-            
-            // Ekstrak angka untuk input number
-            const numMatch = price.replace(/[^0-9]/g, '');
-            document.getElementById('hargaPaketNum').value = numMatch ? parseInt(numMatch, 10) : '';
-            
+            document.getElementById('hargaPaketNum').value = priceVal;
             document.getElementById('gambarPaket').value = img;
             document.getElementById('thumbPreview').src = img;
             document.getElementById('benefitPaket').value = benefits;
@@ -479,7 +468,6 @@
             }
         };
 
-        // --- SIMPAN PORTOFOLIO ---
         const btnSimpanPort = document.getElementById('btnSimpanPort');
         const statusPort = document.getElementById('statusPort');
         btnSimpanPort.addEventListener('click', async () => {
@@ -503,7 +491,6 @@
             }
         });
 
-        // --- NAV TABS ---
         const navBtns = document.querySelectorAll('.nav-btn');
         const panels = document.querySelectorAll('.panel');
         navBtns.forEach(btn => {
@@ -526,12 +513,12 @@
             document.getElementById('portPreview').src = url ? url : 'https://via.placeholder.com/100';
         }
 
-        // --- INVOICE BUILDER FUNCTIONS ---
+        // --- INVOICE BUILDER (OTOMATIS TERHUBUNG DENGAN HARGA DATABASE) ---
         function addServiceRow() {
             const container = document.getElementById('selectedServicesList');
             const rowId = 'service_row_' + Date.now();
             
-            let optionsHTML = '<option value="">-- Pilih Layanan dari Pricelist --</option>';
+            let optionsHTML = '<option value="" data-price="0">-- Pilih Paket dari Pricelist --</option>';
             if (window.dbAllPackages && window.dbAllPackages.length > 0) {
                 window.dbAllPackages.forEach(pkg => {
                     const priceVal = pkg.priceValue || 0;
@@ -540,18 +527,18 @@
             }
 
             const div = document.createElement('div');
-            div.className = 'grid-3';
+            div.className = 'grid-invoice';
             div.id = rowId;
             div.innerHTML = `
                 <div class="form-group" style="margin-bottom:0;">
-                    <label>Pilih Paket</label>
+                    <label>Pilih Paket Layanan</label>
                     <select class="form-control service-select" onchange="updateServicePrice(this)">
                         ${optionsHTML}
                     </select>
                 </div>
                 <div class="form-group" style="margin-bottom:0;">
-                    <label>Harga (Rp)</label>
-                    <input type="number" class="form-control service-price" placeholder="0" value="0">
+                    <label>Harga (Otomatis)</label>
+                    <input type="number" class="form-control service-price" value="0" readonly style="background: rgba(0,0,0,0.3); cursor: not-allowed;">
                 </div>
                 <button type="button" class="btn btn-danger" onclick="document.getElementById('${rowId}').remove()" style="height: 45px;"><i class="fa-solid fa-trash"></i></button>
             `;
@@ -561,7 +548,7 @@
         function updateServicePrice(selectEl) {
             const selectedOption = selectEl.options[selectEl.selectedIndex];
             const priceVal = selectedOption.getAttribute('data-price') || 0;
-            const row = selectEl.closest('.grid-3');
+            const row = selectEl.closest('.grid-invoice');
             const priceInput = row.querySelector('.service-price');
             priceInput.value = priceVal;
         }
@@ -571,12 +558,12 @@
             const rowId = 'custom_row_' + Date.now();
 
             const div = document.createElement('div');
-            div.className = 'grid-3';
+            div.className = 'grid-invoice';
             div.id = rowId;
             div.innerHTML = `
                 <div class="form-group" style="margin-bottom:0;">
                     <label>Nama Item / Charge / Lainnya</label>
-                    <input type="text" class="form-control custom-name" placeholder="Misal: Flashdisk Custom / Extra Charge Transport">
+                    <input type="text" class="form-control custom-name" placeholder="Misal: Flashdisk Custom / Extra Charge">
                 </div>
                 <div class="form-group" style="margin-bottom:0;">
                     <label>Harga (Rp)</label>
@@ -597,12 +584,12 @@
             let totalSum = 0;
             const formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
 
-            // Ambil layanan pricelist
-            const serviceRows = document.querySelectorAll('#selectedServicesList .grid-3');
+            // Ambil dari pilihan paket pricelist
+            const serviceRows = document.querySelectorAll('#selectedServicesList .grid-invoice');
             serviceRows.forEach(row => {
                 const select = row.querySelector('.service-select');
                 const priceInput = row.querySelector('.service-price');
-                const serviceName = select.value || 'Layanan Paket';
+                const serviceName = select.value;
                 const price = parseFloat(priceInput.value) || 0;
 
                 if (serviceName && price > 0) {
@@ -618,8 +605,8 @@
                 }
             });
 
-            // Ambil item custom / other / charge
-            const customRows = document.querySelectorAll('#customItemsList .grid-3');
+            // Ambil dari item custom / other / charge
+            const customRows = document.querySelectorAll('#customItemsList .grid-invoice');
             customRows.forEach(row => {
                 const nameInput = row.querySelector('.custom-name');
                 const priceInput = row.querySelector('.custom-price');

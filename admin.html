@@ -17,7 +17,6 @@
             --bg-card: #172429;
             --bg-input: #2a3338;
             --accent-gold: #e5ac31;
-            --accent-terracotta: #b7785c;
             --text-cream: #edebde;
             --text-muted: #a0aab0;
             --border-color: rgba(183, 120, 92, 0.25);
@@ -31,12 +30,10 @@
         #loginOverlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-main);
-            background-image: linear-gradient(rgba(229, 172, 49, 0.05) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(229, 172, 49, 0.05) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(229, 172, 49, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(229, 172, 49, 0.05) 1px, transparent 1px);
             background-size: 30px 30px; z-index: 99999;
             display: flex; justify-content: center; align-items: center; padding: 20px;
         }
-
         .login-box {
             background: var(--bg-card); border: 1px solid var(--accent-gold); padding: 40px;
             border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -61,31 +58,18 @@
         /* --- MAIN CONTENT --- */
         .main-content {
             flex: 1; margin-left: var(--sidebar-width); padding: 40px;
-            background-image: linear-gradient(rgba(229, 172, 49, 0.03) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(229, 172, 49, 0.03) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(229, 172, 49, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(229, 172, 49, 0.03) 1px, transparent 1px);
             background-size: 30px 30px;
         }
-        .page-title {
-            font-size: 1.8rem; font-weight: 800; margin-bottom: 30px; color: var(--text-cream);
-            border-bottom: 1px solid var(--border-color); padding-bottom: 15px;
-        }
-        .panel {
-            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px;
-            padding: 25px; margin-bottom: 30px; display: none;
-        }
+        .page-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 30px; color: var(--text-cream); border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+        .panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; margin-bottom: 30px; display: none; }
         .panel.active { display: block; }
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: var(--accent-gold); }
-        .form-control {
-            width: 100%; padding: 12px 15px; background: var(--bg-input); border: 1px solid var(--border-color);
-            border-radius: 8px; color: var(--text-cream); font-size: 0.9rem; outline: none;
-        }
+        .form-control { width: 100%; padding: 12px 15px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-cream); font-size: 0.9rem; outline: none; }
         .form-control:focus { border-color: var(--accent-gold); }
-        .btn {
-            padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer;
-            border: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease;
-        }
-        .btn-primary { background: linear-gradient(135deg, var(--accent-copper), var(--accent-gold)); color: #121d21; }
+        .btn { padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease; }
+        .btn-primary { background: linear-gradient(135deg, #b7785c, var(--accent-gold)); color: #121d21; }
         .btn-secondary { background: var(--bg-input); color: var(--text-cream); border: 1px solid var(--border-color); }
         .btn-success { background: #2ecc71; color: #fff; padding: 6px 12px; font-size: 0.8rem; }
         .btn-danger { background: #e74c3c; color: #fff; padding: 6px 12px; font-size: 0.8rem; }
@@ -94,10 +78,7 @@
         .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
         .grid-invoice { display: grid; grid-template-columns: 2fr 1fr auto; gap: 10px; align-items: flex-end; margin-bottom: 10px; }
 
-        .thumbnail-preview {
-            width: 80px; height: 80px; border-radius: 8px; border: 1px solid var(--border-color);
-            object-fit: contain; background: #fff; margin-top: 8px; display: block; padding: 5px;
-        }
+        .thumbnail-preview { width: 80px; height: 80px; border-radius: 8px; border: 1px solid var(--border-color); object-fit: contain; background: #fff; margin-top: 8px; display: block; padding: 5px; }
 
         /* --- TABLE STYLING --- */
         .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: var(--bg-input); border-radius: 8px; overflow: hidden; }
@@ -120,7 +101,7 @@
 
         @media print {
             body { background: #ffffff; color: #000; display: block; }
-            .sidebar, .page-title, .form-panel, .btn-print, #loginOverlay, .nav-tabs-container { display: none !important; }
+            .sidebar, .page-title, .form-panel, .btn-print, #loginOverlay { display: none !important; }
             .main-content { margin: 0; padding: 0; background: none; }
             .panel { border: none; padding: 0; margin: 0; box-shadow: none; }
             #invoicePreview { display: block !important; padding: 0; }
@@ -161,29 +142,34 @@
         <!-- PANEL: DASHBOARD -->
         <div class="panel active" id="dashboard">
             <h2 class="page-title">Ikhtisar Admin</h2>
-            <p style="color: var(--text-muted); line-height: 1.6;">Selamat datang. Semua data portofolio, pricelist, dan invoice tersinkronisasi otomatis dengan database cloud secara real-time.</p>
+            <p style="color: var(--text-muted); line-height: 1.6;">Selamat datang. Kelola pricelist, tentukan urutan paket, kelola portofolio, dan buat invoice secara terintegrasi.</p>
         </div>
 
         <!-- PANEL: KELOLA HARGA -->
         <div class="panel" id="kelola-harga">
             <h2 class="page-title">Kelola Pricelist & Produk</h2>
-            <!-- Sama seperti kode sebelumnya... -->
-            <div class="grid-2">
+            <div class="grid-3">
                 <div class="form-group">
-                    <label>Pilih Kategori Layanan</label>
+                    <label>Pilih Kategori</label>
                     <select class="form-control" id="kategoriLayanan">
-                        <option value="dokumentasi">Dokumentasi (Photo Only)</option>
+                        <option value="dokumentasi">Dokumentasi</option>
                         <option value="photobooth">Photobooth</option>
                         <option value="undangan">Undangan Digital</option>
                     </select>
                 </div>
-                <div class="form-group"><label>ID / Kode Paket (Tanpa Spasi)</label><input type="text" class="form-control" id="idPaket" placeholder="Contoh: premium"></div>
+                <div class="form-group"><label>Kode Paket (Tanpa Spasi)</label><input type="text" class="form-control" id="idPaket" placeholder="Contoh: premium"></div>
+                <div class="form-group">
+                    <label>Urutan Tampil (Angka)</label>
+                    <input type="number" class="form-control" id="urutanPaket" placeholder="1" value="1">
+                </div>
             </div>
-            <div class="form-group"><label>Nama Paket / Produk</label><input type="text" class="form-control" id="namaPaket" placeholder="Contoh: PREMIUM"></div>
+            
+            <div class="form-group"><label>Nama Paket</label><input type="text" class="form-control" id="namaPaket" placeholder="Contoh: PREMIUM"></div>
+            
             <div class="grid-2">
                 <div class="form-group"><label>Harga (Angka Saja, misal: 400000)</label><input type="number" class="form-control" id="hargaPaketNum" placeholder="400000"></div>
                 <div class="form-group">
-                    <label>URL Gambar / Link Drive Produk</label>
+                    <label>URL Gambar Google Drive</label>
                     <input type="text" class="form-control" id="gambarPaket" placeholder="https://..." oninput="updateThumbPreview(this.value)">
                     <img id="thumbPreview" src="https://via.placeholder.com/100?text=Preview" class="thumbnail-preview" alt="Preview">
                 </div>
@@ -193,10 +179,10 @@
             <p id="statusSimpan" style="margin-top:10px; font-size:0.85rem; color:var(--accent-gold);"></p>
 
             <div style="margin-top: 40px;">
-                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; color: var(--accent-gold);">Daftar Paket di Database</h3>
+                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; color: var(--accent-gold);">Daftar Paket (Terurut)</h3>
                 <div style="overflow-x: auto;">
                     <table class="admin-table">
-                        <thead><tr><th>Gambar</th><th>Kategori</th><th>Nama Paket</th><th>Harga</th><th style="text-align: center;">Aksi</th></tr></thead>
+                        <thead><tr><th>Urutan</th><th>Kategori</th><th>Nama Paket</th><th>Harga</th><th style="text-align: center;">Aksi</th></tr></thead>
                         <tbody id="pricelistTableBody"><tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Memuat data...</td></tr></tbody>
                     </table>
                 </div>
@@ -218,7 +204,7 @@
                 <div class="form-group"><label>Nama Album / Event</label><input type="text" class="form-control" id="portEventName" placeholder="Nama Event Acara"></div>
             </div>
             <div class="form-group">
-                <label>Link Gambar Google Drive / URL Foto</label>
+                <label>Link Gambar Google Drive</label>
                 <input type="text" class="form-control" id="portPhotoUrl" placeholder="https://..." oninput="updatePortPreview(this.value)">
                 <img id="portPreview" src="https://via.placeholder.com/100?text=Preview" class="thumbnail-preview" alt="Preview">
             </div>
@@ -253,7 +239,7 @@
                 </div>
             </div>
 
-            <!-- INVOICE PREVIEW SECTION (DIGUNAKAN UNTUK PRINT) -->
+            <!-- INVOICE PREVIEW SECTION -->
             <div id="invoicePreview">
                 <div class="invoice-header">
                     <img src="https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw" alt="ARLENS Logo" style="filter: invert(1);"> 
@@ -264,20 +250,11 @@
                     <div style="text-align: right;"><h4>Ditagihkan Kepada:</h4><p><strong id="printNama">-</strong><br>Tanggal Acara: <span id="printTanggal">-</span></p></div>
                 </div>
                 <table class="invoice-table">
-                    <thead>
-                        <tr>
-                            <th>Deskripsi Layanan / Produk</th>
-                            <th style="text-align: center;">Qty</th>
-                            <th style="text-align: right;">Harga Satuan</th>
-                            <th style="text-align: right;">Subtotal</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>Deskripsi Layanan / Produk</th><th style="text-align: center;">Qty</th><th style="text-align: right;">Harga Satuan</th><th style="text-align: right;">Subtotal</th></tr></thead>
                     <tbody id="printTableBody"></tbody>
                 </table>
                 <div class="invoice-total">TOTAL TAGIHAN: <span id="printTotal">Rp 0</span></div>
                 <p style="margin-top: 50px; text-align: center; font-size: 0.85rem; color: #a0aab0;">Terima kasih telah mempercayakan dokumentasi momen berharga Anda kepada ARLENS.ID.</p>
-                
-                <!-- Tombol Print yang disembunyikan saat cetak fisik -->
                 <div class="btn-print" style="margin-top: 30px; text-align: center;">
                     <button class="btn btn-primary" onclick="window.print()"><i class="fa-solid fa-print"></i> Cetak / Download PDF</button>
                     <button class="btn btn-secondary" onclick="tutupPreviewInvoice()"><i class="fa-solid fa-xmark"></i> Tutup Preview</button>
@@ -288,22 +265,10 @@
         <!-- PANEL: RIWAYAT INVOICE -->
         <div class="panel" id="riwayat-invoice">
             <h2 class="page-title">Riwayat Invoice Customer</h2>
-            <p style="color: var(--text-muted); margin-bottom: 20px;">Daftar semua invoice yang telah di-generate. Anda bisa cetak ulang PDF atau kirim tagihan via WhatsApp ke pelanggan dari sini.</p>
-            
             <div style="overflow-x: auto;">
                 <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>No. Invoice</th>
-                            <th>Tanggal Acara</th>
-                            <th>Nama Customer</th>
-                            <th>Total Tagihan</th>
-                            <th style="text-align: center;">Aksi (Cetak / WA)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="riwayatTableBody">
-                        <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Memuat riwayat...</td></tr>
-                    </tbody>
+                    <thead><tr><th>No. Invoice</th><th>Tanggal Acara</th><th>Nama Customer</th><th>Total Tagihan</th><th style="text-align: center;">Aksi (Cetak / WA)</th></tr></thead>
+                    <tbody id="riwayatTableBody"><tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Memuat riwayat...</td></tr></tbody>
                 </table>
             </div>
         </div>
@@ -321,8 +286,7 @@
             projectId: "arlens-portofolio",
             storageBucket: "arlens-portofolio.firebasestorage.app",
             messagingSenderId: "104940044026",
-            appId: "1:104940044026:web:8956c198f34598bafe5343",
-            measurementId: "G-1RVNQXEH1G"
+            appId: "1:104940044026:web:8956c198f34598bafe5343"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -330,7 +294,7 @@
         const db = getFirestore(app);
 
         window.dbAllPackages = [];
-        window.dbSemuaInvoice = []; // Variabel global simpan histori invoice
+        window.dbSemuaInvoice = []; 
 
         const loginOverlay = document.getElementById('loginOverlay');
         onAuthStateChanged(auth, (user) => {
@@ -352,11 +316,9 @@
             });
         });
 
-        document.getElementById('btnLogoutAction').addEventListener('click', (e) => {
-            e.preventDefault(); signOut(auth);
-        });
+        document.getElementById('btnLogoutAction').addEventListener('click', (e) => { e.preventDefault(); signOut(auth); });
 
-        // --- LOAD PRICELIST ---
+        // --- LOAD PRICELIST AMAN (DENGAN URUTAN) ---
         async function loadPricelistData() {
             try {
                 const qSnap = await getDocs(collection(db, "pricelist"));
@@ -374,17 +336,28 @@
                         finalPriceVal = parseInt(numStr, 10) || 0;
                     }
                     data.priceValue = finalPriceVal;
-                    window.dbAllPackages.push({ id: docSnap.id, ...data });
+                    data.order = data.order || 99; // Default urutan jika belum ada
                     
+                    window.dbAllPackages.push({ id: docSnap.id, ...data });
+                });
+
+                // Urutkan berdasarkan Kategori, lalu Urutan (Order)
+                window.dbAllPackages.sort((a, b) => {
+                    if(a.kategori < b.kategori) return -1;
+                    if(a.kategori > b.kategori) return 1;
+                    return a.order - b.order;
+                });
+
+                window.dbAllPackages.forEach(data => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td><img src="${data.img || ''}" alt="Thumb" onerror="this.src='https://via.placeholder.com/40'"></td>
+                        <td><strong>#${data.order}</strong></td>
                         <td><span style="text-transform: uppercase; font-weight: 700; font-size: 0.75rem; color: var(--accent-gold);">${data.kategori}</span></td>
                         <td>${data.name}</td>
-                        <td>Rp ${finalPriceVal.toLocaleString('id-ID')}</td>
+                        <td>Rp ${data.priceValue.toLocaleString('id-ID')}</td>
                         <td style="text-align: center;">
-                            <button class="btn btn-edit" onclick="window.editPricelist('${docSnap.id}', '${data.kategori}', '${data.name}', '${finalPriceVal}', '${data.img}', '${(data.benefits||[]).join(', ')}')"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-danger" onclick="window.deletePricelist('${docSnap.id}')"><i class="fa-solid fa-trash"></i></button>
+                            <button class="btn btn-edit" onclick="window.panggilEdit('${data.id}')"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn btn-danger" onclick="window.hapusPaket('${data.id}')"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     `;
                     tbody.appendChild(tr);
@@ -395,246 +368,42 @@
             } catch (e) { console.error(e); }
         }
 
-        // --- LOAD RIWAYAT INVOICE ---
-        window.loadRiwayatInvoice = async function() {
-            try {
-                const q = query(collection(db, "invoices"), orderBy("createdAt", "desc"));
-                const qSnap = await getDocs(q);
-                const tbody = document.getElementById('riwayatTableBody');
-                tbody.innerHTML = ''; window.dbSemuaInvoice = [];
+        // --- FUNGSI EDIT & HAPUS PRICELIST AMAN ---
+        window.panggilEdit = function(docId) {
+            const pkg = window.dbAllPackages.find(p => p.id === docId);
+            if(pkg) {
+                document.getElementById('kategoriLayanan').value = pkg.kategori;
+                document.getElementById('idPaket').value = docId.replace(`${pkg.kategori}_`, '');
+                document.getElementById('urutanPaket').value = pkg.order || 1;
+                document.getElementById('namaPaket').value = pkg.name;
+                document.getElementById('hargaPaketNum').value = pkg.priceValue;
+                document.getElementById('gambarPaket').value = pkg.img || '';
+                document.getElementById('thumbPreview').src = pkg.img || 'https://via.placeholder.com/100';
+                document.getElementById('benefitPaket').value = (pkg.benefits || []).join(', ');
 
-                if(qSnap.empty) {
-                    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Belum ada invoice yang dibuat.</td></tr>`;
-                    return;
-                }
-
-                qSnap.forEach(docSnap => {
-                    const data = docSnap.data();
-                    data.id = docSnap.id; // simpan ID doc
-                    window.dbSemuaInvoice.push(data);
-
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td><strong style="color:var(--accent-gold);">${data.invoiceNo}</strong></td>
-                        <td>${data.tanggal}</td>
-                        <td>${data.nama}</td>
-                        <td><strong>Rp ${Number(data.total).toLocaleString('id-ID')}</strong></td>
-                        <td style="text-align: center; white-space:nowrap;">
-                            <button class="btn btn-primary" onclick="window.cetakUlangInvoice('${data.id}')" title="Cetak PDF"><i class="fa-solid fa-print"></i> PDF</button>
-                            <button class="btn btn-success" onclick="window.kirimWA('${data.id}')" title="Kirim WhatsApp (Bisa lampirkan PDF)"><i class="fa-brands fa-whatsapp"></i> Kirim WA</button>
-                            <button class="btn btn-danger" onclick="window.hapusInvoice('${data.id}')"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            } catch (e) { console.error(e); }
-        }
-
-        // --- SIMPAN INVOICE BARU (CONTINUITY SYSTEM) ---
-        window.simpanDanBuatInvoice = async function() {
-            const nama = document.getElementById('invNama').value || 'Pelanggan Yth';
-            const tanggal = document.getElementById('invTanggal').value || '-';
-            let waRaw = document.getElementById('invWA').value || '';
-            let wa = waRaw.replace(/\D/g, ''); // Bersihkan karakter non-angka
-            if(wa.startsWith('0')) wa = '62' + wa.substring(1); // Ubah awalan 0 ke 62
-
-            let itemsData = [];
-            let totalSum = 0;
-
-            // Kumpulkan layanan pricelist
-            document.querySelectorAll('#selectedServicesList .grid-invoice').forEach(row => {
-                const name = row.querySelector('.service-select').value;
-                const price = parseFloat(row.querySelector('.service-price').value) || 0;
-                if(name && price > 0) {
-                    itemsData.push({ name: name, price: price });
-                    totalSum += price;
-                }
-            });
-
-            // Kumpulkan custom charge
-            document.querySelectorAll('#customItemsList .grid-invoice').forEach(row => {
-                const name = row.querySelector('.custom-name').value;
-                const price = parseFloat(row.querySelector('.custom-price').value) || 0;
-                if(name && price !== 0) {
-                    itemsData.push({ name: name, price: price });
-                    totalSum += price;
-                }
-            });
-
-            if(itemsData.length === 0) {
-                alert("Pilih minimal 1 paket layanan atau isi item tambahan!");
-                return;
-            }
-
-            // LOGIKA NOMOR INVOICE BERKELANJUTAN
-            const currentYear = new Date().getFullYear();
-            let maxSequence = 0;
-
-            // Cari sequence tertinggi di tahun ini
-            window.dbSemuaInvoice.forEach(inv => {
-                if(inv.year === currentYear && inv.sequence > maxSequence) {
-                    maxSequence = inv.sequence;
-                }
-            });
-
-            const nextSequence = maxSequence + 1;
-            const seqString = String(nextSequence).padStart(3, '0');
-            const newInvoiceNo = `INV/ARLens/${currentYear}/${seqString}`;
-
-            const invoicePayload = {
-                invoiceNo: newInvoiceNo,
-                year: currentYear,
-                sequence: nextSequence,
-                nama: nama,
-                tanggal: tanggal,
-                wa: wa,
-                items: itemsData,
-                total: totalSum,
-                createdAt: new Date().toISOString()
-            };
-
-            try {
-                // Simpan ke Firestore
-                await addDoc(collection(db, "invoices"), invoicePayload);
-                
-                // Segarkan tabel riwayat
-                await window.loadRiwayatInvoice();
-                
-                // Tampilkan Preview
-                window.renderTampilanInvoice(invoicePayload);
-                document.getElementById('formBuatInvoice').style.display = 'none';
-                document.getElementById('invoicePreview').style.display = 'block';
-
-                // Reset Form
-                document.getElementById('invNama').value = '';
-                document.getElementById('invTanggal').value = '';
-                document.getElementById('invWA').value = '';
-                document.getElementById('selectedServicesList').innerHTML = '';
-                document.getElementById('customItemsList').innerHTML = '';
-                window.addServiceRow(); window.addCustomItemRow();
-
-            } catch(e) {
-                alert("Gagal menyimpan invoice ke database!");
-                console.error(e);
-            }
-        };
-
-        // --- RENDER INVOICE UNTUK PRINT ---
-        window.renderTampilanInvoice = function(data) {
-            document.getElementById('printNoInv').innerText = data.invoiceNo;
-            document.getElementById('printNama').innerText = data.nama;
-            document.getElementById('printTanggal').innerText = data.tanggal;
-            
-            const tbody = document.getElementById('printTableBody');
-            tbody.innerHTML = '';
-            
-            const formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
-
-            data.items.forEach(item => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${item.name}</td>
-                    <td style="text-align: center;">1</td>
-                    <td style="text-align: right;">${formatter.format(item.price)}</td>
-                    <td style="text-align: right;">${formatter.format(item.price)}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-
-            document.getElementById('printTotal').innerText = formatter.format(data.total);
-        };
-
-        // --- FUNGSI DARI TOMBOL DI TABEL RIWAYAT ---
-        window.cetakUlangInvoice = function(docId) {
-            const invoice = window.dbSemuaInvoice.find(inv => inv.id === docId);
-            if(invoice) {
-                // Pindah ke tab Buat Invoice untuk numpang nampilin preview
                 document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                 document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-                document.querySelector('[data-target="buat-invoice"]').classList.add('active');
-                document.getElementById('buat-invoice').classList.add('active');
-                
-                document.getElementById('formBuatInvoice').style.display = 'none';
-                window.renderTampilanInvoice(invoice);
-                document.getElementById('invoicePreview').style.display = 'block';
+                document.querySelector('[data-target="kelola-harga"]').classList.add('active');
+                document.getElementById('kelola-harga').classList.add('active');
                 window.scrollTo({top: 0, behavior: 'smooth'});
             }
         };
 
-        // --- FUNGSI KIRIM WA (PINTAR & OTOMATIS) ---
-        window.kirimWA = function(docId) {
-            const invoice = window.dbSemuaInvoice.find(inv => inv.id === docId);
-            if(invoice) {
-                if(!invoice.wa || invoice.wa === '') {
-                    alert("Nomor WA tidak diisi pada invoice ini.");
-                    return;
-                }
-
-                if(!confirm("Mulai proses Kirim WA & PDF?\n\n1. Sistem akan mencetak PDF (Pilih Save as PDF).\n2. Setelah itu, WhatsApp otomatis terbuka.\n3. Jangan lupa LAMPIRKAN/ATTACH file PDF yang baru Anda simpan tadi ke chat pelanggan!")) {
-                    return; // Batal jika user tidak setuju
-                }
-
-                // 1. Render Invoice ke layar
-                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-                document.querySelector('[data-target="buat-invoice"]').classList.add('active');
-                document.getElementById('buat-invoice').classList.add('active');
-                document.getElementById('formBuatInvoice').style.display = 'none';
-                window.renderTampilanInvoice(invoice);
-                document.getElementById('invoicePreview').style.display = 'block';
-                window.scrollTo({top: 0, behavior: 'smooth'});
-
-                const formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
-                
-                // 2. Siapkan Teks Pesan WhatsApp yang menginfokan ada lampiran PDF
-                const pesan = `Halo kak *${invoice.nama}*,\nTerima kasih telah mempercayakan dokumentasi momen berharga Anda kepada ARLENS.ID.\n\nBersama pesan ini, kami lampirkan file PDF Invoice untuk tagihan Anda.\n\n*No Invoice:* ${invoice.invoiceNo}\n*Tgl Acara:* ${invoice.tanggal}\n*TOTAL TAGIHAN: ${formatter.format(invoice.total)}*\n\nMohon kesediaannya untuk mengecek file PDF terlampir. Jika ada pertanyaan, silakan balas pesan ini.\nTerima kasih 🙏`;
-
-                const url = `https://wa.me/${invoice.wa}?text=${encodeURIComponent(pesan)}`;
-
-                // 3. Eksekusi Print (Simpan PDF), lalu buka WhatsApp
-                setTimeout(() => {
-                    window.print(); // Ini akan membuka kotak dialog "Save as PDF" di browser Anda
-                    
-                    // Setelah Anda selesai klik "Save" atau "Cancel" di dialog print, WA akan langsung terbuka
-                    setTimeout(() => {
-                        window.open(url, '_blank');
-                    }, 500); 
-                }, 500);
-            }
-        };
-
-        window.hapusInvoice = async function(docId) {
-            if(confirm("Yakin ingin menghapus riwayat invoice ini? Data tidak bisa dikembalikan.")) {
+        window.hapusPaket = async function(docId) {
+            if(confirm(`Yakin ingin menghapus paket ini?`)) {
                 try {
-                    await deleteDoc(doc(db, "invoices", docId));
-                    window.loadRiwayatInvoice();
+                    await deleteDoc(doc(db, "pricelist", docId));
+                    loadPricelistData();
+                    alert("Paket berhasil dihapus!");
                 } catch(e) { alert("Gagal menghapus."); }
             }
         };
 
-        window.tutupPreviewInvoice = function() {
-            document.getElementById('invoicePreview').style.display = 'none';
-            document.getElementById('formBuatInvoice').style.display = 'block';
-        };
-
-        // --- SISTEM TABS NAVIGATION ---
-        const navBtns = document.querySelectorAll('.nav-btn');
-        const panels = document.querySelectorAll('.panel');
-        navBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                if(btn.id === 'btnLogoutAction') return;
-                e.preventDefault();
-                navBtns.forEach(b => b.classList.remove('active'));
-                panels.forEach(p => p.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById(btn.getAttribute('data-target')).classList.add('active');
-            });
-        });
-
-        // Event listener simpan pricelist (tetap sama)
+        // --- SIMPAN PRICELIST ---
         document.getElementById('btnSimpanDB').addEventListener('click', async () => {
             const kategori = document.getElementById('kategoriLayanan').value;
             const idPaket = document.getElementById('idPaket').value.replace(/\s+/g, '').toLowerCase();
+            const orderNum = parseInt(document.getElementById('urutanPaket').value) || 1;
             const namaPaket = document.getElementById('namaPaket').value;
             const hargaNum = parseFloat(document.getElementById('hargaPaketNum').value) || 0;
             const hargaFormatted = `Rp. ${hargaNum.toLocaleString('id-ID')},00`;
@@ -645,24 +414,153 @@
 
             try {
                 const docRef = doc(db, "pricelist", `${kategori}_${idPaket}`);
-                await setDoc(docRef, { kategori, name: namaPaket, price: hargaFormatted, priceValue: hargaNum, img: gambar, benefits: benefitsArray });
+                await setDoc(docRef, { kategori, order: orderNum, name: namaPaket, price: hargaFormatted, priceValue: hargaNum, img: gambar, benefits: benefitsArray });
                 loadPricelistData();
                 document.getElementById('statusSimpan').innerText = "Berhasil disimpan!";
                 setTimeout(() => document.getElementById('statusSimpan').innerText = "", 2000);
             } catch(e) {}
         });
+
+        // --- LOAD RIWAYAT INVOICE ---
+        window.loadRiwayatInvoice = async function() {
+            try {
+                const q = query(collection(db, "invoices"), orderBy("createdAt", "desc"));
+                const qSnap = await getDocs(q);
+                const tbody = document.getElementById('riwayatTableBody');
+                tbody.innerHTML = ''; window.dbSemuaInvoice = [];
+
+                if(qSnap.empty) { tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Belum ada invoice.</td></tr>`; return; }
+
+                qSnap.forEach(docSnap => {
+                    const data = docSnap.data(); data.id = docSnap.id;
+                    window.dbSemuaInvoice.push(data);
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong style="color:var(--accent-gold);">${data.invoiceNo}</strong></td>
+                        <td>${data.tanggal}</td>
+                        <td>${data.nama}</td>
+                        <td><strong>Rp ${Number(data.total).toLocaleString('id-ID')}</strong></td>
+                        <td style="text-align: center; white-space:nowrap;">
+                            <button class="btn btn-primary" onclick="window.cetakUlangInvoice('${data.id}')" title="Cetak PDF"><i class="fa-solid fa-print"></i> PDF</button>
+                            <button class="btn btn-success" onclick="window.kirimWA('${data.id}')" title="Kirim WA"><i class="fa-brands fa-whatsapp"></i> WA</button>
+                            <button class="btn btn-danger" onclick="window.hapusInvoice('${data.id}')"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (e) {}
+        }
+
+        // --- SIMPAN INVOICE BARU ---
+        window.simpanDanBuatInvoice = async function() {
+            const nama = document.getElementById('invNama').value || 'Pelanggan Yth';
+            const tanggal = document.getElementById('invTanggal').value || '-';
+            let waRaw = document.getElementById('invWA').value || '';
+            let wa = waRaw.replace(/\D/g, ''); 
+            if(wa.startsWith('0')) wa = '62' + wa.substring(1); 
+
+            let itemsData = []; let totalSum = 0;
+            document.querySelectorAll('#selectedServicesList .grid-invoice').forEach(row => {
+                const name = row.querySelector('.service-select').value;
+                const price = parseFloat(row.querySelector('.service-price').value) || 0;
+                if(name && price > 0) { itemsData.push({ name, price }); totalSum += price; }
+            });
+            document.querySelectorAll('#customItemsList .grid-invoice').forEach(row => {
+                const name = row.querySelector('.custom-name').value;
+                const price = parseFloat(row.querySelector('.custom-price').value) || 0;
+                if(name && price !== 0) { itemsData.push({ name, price }); totalSum += price; }
+            });
+
+            if(itemsData.length === 0) { alert("Isi minimal 1 layanan/tambahan!"); return; }
+
+            const currentYear = new Date().getFullYear();
+            let maxSequence = 0;
+            window.dbSemuaInvoice.forEach(inv => { if(inv.year === currentYear && inv.sequence > maxSequence) maxSequence = inv.sequence; });
+            const nextSequence = maxSequence + 1;
+            const newInvoiceNo = `INV/ARLens/${currentYear}/${String(nextSequence).padStart(3, '0')}`;
+
+            const invoicePayload = { invoiceNo: newInvoiceNo, year: currentYear, sequence: nextSequence, nama, tanggal, wa, items: itemsData, total: totalSum, createdAt: new Date().toISOString() };
+
+            try {
+                await addDoc(collection(db, "invoices"), invoicePayload);
+                await window.loadRiwayatInvoice();
+                window.renderTampilanInvoice(invoicePayload);
+                document.getElementById('formBuatInvoice').style.display = 'none';
+                document.getElementById('invoicePreview').style.display = 'block';
+
+                document.getElementById('invNama').value = ''; document.getElementById('invTanggal').value = ''; document.getElementById('invWA').value = '';
+                document.getElementById('selectedServicesList').innerHTML = ''; document.getElementById('customItemsList').innerHTML = '';
+                window.addServiceRow(); window.addCustomItemRow();
+            } catch(e) {}
+        };
+
+        // --- RENDER INVOICE ---
+        window.renderTampilanInvoice = function(data) {
+            document.getElementById('printNoInv').innerText = data.invoiceNo;
+            document.getElementById('printNama').innerText = data.nama;
+            document.getElementById('printTanggal').innerText = data.tanggal;
+            const tbody = document.getElementById('printTableBody'); tbody.innerHTML = '';
+            const formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+            data.items.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${item.name}</td><td style="text-align: center;">1</td><td style="text-align: right;">${formatter.format(item.price)}</td><td style="text-align: right;">${formatter.format(item.price)}</td>`;
+                tbody.appendChild(tr);
+            });
+            document.getElementById('printTotal').innerText = formatter.format(data.total);
+        };
+
+        window.cetakUlangInvoice = function(docId) {
+            const invoice = window.dbSemuaInvoice.find(inv => inv.id === docId);
+            if(invoice) {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+                document.querySelector('[data-target="buat-invoice"]').classList.add('active'); document.getElementById('buat-invoice').classList.add('active');
+                document.getElementById('formBuatInvoice').style.display = 'none';
+                window.renderTampilanInvoice(invoice); document.getElementById('invoicePreview').style.display = 'block';
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }
+        };
+
+        window.kirimWA = function(docId) {
+            const invoice = window.dbSemuaInvoice.find(inv => inv.id === docId);
+            if(invoice) {
+                if(!invoice.wa || invoice.wa === '') { alert("Nomor WA kosong."); return; }
+                if(!confirm("Proses Kirim WA & PDF?\n\n1. Layar cetak PDF akan muncul.\n2. Klik Save/Simpan.\n3. WhatsApp akan otomatis terbuka.\n4. Lampirkan PDF ke chat pelanggan!")) return;
+                
+                window.cetakUlangInvoice(docId);
+                const formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+                const pesan = `Halo kak *${invoice.nama}*,\nTerima kasih telah mempercayakan dokumentasi momen berharga Anda kepada ARLENS.ID.\n\nBersama pesan ini, kami lampirkan file PDF Invoice untuk tagihan Anda.\n\n*No Invoice:* ${invoice.invoiceNo}\n*Tgl Acara:* ${invoice.tanggal}\n*TOTAL TAGIHAN: ${formatter.format(invoice.total)}*\n\nMohon kesediaannya mengecek file PDF terlampir. Jika ada pertanyaan, balas pesan ini.\nTerima kasih 🙏`;
+                
+                setTimeout(() => {
+                    window.print();
+                    setTimeout(() => { window.open(`https://wa.me/${invoice.wa}?text=${encodeURIComponent(pesan)}`, '_blank'); }, 500); 
+                }, 500);
+            }
+        };
+
+        window.hapusInvoice = async function(docId) {
+            if(confirm("Yakin hapus riwayat invoice?")) {
+                try { await deleteDoc(doc(db, "invoices", docId)); window.loadRiwayatInvoice(); } catch(e) {}
+            }
+        };
+
+        window.tutupPreviewInvoice = function() { document.getElementById('invoicePreview').style.display = 'none'; document.getElementById('formBuatInvoice').style.display = 'block'; };
+
+        // --- SISTEM TABS NAVIGATION ---
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if(btn.id === 'btnLogoutAction') return; e.preventDefault();
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active'); document.getElementById(btn.getAttribute('data-target')).classList.add('active');
+            });
+        });
         
         document.getElementById('btnSimpanPort').addEventListener('click', async () => {
-            const kategori = document.getElementById('portKategori').value;
-            const eventName = document.getElementById('portEventName').value;
-            const photoUrl = document.getElementById('portPhotoUrl').value;
+            const kategori = document.getElementById('portKategori').value; const eventName = document.getElementById('portEventName').value; const photoUrl = document.getElementById('portPhotoUrl').value;
             if (!eventName || !photoUrl) return;
             try {
                 await addDoc(collection(db, "portfolio"), { kategori, eventName, photoUrl, createdAt: new Date().toISOString() });
-                document.getElementById('portPhotoUrl').value = '';
-                document.getElementById('portPreview').src = 'https://via.placeholder.com/100?text=Preview';
-                document.getElementById('statusPort').innerText = "Berhasil disimpan!";
-                setTimeout(() => document.getElementById('statusPort').innerText = "", 2000);
+                document.getElementById('portPhotoUrl').value = ''; document.getElementById('portPreview').src = 'https://via.placeholder.com/100';
+                document.getElementById('statusPort').innerText = "Berhasil disimpan!"; setTimeout(() => document.getElementById('statusPort').innerText = "", 2000);
             } catch(e) {}
         });
 
@@ -675,54 +573,24 @@
         // --- UI INVOICE BUILDER FUNCTIONS ---
         window.addServiceRow = function() {
             const container = document.getElementById('selectedServicesList');
-            const rowId = 'service_row_' + Date.now();
             let optionsHTML = '<option value="" data-price="0">-- Pilih Paket dari Pricelist --</option>';
             if (window.dbAllPackages && window.dbAllPackages.length > 0) {
                 window.dbAllPackages.forEach(pkg => {
-                    const priceVal = pkg.priceValue || 0;
                     const displayName = `[${pkg.kategori.toUpperCase()}] ${pkg.name}`;
-                    optionsHTML += `<option value="${displayName}" data-price="${priceVal}">${displayName}</option>`;
+                    optionsHTML += `<option value="${displayName}" data-price="${pkg.priceValue || 0}">${displayName}</option>`;
                 });
             }
-            const div = document.createElement('div');
-            div.className = 'grid-invoice'; div.id = rowId;
-            div.innerHTML = `
-                <div class="form-group" style="margin-bottom:0;">
-                    <label>Pilih Paket Layanan</label>
-                    <select class="form-control service-select" onchange="window.updateServicePrice(this)">${optionsHTML}</select>
-                </div>
-                <div class="form-group" style="margin-bottom:0;">
-                    <label>Harga (Otomatis)</label>
-                    <input type="number" class="form-control service-price" value="0" readonly style="background: rgba(0,0,0,0.3); cursor: not-allowed; color: var(--accent-gold); font-weight: bold;">
-                </div>
-                <button type="button" class="btn btn-danger" onclick="document.getElementById('${rowId}').remove()" style="height: 45px;"><i class="fa-solid fa-trash"></i></button>
-            `;
+            const div = document.createElement('div'); div.className = 'grid-invoice'; div.id = 'service_row_' + Date.now();
+            div.innerHTML = `<div class="form-group" style="margin-bottom:0;"><select class="form-control service-select" onchange="window.updateServicePrice(this)">${optionsHTML}</select></div><div class="form-group" style="margin-bottom:0;"><input type="number" class="form-control service-price" value="0" readonly style="background: rgba(0,0,0,0.3); color: var(--accent-gold); font-weight: bold;"></div><button type="button" class="btn btn-danger" onclick="this.parentElement.remove()" style="height: 45px;"><i class="fa-solid fa-trash"></i></button>`;
             container.appendChild(div);
         }
 
-        window.updateServicePrice = function(selectEl) {
-            const selectedOption = selectEl.options[selectEl.selectedIndex];
-            const priceVal = selectedOption.getAttribute('data-price') || 0;
-            const row = selectEl.closest('.grid-invoice');
-            row.querySelector('.service-price').value = priceVal;
-        }
+        window.updateServicePrice = function(selectEl) { selectEl.closest('.grid-invoice').querySelector('.service-price').value = selectEl.options[selectEl.selectedIndex].getAttribute('data-price') || 0; }
 
         window.addCustomItemRow = function() {
             const container = document.getElementById('customItemsList');
-            const rowId = 'custom_row_' + Date.now();
-            const div = document.createElement('div');
-            div.className = 'grid-invoice'; div.id = rowId;
-            div.innerHTML = `
-                <div class="form-group" style="margin-bottom:0;">
-                    <label>Nama Item / Charge / Lainnya</label>
-                    <input type="text" class="form-control custom-name" placeholder="Misal: Denda Overtime / Flashdisk">
-                </div>
-                <div class="form-group" style="margin-bottom:0;">
-                    <label>Harga (Rp)</label>
-                    <input type="number" class="form-control custom-price" placeholder="0" value="0">
-                </div>
-                <button type="button" class="btn btn-danger" onclick="document.getElementById('${rowId}').remove()" style="height: 45px;"><i class="fa-solid fa-trash"></i></button>
-            `;
+            const div = document.createElement('div'); div.className = 'grid-invoice';
+            div.innerHTML = `<div class="form-group" style="margin-bottom:0;"><input type="text" class="form-control custom-name" placeholder="Misal: Denda Overtime / Flashdisk"></div><div class="form-group" style="margin-bottom:0;"><input type="number" class="form-control custom-price" placeholder="0" value="0"></div><button type="button" class="btn btn-danger" onclick="this.parentElement.remove()" style="height: 45px;"><i class="fa-solid fa-trash"></i></button>`;
             container.appendChild(div);
         }
     </script>

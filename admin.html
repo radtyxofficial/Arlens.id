@@ -61,9 +61,20 @@
             background-image: linear-gradient(rgba(229, 172, 49, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(229, 172, 49, 0.03) 1px, transparent 1px);
             background-size: 30px 30px;
         }
-        .page-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 30px; color: var(--text-cream); border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+        .page-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; color: var(--text-cream); border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
         .panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; margin-bottom: 30px; display: none; }
         .panel.active { display: block; }
+
+        /* --- SUB TABS UNTUK KELOLA HARGA --- */
+        .price-tabs { display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+        .price-tab-btn {
+            padding: 10px 20px; background: var(--bg-input); border: 1px solid var(--border-color);
+            color: var(--text-muted); border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.3s;
+        }
+        .price-tab-btn.active { background: var(--accent-gold); color: #121d21; border-color: var(--accent-gold); }
+        .price-subpanel { display: none; }
+        .price-subpanel.active { display: block; }
+
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: var(--accent-gold); }
         .form-control { width: 100%; padding: 12px 15px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-cream); font-size: 0.9rem; outline: none; }
@@ -144,56 +155,81 @@
         <!-- PANEL: DASHBOARD -->
         <div class="panel active" id="dashboard">
             <h2 class="page-title">Ikhtisar Admin</h2>
-            <p style="color: var(--text-muted); line-height: 1.6;">Selamat datang. Kelola pricelist terpisah (Dokumentasi, Photobooth, Undangan), tentukan urutan, portofolio, dan buat invoice secara terintegrasi.</p>
+            <p style="color: var(--text-muted); line-height: 1.6;">Selamat datang. Kelola pricelist terpisah per produk, portofolio, dan buat invoice secara terintegrasi.</p>
         </div>
 
-        <!-- PANEL: KELOLA HARGA -->
+        <!-- PANEL: KELOLA HARGA (DIPISAH BERDASARKAN TAB PRODUK) -->
         <div class="panel" id="kelola-harga">
             <h2 class="page-title">Kelola Pricelist & Produk</h2>
-            <div class="grid-3">
-                <div class="form-group">
-                    <label>Pilih Kategori Utama</label>
-                    <select class="form-control" id="kategoriLayanan" onchange="handleKategoriChange(this.value)">
-                        <option value="dokumentasi">Dokumentasi</option>
-                        <option value="photobooth">Photobooth</option>
-                        <option value="undangan">Undangan Digital</option>
-                    </select>
-                </div>
-                <div class="form-group" id="subKategoriContainer" style="display: none;">
-                    <label>Sub-Kategori Photobooth</label>
-                    <select class="form-control" id="subKategoriPhotobooth">
-                        <option value="qr_only">Paket QR Only</option>
-                        <option value="limited_print">Paket Limited Print</option>
-                        <option value="unlimited_print">Paket Unlimited Print</option>
-                        <option value="addon">Add-On / Tambahan</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Kode Paket (Tanpa Spasi)</label><input type="text" class="form-control" id="idPaket" placeholder="Contoh: qr_2jam"></div>
-            </div>
-
-            <div class="grid-3">
-                <div class="form-group"><label>Urutan Tampil (Angka)</label><input type="number" class="form-control" id="urutanPaket" placeholder="1" value="1"></div>
-                <div class="form-group"><label>Nama Paket / Durasi</label><input type="text" class="form-control" id="namaPaket" placeholder="Contoh: 2 Hours atau 100 Print"></div>
-                <div class="form-group"><label>Deskripsi / Catatan Tambahan</label><input type="text" class="form-control" id="deskripsiPaket" placeholder="Contoh: Termasuk penyiapan 30-40 min"></div>
-            </div>
             
-            <div class="grid-2">
-                <div class="form-group"><label>Harga (Angka Saja, misal: 400000)</label><input type="number" class="form-control" id="hargaPaketNum" placeholder="400000"></div>
-                <div class="form-group">
-                    <label>URL Gambar Google Drive</label>
-                    <input type="text" class="form-control" id="gambarPaket" placeholder="https://..." oninput="updateThumbPreview(this.value)">
-                    <img id="thumbPreview" src="https://via.placeholder.com/100?text=Preview" class="thumbnail-preview" alt="Preview">
-                </div>
+            <!-- Tab Pemilih Produk -->
+            <div class="price-tabs">
+                <button type="button" class="price-tab-btn active" onclick="switchPriceTab('dokumentasi')"><i class="fa-solid fa-camera"></i> Pricelist Dokumentasi</button>
+                <button type="button" class="price-tab-btn" onclick="switchPriceTab('photobooth')"><i class="fa-solid fa-print"></i> Pricelist Photobooth</button>
+                <button type="button" class="price-tab-btn" onclick="switchPriceTab('undangan')"><i class="fa-solid fa-envelope-open-text"></i> Pricelist Undangan</button>
             </div>
-            <div class="form-group"><label>Benefit Paket (Pisahkan dengan tanda koma)</label><textarea class="form-control" id="benefitPaket" rows="3" placeholder="Benefit 1, Benefit 2"></textarea></div>
-            <button class="btn btn-primary" id="btnSimpanDB"><i class="fa-solid fa-cloud-arrow-up"></i> Simpan / Perbarui Paket</button>
-            <p id="statusSimpan" style="margin-top:10px; font-size:0.85rem; color:var(--accent-gold);"></p>
 
-            <div style="margin-top: 40px;">
-                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; color: var(--accent-gold);">Daftar Pricelist Terpisah</h3>
-                <div style="overflow-x: auto;" id="containerTabelPricelist">
-                    <!-- Tabel terpisah per kategori -->
+            <!-- FORM 1: DOKUMENTASI -->
+            <div id="subpanel-dokumentasi" class="price-subpanel active">
+                <h3 style="color:var(--accent-gold); margin-bottom:15px; font-size:1.1rem;">Input / Edit Paket Dokumentasi</h3>
+                <div class="grid-3">
+                    <div class="form-group"><label>Kode Paket (Tanpa Spasi)</label><input type="text" class="form-control" id="doc_id" placeholder="Contoh: premium"></div>
+                    <div class="form-group"><label>Urutan Tampil</label><input type="number" class="form-control" id="doc_order" value="1"></div>
+                    <div class="form-group"><label>Nama Paket</label><input type="text" class="form-control" id="doc_name" placeholder="Contoh: PREMIUM"></div>
                 </div>
+                <div class="grid-2">
+                    <div class="form-group"><label>Harga (Angka Saja)</label><input type="number" class="form-control" id="doc_price" placeholder="400000"></div>
+                    <div class="form-group"><label>Deskripsi / Rekomendasi Acara</label><input type="text" class="form-control" id="doc_desc" placeholder="Cocok untuk intimate wedding"></div>
+                </div>
+                <div class="form-group"><label>Benefit (Pisahkan dengan koma)</label><textarea class="form-control" id="doc_benefits" rows="2" placeholder="Benefit 1, Benefit 2"></textarea></div>
+                <button class="btn btn-primary" onclick="simpanPricelist('dokumentasi')"><i class="fa-solid fa-save"></i> Simpan Paket Dokumentasi</button>
+            </div>
+
+            <!-- FORM 2: PHOTOBOOTH -->
+            <div id="subpanel-photobooth" class="price-subpanel">
+                <h3 style="color:var(--accent-gold); margin-bottom:15px; font-size:1.1rem;">Input / Edit Paket Photobooth</h3>
+                <div class="grid-3">
+                    <div class="form-group">
+                        <label>Sub-Kategori Photobooth</label>
+                        <select class="form-control" id="pb_subkategori">
+                            <option value="qr_only">Paket QR Only</option>
+                            <option value="limited_print">Paket Limited Print</option>
+                            <option value="unlimited_print">Paket Unlimited Print</option>
+                            <option value="addon">Add-On / Tambahan</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Kode Paket (Tanpa Spasi)</label><input type="text" class="form-control" id="pb_id" placeholder="Contoh: qr_2jam"></div>
+                    <div class="form-group"><label>Urutan Tampil</label><input type="number" class="form-control" id="pb_order" value="1"></div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group"><label>Nama Paket / Durasi</label><input type="text" class="form-control" id="pb_name" placeholder="Contoh: 2 Hours atau Tambahan Template"></div>
+                    <div class="form-group"><label>Harga (Angka Saja)</label><input type="number" class="form-control" id="pb_price" placeholder="400000"></div>
+                </div>
+                <div class="form-group"><label>Deskripsi / Catatan (Opsional)</label><input type="text" class="form-control" id="pb_desc" placeholder="Setiap tambahan waktu 100k/Jam"></div>
+                <button class="btn btn-primary" onclick="simpanPricelist('photobooth')"><i class="fa-solid fa-save"></i> Simpan Paket Photobooth</button>
+            </div>
+
+            <!-- FORM 3: UNDANGAN DIGITAL -->
+            <div id="subpanel-undangan" class="price-subpanel">
+                <h3 style="color:var(--accent-gold); margin-bottom:15px; font-size:1.1rem;">Input / Edit Pricelist Undangan Digital</h3>
+                <div class="grid-3">
+                    <div class="form-group"><label>Kode Paket (Tanpa Spasi)</label><input type="text" class="form-control" id="und_id" placeholder="Contoh: basic"></div>
+                    <div class="form-group"><label>Urutan Tampil</label><input type="number" class="form-control" id="und_order" value="1"></div>
+                    <div class="form-group"><label>Nama Paket Undangan</label><input type="text" class="form-control" id="und_name" placeholder="Contoh: Undangan Web Eksklusif"></div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group"><label>Harga (Angka Saja)</label><input type="number" class="form-control" id="und_price" placeholder="150000"></div>
+                    <div class="form-group"><label>Deskripsi / Fitur Singkat</label><input type="text" class="form-control" id="und_desc" placeholder="Masa aktif 1 tahun"></div>
+                </div>
+                <button class="btn btn-primary" onclick="simpanPricelist('undangan')"><i class="fa-solid fa-save"></i> Simpan Paket Undangan</button>
+            </div>
+
+            <p id="statusSimpan" style="margin-top:15px; font-size:0.85rem; color:var(--accent-gold);"></p>
+
+            <!-- TABEL DAFTAR SEMUA PAKET -->
+            <div style="margin-top: 40px;">
+                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; color: var(--accent-gold);">Daftar Pricelist Terkelompok</h3>
+                <div style="overflow-x: auto;" id="containerTabelPricelist"></div>
             </div>
         </div>
 
@@ -326,17 +362,78 @@
 
         document.getElementById('btnLogoutAction').addEventListener('click', (e) => { e.preventDefault(); signOut(auth); });
 
-        // --- TAMPIL/SEMBUNYI SUB-KATEGORI PHOTOBOOTH ---
-        window.handleKategoriChange = function(val) {
-            const subContainer = document.getElementById('subKategoriContainer');
-            if(val === 'photobooth') {
-                subContainer.style.display = 'block';
-            } else {
-                subContainer.style.display = 'none';
+        // --- SWITCH SUB-TAB KELOLA HARGA ---
+        window.switchPriceTab = function(tabName) {
+            document.querySelectorAll('.price-tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.price-subpanel').forEach(p => p.classList.remove('active'));
+            
+            if(tabName === 'dokumentasi') {
+                document.querySelectorAll('.price-tab-btn')[0].classList.add('active');
+                document.getElementById('subpanel-dokumentasi').classList.add('active');
+            } else if(tabName === 'photobooth') {
+                document.querySelectorAll('.price-tab-btn')[1].classList.add('active');
+                document.getElementById('subpanel-photobooth').classList.add('active');
+            } else if(tabName === 'undangan') {
+                document.querySelectorAll('.price-tab-btn')[2].classList.add('active');
+                document.getElementById('subpanel-undangan').classList.add('active');
             }
         }
 
-        // --- LOAD & RENDER TABEL TERPISAH PER KATEGORI & SUB-KATEGORI ---
+        // --- SIMPAN PRICELIST PER KATEGORI ---
+        window.simpanPricelist = async function(kategori) {
+            let idVal, orderVal, nameVal, priceVal, descVal, subkatVal = 'umum', benefitsVal = [];
+            
+            if(kategori === 'dokumentasi') {
+                idVal = document.getElementById('doc_id').value.trim().toLowerCase();
+                orderVal = parseInt(document.getElementById('doc_order').value) || 1;
+                nameVal = document.getElementById('doc_name').value.trim();
+                priceVal = parseFloat(document.getElementById('doc_price').value) || 0;
+                descVal = document.getElementById('doc_desc').value.trim();
+                benefitsVal = document.getElementById('doc_benefits').value.split(',').map(i => i.trim()).filter(i => i);
+            } else if(kategori === 'photobooth') {
+                subkatVal = document.getElementById('pb_subkategori').value;
+                idVal = document.getElementById('pb_id').value.trim().toLowerCase();
+                orderVal = parseInt(document.getElementById('pb_order').value) || 1;
+                nameVal = document.getElementById('pb_name').value.trim();
+                priceVal = parseFloat(document.getElementById('pb_price').value) || 0;
+                descVal = document.getElementById('pb_desc').value.trim();
+            } else if(kategori === 'undangan') {
+                idVal = document.getElementById('und_id').value.trim().toLowerCase();
+                orderVal = parseInt(document.getElementById('und_order').value) || 1;
+                nameVal = document.getElementById('und_name').value.trim();
+                priceVal = parseFloat(document.getElementById('und_price').value) || 0;
+                descVal = document.getElementById('und_desc').value.trim();
+            }
+
+            if(!idVal || !nameVal) {
+                alert("Kode Paket dan Nama Paket wajib diisi!");
+                return;
+            }
+
+            try {
+                const docId = `${kategori}_${subkatVal !== 'umum' ? subkatVal + '_' : ''}${idVal}`;
+                const docRef = doc(db, "pricelist", docId);
+                await setDoc(docRef, {
+                    kategori: kategori,
+                    subkategori: subkatVal,
+                    order: orderVal,
+                    name: nameVal,
+                    desc: descVal,
+                    price: `Rp. ${priceVal.toLocaleString('id-ID')},00`,
+                    priceValue: priceVal,
+                    benefits: benefitsVal
+                });
+
+                document.getElementById('statusSimpan').innerText = "✅ Paket berhasil disimpan!";
+                loadPricelistData();
+                setTimeout(() => document.getElementById('statusSimpan').innerText = "", 2000);
+            } catch(e) {
+                alert("Gagal menyimpan data!");
+                console.error(e);
+            }
+        }
+
+        // --- LOAD & RENDER TABEL TERPISAH PER KATEGORI ---
         async function loadPricelistData() {
             try {
                 const qSnap = await getDocs(collection(db, "pricelist"));
@@ -362,7 +459,6 @@
                     window.dbAllPackages.push({ id: docSnap.id, ...data });
                 });
 
-                // Urutkan data berdasarkan Kategori & Urutan
                 window.dbAllPackages.sort((a, b) => {
                     if(a.kategori < b.kategori) return -1;
                     if(a.kategori > b.kategori) return 1;
@@ -393,7 +489,6 @@
                     `;
 
                     if(kat === 'photobooth') {
-                        // Kelompokkan photobooth berdasarkan subkategori
                         const subKatMap = {
                             'qr_only': 'Paket QR Only',
                             'limited_print': 'Paket Limited Print',
@@ -447,23 +542,32 @@
             } catch (e) { console.error(e); }
         }
 
-        // --- FUNGSI EDIT & HAPUS PRICELIST AMAN ---
+        // --- PANGGIL EDIT ---
         window.panggilEdit = function(docId) {
             const pkg = window.dbAllPackages.find(p => p.id === docId);
             if(pkg) {
-                document.getElementById('kategoriLayanan').value = pkg.kategori;
-                window.handleKategoriChange(pkg.kategori);
-                if(pkg.kategori === 'photobooth') {
-                    document.getElementById('subKategoriPhotobooth').value = pkg.subkategori || 'qr_only';
+                switchPriceTab(pkg.kategori);
+                if(pkg.kategori === 'dokumentasi') {
+                    document.getElementById('doc_id').value = docId.replace('dokumentasi_', '');
+                    document.getElementById('doc_order').value = pkg.order || 1;
+                    document.getElementById('doc_name').value = pkg.name;
+                    document.getElementById('doc_price').value = pkg.priceValue;
+                    document.getElementById('doc_desc').value = pkg.desc || '';
+                    document.getElementById('doc_benefits').value = (pkg.benefits || []).join(', ');
+                } else if(pkg.kategori === 'photobooth') {
+                    document.getElementById('pb_subkategori').value = pkg.subkategori || 'qr_only';
+                    document.getElementById('pb_id').value = docId.split('_').slice(2).join('_');
+                    document.getElementById('pb_order').value = pkg.order || 1;
+                    document.getElementById('pb_name').value = pkg.name;
+                    document.getElementById('pb_price').value = pkg.priceValue;
+                    document.getElementById('pb_desc').value = pkg.desc || '';
+                } else if(pkg.kategori === 'undangan') {
+                    document.getElementById('und_id').value = docId.replace('undangan_', '');
+                    document.getElementById('und_order').value = pkg.order || 1;
+                    document.getElementById('und_name').value = pkg.name;
+                    document.getElementById('und_price').value = pkg.priceValue;
+                    document.getElementById('und_desc').value = pkg.desc || '';
                 }
-                document.getElementById('idPaket').value = docId.split('_').slice(1).join('_');
-                document.getElementById('urutanPaket').value = pkg.order || 1;
-                document.getElementById('namaPaket').value = pkg.name;
-                document.getElementById('deskripsiPaket').value = pkg.desc || '';
-                document.getElementById('hargaPaketNum').value = pkg.priceValue;
-                document.getElementById('gambarPaket').value = pkg.img || '';
-                document.getElementById('thumbPreview').src = pkg.img || 'https://via.placeholder.com/100';
-                document.getElementById('benefitPaket').value = (pkg.benefits || []).join(', ');
 
                 document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                 document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -482,38 +586,6 @@
                 } catch(e) { alert("Gagal menghapus."); }
             }
         };
-
-        // --- SIMPAN PRICELIST ---
-        document.getElementById('btnSimpanDB').addEventListener('click', async () => {
-            const kategori = document.getElementById('kategoriLayanan').value;
-            const subkategori = kategori === 'photobooth' ? document.getElementById('subKategoriPhotobooth').value : 'umum';
-            const idPaket = document.getElementById('idPaket').value.replace(/\s+/g, '').toLowerCase();
-            const orderNum = parseInt(document.getElementById('urutanPaket').value) || 1;
-            const namaPaket = document.getElementById('namaPaket').value;
-            const deskripsi = document.getElementById('deskripsiPaket').value;
-            const hargaNum = parseFloat(document.getElementById('hargaPaketNum').value) || 0;
-            const hargaFormatted = `Rp. ${hargaNum.toLocaleString('id-ID')},00`;
-            const gambar = document.getElementById('gambarPaket').value;
-            const benefitsArray = document.getElementById('benefitPaket').value.split(',').map(i => i.trim()).filter(i => i);
-
-            if (!idPaket || !namaPaket) return;
-
-            try {
-                const docId = `${kategori}_${subkategori !== 'umum' ? subkategori + '_' : ''}${idPaket}`;
-                const docRef = doc(db, "pricelist", docId);
-                await setDoc(docRef, { kategori, subkategori, order: orderNum, name: namaPaket, desc: deskripsi, price: hargaFormatted, priceValue: hargaNum, img: gambar, benefits: benefitsArray });
-                loadPricelistData();
-                document.getElementById('statusSimpan').innerText = "Berhasil disimpan!";
-                
-                document.getElementById('idPaket').value = '';
-                document.getElementById('namaPaket').value = '';
-                document.getElementById('deskripsiPaket').value = '';
-                document.getElementById('hargaPaketNum').value = '';
-                document.getElementById('benefitPaket').value = '';
-                
-                setTimeout(() => document.getElementById('statusSimpan').innerText = "", 2000);
-            } catch(e) {}
-        });
 
         // --- LOAD RIWAYAT INVOICE ---
         window.loadRiwayatInvoice = async function() {
@@ -661,7 +733,6 @@
     </script>
 
     <script>
-        function updateThumbPreview(url) { document.getElementById('thumbPreview').src = url ? url : 'https://via.placeholder.com/100'; }
         function updatePortPreview(url) { document.getElementById('portPreview').src = url ? url : 'https://via.placeholder.com/100'; }
 
         // --- UI INVOICE BUILDER FUNCTIONS ---

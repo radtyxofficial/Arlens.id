@@ -164,7 +164,10 @@
                 </div>
             </div>
             
-            <div class="form-group"><label>Nama Paket</label><input type="text" class="form-control" id="namaPaket" placeholder="Contoh: PREMIUM"></div>
+            <div class="grid-2">
+                <div class="form-group"><label>Nama Paket</label><input type="text" class="form-control" id="namaPaket" placeholder="Contoh: PREMIUM"></div>
+                <div class="form-group"><label>Deskripsi Singkat (Rekomendasi Acara)</label><input type="text" class="form-control" id="deskripsiPaket" placeholder="Contoh: Cocok untuk acara intimate/lamaran"></div>
+            </div>
             
             <div class="grid-2">
                 <div class="form-group"><label>Harga (Angka Saja, misal: 400000)</label><input type="number" class="form-control" id="hargaPaketNum" placeholder="400000"></div>
@@ -204,7 +207,7 @@
                 <div class="form-group"><label>Nama Album / Event</label><input type="text" class="form-control" id="portEventName" placeholder="Nama Event Acara"></div>
             </div>
             <div class="form-group">
-                <label>Link Gambar Google Drive</label>
+                <label>Link Gambar Google Drive / URL Foto</label>
                 <input type="text" class="form-control" id="portPhotoUrl" placeholder="https://..." oninput="updatePortPreview(this.value)">
                 <img id="portPreview" src="https://via.placeholder.com/100?text=Preview" class="thumbnail-preview" alt="Preview">
             </div>
@@ -318,7 +321,7 @@
 
         document.getElementById('btnLogoutAction').addEventListener('click', (e) => { e.preventDefault(); signOut(auth); });
 
-        // --- LOAD PRICELIST AMAN (DENGAN URUTAN) ---
+        // --- LOAD PRICELIST AMAN (DENGAN URUTAN & DESKRIPSI) ---
         async function loadPricelistData() {
             try {
                 const qSnap = await getDocs(collection(db, "pricelist"));
@@ -336,12 +339,11 @@
                         finalPriceVal = parseInt(numStr, 10) || 0;
                     }
                     data.priceValue = finalPriceVal;
-                    data.order = data.order || 99; // Default urutan jika belum ada
+                    data.order = data.order || 99;
                     
                     window.dbAllPackages.push({ id: docSnap.id, ...data });
                 });
 
-                // Urutkan berdasarkan Kategori, lalu Urutan (Order)
                 window.dbAllPackages.sort((a, b) => {
                     if(a.kategori < b.kategori) return -1;
                     if(a.kategori > b.kategori) return 1;
@@ -376,6 +378,7 @@
                 document.getElementById('idPaket').value = docId.replace(`${pkg.kategori}_`, '');
                 document.getElementById('urutanPaket').value = pkg.order || 1;
                 document.getElementById('namaPaket').value = pkg.name;
+                document.getElementById('deskripsiPaket').value = pkg.desc || ''; // Mengisi otomatis kolom deskripsi
                 document.getElementById('hargaPaketNum').value = pkg.priceValue;
                 document.getElementById('gambarPaket').value = pkg.img || '';
                 document.getElementById('thumbPreview').src = pkg.img || 'https://via.placeholder.com/100';
@@ -405,6 +408,7 @@
             const idPaket = document.getElementById('idPaket').value.replace(/\s+/g, '').toLowerCase();
             const orderNum = parseInt(document.getElementById('urutanPaket').value) || 1;
             const namaPaket = document.getElementById('namaPaket').value;
+            const deskripsi = document.getElementById('deskripsiPaket').value; // Ambil nilai kolom deskripsi baru
             const hargaNum = parseFloat(document.getElementById('hargaPaketNum').value) || 0;
             const hargaFormatted = `Rp. ${hargaNum.toLocaleString('id-ID')},00`;
             const gambar = document.getElementById('gambarPaket').value;
@@ -414,9 +418,17 @@
 
             try {
                 const docRef = doc(db, "pricelist", `${kategori}_${idPaket}`);
-                await setDoc(docRef, { kategori, order: orderNum, name: namaPaket, price: hargaFormatted, priceValue: hargaNum, img: gambar, benefits: benefitsArray });
+                await setDoc(docRef, { kategori, order: orderNum, name: namaPaket, desc: deskripsi, price: hargaFormatted, priceValue: hargaNum, img: gambar, benefits: benefitsArray });
                 loadPricelistData();
                 document.getElementById('statusSimpan').innerText = "Berhasil disimpan!";
+                
+                // Kosongkan form setelah simpan
+                document.getElementById('idPaket').value = '';
+                document.getElementById('namaPaket').value = '';
+                document.getElementById('deskripsiPaket').value = '';
+                document.getElementById('hargaPaketNum').value = '';
+                document.getElementById('benefitPaket').value = '';
+                
                 setTimeout(() => document.getElementById('statusSimpan').innerText = "", 2000);
             } catch(e) {}
         });

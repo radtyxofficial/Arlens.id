@@ -584,12 +584,6 @@
             background-color: #ffffff;
         }
 
-        .card-img.transparent-bg {
-            background-color: transparent !important;
-            padding: 0 !important;
-            object-fit: cover !important;
-        }
-
         .card-title {
             font-size: 1.15rem;
             font-weight: 700;
@@ -1027,6 +1021,7 @@
             font-size: 0.82rem;
             color: var(--accent-terracotta);
             font-weight: 600;
+            line-height: 1.4;
         }
         .modal-benefits li.note-item i {
             color: var(--accent-terracotta);
@@ -1091,7 +1086,6 @@
                 Abadikan setiap momen berharga Anda menjadi karya seni visual yang natural dan elegan. Melalui layanan Dokumentasi, Photobooth, dan Undangan Digital, kami menghadirkan pengalaman unik yang dirancang penuh presisi untuk hari spesial Anda.
             </p>
             
-            <!-- PEMBERITAHUAN COMING SOON / UJI COBA -->
             <div class="trial-notice">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 <p><span>STATUS: COMING SOON (UJI COBA).</span> Website dan seluruh layanan jasa kreatif kami saat ini masih dalam tahap proses pengembangan akhir.</p>
@@ -1139,9 +1133,9 @@
             <h2>Layanan Arlens.ID</h2>
         </div>
         <div class="tab-navigation">
-            <button class="tab-btn active" onclick="switchTab('dokumentasi', this)">Dokumentasi (Photo Only)</button>
-            <button class="tab-btn" onclick="switchTab('photobooth', this)">Photobooth</button>
-            <button class="tab-btn" onclick="switchTab('undangan', this)">Undangan Digital</button>
+            <button class="tab-btn active" onclick="switchLiveTab('dokumentasi', this)">Dokumentasi (Photo Only)</button>
+            <button class="tab-btn" onclick="switchLiveTab('photobooth', this)">Photobooth</button>
+            <button class="tab-btn" onclick="switchLiveTab('undangan', this)">Undangan Digital</button>
         </div>
     </section>
 
@@ -1151,16 +1145,15 @@
             <p>Rincian Harga</p>
             <h2>Price List</h2>
         </div>
-        <div class="cards-grid" id="cardsGrid">
-            <!-- Data akan dimuat otomatis dari Firebase Firestore -->
-            <p style="text-align: center; color: var(--text-muted); grid-column: 1/-1;">Memuat data pricelist...</p>
+        <div class="cards-grid" id="liveCardsGrid">
+            <!-- Dinamis dimuat dari Firebase berdasarkan input Admin -->
         </div>
     </section>
 
     <!-- 7. PORTFOLIO / GALLERY SECTION -->
     <section class="section-padded reveal-section" id="portfolio">
-        <div id="galleryContainer">
-            <!-- JS Injecting Gallery Content Automatically -->
+        <div id="liveGalleryContainer">
+            <!-- Dinamis dimuat dari Firebase berdasarkan input Admin -->
         </div>
     </section>
 
@@ -1260,9 +1253,9 @@
             <div class="footer-col">
                 <h4>Layanan Kami</h4>
                 <ul>
-                    <li><a href="#products" onclick="switchTab('dokumentasi', document.querySelectorAll('.tab-btn')[0])">Dokumentasi</a></li>
-                    <li><a href="#products" onclick="switchTab('photobooth', document.querySelectorAll('.tab-btn')[1])">Photobooth</a></li>
-                    <li><a href="#products" onclick="switchTab('undangan', document.querySelectorAll('.tab-btn')[2])">Undangan Digital</a></li>
+                    <li><a href="#products" onclick="switchLiveTab('dokumentasi', document.querySelectorAll('.tab-btn')[0])">Dokumentasi</a></li>
+                    <li><a href="#products" onclick="switchLiveTab('photobooth', document.querySelectorAll('.tab-btn')[1])">Photobooth</a></li>
+                    <li><a href="#products" onclick="switchLiveTab('undangan', document.querySelectorAll('.tab-btn')[2])">Undangan Digital</a></li>
                 </ul>
             </div>
         </div>
@@ -1278,7 +1271,7 @@
             <div class="modal-title" id="modalTitle">Nama Paket</div>
             <div class="modal-price" id="modalPrice">Harga Paket</div>
             <ul class="modal-benefits" id="modalBenefits">
-                <!-- Benefit list populated via JS -->
+                <!-- Benefit & Deskripsi dimuat dinamis -->
             </ul>
             <a href="#" id="modalWhatsAppBtn" target="_blank" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: 12px;"><i class="fa-brands fa-whatsapp"></i> Pesan Paket Ini</a>
         </div>
@@ -1292,7 +1285,7 @@
         </div>
     </div>
 
-    <!-- FIREBASE & JAVASCRIPT LOGIC -->
+    <!-- FIREBASE & CLIENT SCRIPT LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
@@ -1303,249 +1296,243 @@
             projectId: "arlens-portofolio",
             storageBucket: "arlens-portofolio.firebasestorage.app",
             messagingSenderId: "104940044026",
-            appId: "1:104940044026:web:8956c198f34598bafe5343",
-            measurementId: "G-1RVNQXEH1G"
+            appId: "1:104940044026:web:8956c198f34598bafe5343"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Global variable untuk menampung data dari database
-        window.firebasePackages = {
-            dokumentasi: [],
-            photobooth: [],
-            undangan: []
-        };
+        let livePackages = {};
+        let livePortfolios = {};
+        let currentActiveTab = 'dokumentasi';
 
-        // Fungsi mengambil data dari Firestore
-        async function fetchPackagesFromFirebase() {
+        async function fetchWebData() {
             try {
-                const querySnapshot = await getDocs(collection(db, "pricelist"));
-                
-                // Reset penampung
-                window.firebasePackages = { dokumentasi: [], photobooth: [], undangan: [] };
+                // Ambil Pricelist dari Firestore
+                const priceSnap = await getDocs(collection(db, "pricelist"));
+                livePackages = { dokumentasi: [], photobooth: [], undangan: [] };
 
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    if (data.kategori && window.firebasePackages[data.kategori]) {
-                        window.firebasePackages[data.kategori].push(data);
+                priceSnap.forEach(docSnap => {
+                    const data = docSnap.data();
+                    const kat = data.kategori || 'dokumentasi';
+                    if(livePackages[kat]) {
+                        livePackages[kat].push(data);
                     }
                 });
 
-                // Render ulang tab aktif saat data berhasil ditarik
-                const activeBtn = document.querySelector('.tab-btn.active');
-                let currentCategory = 'dokumentasi';
-                if(activeBtn) {
-                    const text = activeBtn.innerText.toLowerCase();
-                    if(text.includes('photobooth')) currentCategory = 'photobooth';
-                    else if(text.includes('undangan')) currentCategory = 'undangan';
-                }
-                renderTabContent(currentCategory);
+                // Urutkan berdasarkan properti order
+                Object.keys(livePackages).forEach(k => {
+                    livePackages[k].sort((a, b) => (a.order || 99) - (b.order || 99));
+                });
 
-            } catch (error) {
-                console.error("Gagal mengambil data dari Firebase:", error);
+                // Ambil Portofolio dari Firestore
+                const portSnap = await getDocs(collection(db, "portfolio"));
+                let rawPortfolios = [];
+                portSnap.forEach(docSnap => {
+                    rawPortfolios.push(docSnap.data());
+                });
+
+                // Kelompokkan portofolio berdasarkan event/album
+                livePortfolios = { dokumentasi: {}, photobooth: {}, undangan: {} };
+                rawPortfolios.forEach(item => {
+                    const kat = item.kategori || 'dokumentasi';
+                    const eventName = item.eventName || 'Acara Spesial';
+                    if(!livePortfolios[kat][eventName]) {
+                        livePortfolios[kat][eventName] = [];
+                    }
+                    livePortfolios[kat][eventName].push(item.photoUrl);
+                });
+
+                renderLiveContent(currentActiveTab);
+            } catch(e) {
+                console.error("Gagal memuat data live web:", e);
             }
         }
 
-        // Panggil fungsi saat halaman dimuat
-        fetchPackagesFromFirebase();
-        window.fetchPackagesFromFirebase = fetchPackagesFromFirebase;
+        window.renderLiveContent = function(category) {
+            currentActiveTab = category;
+            const grid = document.getElementById('liveCardsGrid');
+            const galleryContainer = document.getElementById('liveGalleryContainer');
+            
+            grid.innerHTML = '';
+            const items = livePackages[category] || [];
+
+            if(items.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 30px;">Belum ada paket tersedia untuk kategori ini. Silakan input melalui Admin Dashboard.</div>`;
+            } else {
+                items.forEach((item, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <img src="${item.img || 'https://via.placeholder.com/600x400/ffffff/121d21?text=ARLENS.ID'}" alt="${item.name}" class="card-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400/ffffff/121d21?text=ARLENS.ID';">
+                        <div class="card-category">${category.toUpperCase()}</div>
+                        <div class="card-title">${item.name}</div>
+                        <div class="card-price">${item.price || 'Rp 0'}</div>
+                        <button class="card-btn" onclick="window.openLiveModal('${category}', ${index})">
+                            Lihat Benefit Detail <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+
+            // Render Galeri Portofolio Live
+            galleryContainer.innerHTML = '';
+            const albumsObj = livePortfolios[category] || {};
+            const albumKeys = Object.keys(albumsObj);
+
+            if(albumKeys.length > 0) {
+                let html = `
+                    <div class="section-title" style="margin-bottom: 20px;">
+                        <p>Galeri & Portfolio</p>
+                        <h2>Hasil ${category.charAt(0).toUpperCase() + category.slice(1)} Kami</h2>
+                    </div>
+                `;
+
+                albumKeys.forEach(eventName => {
+                    const photos = albumsObj[eventName];
+                    html += `
+                    <div class="event-album-container">
+                        <div class="event-album-title">
+                            <i class="fa-solid fa-camera-retro"></i> ${eventName}
+                        </div>
+                        <div class="photo-row">
+                    `;
+                    
+                    photos.forEach(photo => {
+                        html += `
+                            <div class="photo-item" onclick="openLightbox('${photo}')">
+                                <img src="${photo}" alt="Portfolio ${eventName}" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x450/121d21/e5ac31?text=ARLENS.ID';">
+                            </div>
+                        `;
+                    });
+
+                    html += `</div></div>`;
+                });
+                galleryContainer.innerHTML = html;
+            }
+        }
+
+        window.switchLiveTab = function(category, btnElement) {
+            if (btnElement) {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btnElement.classList.add('active');
+            }
+            renderLiveContent(category);
+        }
+
+        window.openLiveModal = function(category, index) {
+            const data = livePackages[category][index];
+            const packageName = `Paket ${data.name}`;
+            
+            document.getElementById('modalTitle').innerText = packageName;
+            document.getElementById('modalPrice').innerText = `Harga: ${data.price}`;
+            const benefitsListEl = document.getElementById('modalBenefits');
+            benefitsListEl.innerHTML = '';
+            
+            // Render Benefit jika ada
+            if(data.benefits && data.benefits.length > 0) {
+                data.benefits.forEach(benefit => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${benefit}`;
+                    benefitsListEl.appendChild(li);
+                });
+            }
+
+            // Render Deskripsi / Catatan Admin dengan format baris baru yang rapi
+            if(data.desc && data.desc.trim() !== '') {
+                const descFormatted = data.desc.replace(/\n/g, '<br>');
+                const liNote = document.createElement('li');
+                liNote.className = 'note-item';
+                liNote.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <div>${descFormatted}</div>`;
+                benefitsListEl.appendChild(liNote);
+            }
+
+            const whatsappNumber = '6285604613503';
+            const message = `Halo ARLENS.ID 👋🏻%0A%0ASaya ingin bertanya mengenai ketersediaan dan detail untuk layanan *${encodeURIComponent(packageName)}* pada acara saya.%0A%0AMohon infonya, terima kasih😇❣️`;
+            document.getElementById('modalWhatsAppBtn').href = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+            document.getElementById('packageModal').classList.add('active');
+        }
+
+        fetchWebData();
     </script>
 
+    <!-- UI INTERACTION SCRIPT -->
     <script>
-        // --- 0. SNOWFALL EFFECT LOGIC ---
+        // --- SNOWFALL EFFECT ---
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas); resizeCanvas();
 
         const snowflakes = [];
-        const maxSnowflakes = 45;
-
-        for (let i = 0; i < maxSnowflakes; i++) {
-            snowflakes.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                radius: Math.random() * 2.2 + 0.8,
-                density: Math.random() * maxSnowflakes,
-                speedY: Math.random() * 0.7 + 0.4,
-                speedX: Math.random() * 0.4 - 0.2
-            });
+        for (let i = 0; i < 45; i++) {
+            snowflakes.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, radius: Math.random() * 2.2 + 0.8, density: Math.random() * 45, speedY: Math.random() * 0.7 + 0.4, speedX: Math.random() * 0.4 - 0.2 });
         }
-
         function drawSnow() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
             ctx.beginPath();
             for (let i = 0; i < snowflakes.length; i++) {
                 let sf = snowflakes[i];
-                ctx.moveTo(sf.x, sf.y);
-                ctx.arc(sf.x, sf.y, sf.radius, 0, Math.PI * 2, true);
+                ctx.moveTo(sf.x, sf.y); ctx.arc(sf.x, sf.y, sf.radius, 0, Math.PI * 2, true);
             }
-            ctx.fill();
-            updateSnow();
+            ctx.fill(); updateSnow();
         }
-
         let angle = 0;
         function updateSnow() {
             angle += 0.01;
             for (let i = 0; i < snowflakes.length; i++) {
                 let sf = snowflakes[i];
-                sf.y += sf.speedY;
-                sf.x += Math.sin(angle + sf.density) * 0.4 + sf.speedX;
-
-                if (sf.y > canvas.height + 10) {
-                    sf.y = -10;
-                    sf.x = Math.random() * canvas.width;
-                }
-                if (sf.x > canvas.width + 10) {
-                    sf.x = -10;
-                } else if (sf.x < -10) {
-                    sf.x = canvas.width + 10;
-                }
+                sf.y += sf.speedY; sf.x += Math.sin(angle + sf.density) * 0.4 + sf.speedX;
+                if (sf.y > canvas.height + 10) { sf.y = -10; sf.x = Math.random() * canvas.width; }
+                if (sf.x > canvas.width + 10) sf.x = -10; else if (sf.x < -10) sf.x = canvas.width + 10;
             }
         }
+        requestAnimationFrame(function loop() { drawSnow(); requestAnimationFrame(loop); });
 
-        function loopSnow() {
-            drawSnow();
-            requestAnimationFrame(loopSnow);
-        }
-        loopSnow();
-
-
-        // --- 1. MUSIC PLAYER LOGIC ---
+        // --- MUSIC PLAYER ---
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
-        const musicIcon = musicToggle.querySelector('i');
         let isMusicPlaying = false;
-
-        function updateMusicUI(playing) {
-            isMusicPlaying = playing;
-            if (playing) {
-                musicIcon.className = 'fa-solid fa-music';
-                musicToggle.classList.add('playing');
-            } else {
-                musicIcon.className = 'fa-solid fa-volume-xmark';
-                musicToggle.classList.remove('playing');
-            }
-        }
-
-        function toggleMusic() {
-            if (isMusicPlaying) {
-                bgMusic.pause();
-                updateMusicUI(false);
-            } else {
-                bgMusic.play().then(() => {
-                    updateMusicUI(true);
-                }).catch(err => {
-                    console.log("Audio play prevented:", err);
-                });
-            }
-        }
-
         musicToggle.addEventListener('click', (e) => {
             e.stopPropagation();
-            toggleMusic();
+            if (isMusicPlaying) { bgMusic.pause(); musicToggle.querySelector('i').className = 'fa-solid fa-volume-xmark'; musicToggle.classList.remove('playing'); isMusicPlaying = false; }
+            else { bgMusic.play().then(() => { musicToggle.querySelector('i').className = 'fa-solid fa-music'; musicToggle.classList.add('playing'); isMusicPlaying = true; }).catch(e => {}); }
         });
+        window.addEventListener('click', () => {
+            if (!isMusicPlaying) { bgMusic.play().then(() => { musicToggle.querySelector('i').className = 'fa-solid fa-music'; musicToggle.classList.add('playing'); isMusicPlaying = true; }).catch(e => {}); }
+        }, { once: true });
 
-        function triggerAutoPlayOnce() {
-            if (!isMusicPlaying) {
-                bgMusic.play().then(() => {
-                    updateMusicUI(true);
-                }).catch(e => {});
-            }
-            window.removeEventListener('click', triggerAutoPlayOnce);
-            window.removeEventListener('touchstart', triggerAutoPlayOnce);
-            window.removeEventListener('scroll', triggerAutoPlayOnce);
-        }
-
-        window.addEventListener('click', triggerAutoPlayOnce);
-        window.addEventListener('touchstart', triggerAutoPlayOnce);
-        window.addEventListener('scroll', triggerAutoPlayOnce);
-
-
-        // --- 2. AUTO CLOSE INTRO / SKIP INTRO ---
-        document.body.style.overflow = 'hidden'; 
-
+        // --- INTRO SCREEN ---
+        document.body.style.overflow = 'hidden';
         const introOverlay = document.getElementById('intro-overlay');
-        let introClosed = false;
-        
         function closeIntro() {
-            if (introClosed) return;
-            introClosed = true;
-
-            if (introOverlay) {
-                introOverlay.style.opacity = '0';
-                setTimeout(() => {
-                    introOverlay.style.display = 'none';
-                }, 800);
-            }
-            document.body.style.overflow = ''; 
-            
-            setTimeout(() => {
-                const activeLink = document.querySelector('.nav-link.active') || navLinks[0];
-                updateIndicator(activeLink);
-            }, 100);
-            
-            if (!isMusicPlaying) {
-                bgMusic.play().then(() => {
-                    updateMusicUI(true);
-                }).catch(e => {});
-            }
+            if (introOverlay) { introOverlay.style.opacity = '0'; setTimeout(() => introOverlay.style.display = 'none', 800); }
+            document.body.style.overflow = '';
         }
-        
         setTimeout(closeIntro, 4500);
 
+        // --- SCROLL REVEAL ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal-section').forEach(section => observer.observe(section));
 
-        // --- 3. SCROLL REVEAL ANIMATION ---
-        const observerOptions = {
-            threshold: 0.15
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal-section').forEach(section => {
-            observer.observe(section);
-        });
-
-        // --- 4. ACCURATE SCROLL SPY & INDICATOR LOGIC ---
+        // --- SCROLL SPY & INDICATOR ---
         const navLinks = document.querySelectorAll('.nav-link');
         const navIndicator = document.getElementById('navIndicator');
-
         function updateIndicator(activeLink) {
             if (!navIndicator || window.innerWidth <= 992) return;
             const parentList = activeLink.parentElement.parentElement;
             const linkRect = activeLink.getBoundingClientRect();
             const parentRect = parentList.getBoundingClientRect();
-            
-            const leftOffset = linkRect.left - parentRect.left;
-            const width = linkRect.width;
-
-            navIndicator.style.transform = `translateX(${leftOffset}px)`;
-            navIndicator.style.width = `${width}px`;
+            navIndicator.style.transform = `translateX(${linkRect.left - parentRect.left}px)`;
+            navIndicator.style.width = `${linkRect.width}px`;
         }
-
-        window.addEventListener('load', () => {
-            const activeLink = document.querySelector('.nav-link.active') || navLinks[0];
-            updateIndicator(activeLink);
-            setTimeout(() => updateIndicator(activeLink), 150);
-        });
-
-        window.addEventListener('resize', () => {
-            const activeLink = document.querySelector('.nav-link.active');
-            if (activeLink) updateIndicator(activeLink);
-        });
+        window.addEventListener('load', () => updateIndicator(document.querySelector('.nav-link.active') || navLinks[0]));
+        window.addEventListener('resize', () => { const active = document.querySelector('.nav-link.active'); if(active) updateIndicator(active); });
 
         const sectionMap = [
             { id: 'home', link: document.querySelector('a[href="#home"]') },
@@ -1558,316 +1545,62 @@
 
         window.addEventListener('scroll', () => {
             let scrollY = window.pageYOffset;
-
             if (scrollY < 180) {
                 navLinks.forEach(l => l.classList.remove('active'));
-                if (sectionMap[0].link) {
-                    sectionMap[0].link.classList.add('active');
-                    updateIndicator(sectionMap[0].link);
-                }
+                if (sectionMap[0].link) { sectionMap[0].link.classList.add('active'); updateIndicator(sectionMap[0].link); }
                 return;
             }
-
             let targetScroll = scrollY + 220;
-
             for (let i = sectionMap.length - 1; i >= 0; i--) {
-                const element = document.getElementById(sectionMap[i].id);
-                if (element) {
-                    const offsetTop = element.offsetTop;
-                    if (targetScroll >= offsetTop) {
-                        navLinks.forEach(l => l.classList.remove('active'));
-                        if (sectionMap[i].link) {
-                            sectionMap[i].link.classList.add('active');
-                            updateIndicator(sectionMap[i].link);
-                        }
-                        break;
-                    }
+                const el = document.getElementById(sectionMap[i].id);
+                if (el && targetScroll >= el.offsetTop) {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    if (sectionMap[i].link) { sectionMap[i].link.classList.add('active'); updateIndicator(sectionMap[i].link); }
+                    break;
                 }
             }
         });
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                navLinks.forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-                updateIndicator(this);
-            });
-        });
-
-        // --- 5. MOBILE MENU HAMBURGER ---
+        // --- HAMBURGER MENU ---
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navbar = document.getElementById('navbar');
-
         mobileMenuBtn.addEventListener('click', () => {
             navbar.classList.toggle('menu-open');
             const icon = mobileMenuBtn.querySelector('i');
-            if(navbar.classList.contains('menu-open')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-xmark');
-            } else {
-                icon.classList.remove('fa-xmark');
-                icon.classList.add('fa-bars');
-            }
+            icon.className = navbar.classList.contains('menu-open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
         });
+        navLinks.forEach(link => link.addEventListener('click', () => {
+            navbar.classList.remove('menu-open');
+            mobileMenuBtn.querySelector('i').className = 'fa-solid fa-bars';
+        }));
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navbar.classList.remove('menu-open');
-                mobileMenuBtn.querySelector('i').classList.replace('fa-xmark', 'fa-bars');
-            });
-        });
-
-        // --- 6. DARK MODE & LIGHT MODE TOGGLE ---
+        // --- THEME TOGGLE (GANTI LOGO HEADER & FOOTER) ---
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const htmlElement = document.documentElement;
-        const headerLogo2D = document.getElementById('headerLogo2D');
-        const footerLogo = document.getElementById('footerLogo');
-        
-        const logoDarkUrl = 'https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw';
-        const logoLightUrl = 'https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG';
-        
         themeToggleBtn.addEventListener('click', () => {
             const currentTheme = htmlElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             htmlElement.setAttribute('data-theme', newTheme);
+            themeToggleBtn.innerHTML = newTheme === 'dark' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
             
-            themeToggleBtn.innerHTML = newTheme === 'dark' 
-                ? '<i class="fa-solid fa-moon"></i>' 
-                : '<i class="fa-solid fa-sun"></i>';
-
-            if (newTheme === 'light') {
-                if(headerLogo2D) headerLogo2D.src = logoLightUrl;
-                if(footerLogo) footerLogo.src = logoLightUrl;
-            } else {
-                if(headerLogo2D) headerLogo2D.src = logoDarkUrl;
-                if(footerLogo) footerLogo.src = logoDarkUrl;
-            }
+            const logoUrl = newTheme === 'light' ? 'https://lh3.googleusercontent.com/d/1w96w1EL1dHSz381pMoKoa793eUbDaBZG' : 'https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw';
+            document.getElementById('headerLogo2D').src = logoUrl;
+            document.getElementById('footerLogo').src = logoUrl;
         });
 
-        // --- 7. 3D INTERACTIVE ABOUT LOGO ---
-        const logo3d = document.getElementById('logo3d');
-        const aboutWrap = document.querySelector('.about-3d-logo-wrap');
+        // --- MODAL & LIGHTBOX ---
+        function closeModal() { document.getElementById('packageModal').classList.remove('active'); }
+        function openLightbox(src) { document.getElementById('lightboxImg').src = src; document.getElementById('lightboxModal').classList.add('active'); }
+        function closeLightbox() { document.getElementById('lightboxModal').classList.remove('active'); }
 
-        if(window.innerWidth > 992) {
-            aboutWrap.addEventListener('mousemove', (e) => {
-                const rect = aboutWrap.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                logo3d.style.transform = `rotateX(${(-y/rect.height)*25}deg) rotateY(${(x/rect.width)*25}deg)`;
-            });
-            aboutWrap.addEventListener('mouseleave', () => logo3d.style.transform = `rotateX(0deg) rotateY(0deg)`);
-        }
-
-        // --- 9. DATA GALERI DINAMIS ---
-        const galleryData = {
-            dokumentasi: {
-                title: 'Hasil Dokumentasi Kami',
-                albums: [
-                    {
-                        eventName: 'Wisuda Sayu Widiana',
-                        icon: 'fa-graduation-cap',
-                        photos: [
-                            'https://lh3.googleusercontent.com/d/1m3BKo62NV2S9Ho7Xo9PBNROswq4-qzgi',
-                            'https://lh3.googleusercontent.com/d/1zm1RVa4JHfeLfQgroNwCOga09gL119pf',
-                            'https://lh3.googleusercontent.com/d/1aW5O89W6MaCqr0DRfPStVngD47X4rrxO',
-                            'https://lh3.googleusercontent.com/d/1WjwAtZflylBXKI1JwNYTUR9jgdhcneLa',
-                            'https://lh3.googleusercontent.com/d/1xPykVu01l7socn75ka_d7BRMLFZMF-JU',
-                            'https://lh3.googleusercontent.com/d/1CP_5xpaOP1Z61vJgC-aElyV6jJWkqP-P'
-                        ]
-                    },
-                    {
-                        eventName: 'Wisuda Komang Risa',
-                        icon: 'fa-graduation-cap',
-                        photos: [
-                            'https://lh3.googleusercontent.com/d/1qQBuQZnQBvWRu8Qq68z5o1EJNY8H1U3t',
-                            'https://lh3.googleusercontent.com/d/1iKYHl3sY2gTSO9W2INLjOTpmq3jfwAOY',
-                            'https://lh3.googleusercontent.com/d/1FtZOxt7SAgq44jaZ_M3Ia4dbxNor_y0S',
-                            'https://lh3.googleusercontent.com/d/1FhtpzBwBaiMch9OBbgKNSGJPVqkP8QI5',
-                            'https://lh3.googleusercontent.com/d/16Z1PnZifhQQoBLBKEooKiQKkkfrQ4mBR',
-                            'https://lh3.googleusercontent.com/d/13Bk5eI9Ys-8DvBWqqG4dJhtM-2dm4CGq'
-                        ]
-                    }
-                ]
-            },
-            photobooth: {
-                title: 'Hasil Photobooth Kami',
-                albums: [
-                    {
-                        eventName: 'MPLS SMAN 1 Sukawati',
-                        icon: 'fa-camera-retro',
-                        photos: [
-                            'https://lh3.googleusercontent.com/d/1hssNsQHPSLovqGlTq0VpnkqTRNFL7Urb',
-                            'https://lh3.googleusercontent.com/d/1Onf2Uo4ec_UdX_08_5bsovwj87wT7PHU',
-                            'https://lh3.googleusercontent.com/d/1nZM47UZZ_3kxeuTb7dQBKCuGbbDNL62r',
-                            'https://lh3.googleusercontent.com/d/1ltYqNj1SoaOxmCmRj1tGNGL2Xu7Fd0Qq',
-                            'https://lh3.googleusercontent.com/d/1K1oMhqCkkNNuwBab3aPnLLZB5eswAcYM',
-                            'https://lh3.googleusercontent.com/d/1OpSmhcQALMdL4K8WHA-KnJ_SI6CNBx6j'
-                        ]
-                    },
-                    {
-                        eventName: 'Jegeg Bagus SMAN 1 Sukawati',
-                        icon: 'fa-award',
-                        photos: [
-                            'https://lh3.googleusercontent.com/d/1yQT_5vR9RtysBbQIm9yPvAnlWOopRueH',
-                            'https://lh3.googleusercontent.com/d/1GF-neiFIolz0CsJmzOSJDjn79KC3CwSg',
-                            'https://lh3.googleusercontent.com/d/12ZBPCAmMbd3QXitinNa9qClkVdbyKLR6',
-                            'https://lh3.googleusercontent.com/d/1rmKPkjRJarlPTelRq_VsxMpv3HRXhEmJ',
-                            'https://lh3.googleusercontent.com/d/1c-UrY33soXT9BLFDfolzhHpuH0XmazFL',
-                            'https://lh3.googleusercontent.com/d/1Ox7qR96JCAffIMuBHDqy3WFktOXisr3s'
-                        ]
-                    }
-                ]
-            },
-            undangan: {
-                title: 'Sample Undangan Digital',
-                albums: [
-                    {
-                        eventName: 'Preview Undangan (Coming Soon)',
-                        icon: 'fa-envelope-open-text',
-                        photos: [
-                            'https://images.unsplash.com/photo-1544531585-9847b68c8c86?auto=format&fit=crop&w=600&q=80',
-                            'https://images.unsplash.com/photo-1533470783457-36e6e8979102?auto=format&fit=crop&w=600&q=80',
-                            'https://images.unsplash.com/photo-1507290439931-a861b5a38200?auto=format&fit=crop&w=600&q=80'
-                        ]
-                    }
-                ]
-            }
-        };
-
-        const cardsGrid = document.getElementById('cardsGrid');
-        const galleryContainer = document.getElementById('galleryContainer');
-
-        function renderTabContent(category) {
-            cardsGrid.innerHTML = '';
-            
-            // Ambil data dari Firebase jika ada, jika kosong berikan array kosong
-            const items = (window.firebasePackages && window.firebasePackages[category]) ? window.firebasePackages[category] : [];
-
-            if (items.length === 0) {
-                cardsGrid.innerHTML = `<p style="text-align: center; color: var(--text-muted); grid-column: 1/-1;">Belum ada data paket untuk kategori ini. Silakan tambahkan melalui halaman Admin.</p>`;
-            } else {
-                items.forEach((item, index) => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    const imgClass = item.isTransparent ? 'card-img transparent-bg' : 'card-img';
-                    
-                    card.innerHTML = `
-                        <img src="${item.img}" alt="${item.name}" class="${imgClass}" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400/ffffff/121d21?text=ARLENS.ID';">
-                        <div class="card-category">${category.toUpperCase()}</div>
-                        <div class="card-title">${item.name}</div>
-                        <div class="card-price">${item.price}</div>
-                        <button class="card-btn" onclick="openModal('${category}', ${index})">
-                            ${category === 'undangan' ? 'Info Peluncuran <i class="fa-solid fa-bell"></i>' : 'Lihat Benefit Detail <i class="fa-solid fa-arrow-right"></i>'}
-                        </button>
-                    `;
-                    cardsGrid.appendChild(card);
-                });
-            }
-
-            galleryContainer.innerHTML = '';
-            const gallery = galleryData[category];
-            
-            if (gallery && gallery.albums.length > 0) {
-                let html = `
-                    <div class="section-title" style="margin-bottom: 20px;">
-                        <p>Galeri & Portfolio</p>
-                        <h2>${gallery.title}</h2>
-                    </div>
-                `;
-
-                gallery.albums.forEach(album => {
-                    html += `
-                    <div class="event-album-container">
-                        <div class="event-album-title">
-                            <i class="fa-solid ${album.icon}"></i> ${album.eventName}
-                        </div>
-                        <div class="photo-row">
-                    `;
-                    
-                    album.photos.forEach(photo => {
-                        html += `
-                            <div class="photo-item" onclick="openLightbox('${photo}')">
-                                <img src="${photo}" alt="Portfolio ${album.eventName}" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x450/121d21/e5ac31?text=ARLENS.ID';">
-                            </div>
-                        `;
-                    });
-
-                    html += `
-                        </div>
-                    </div>
-                    `;
-                });
-
-                galleryContainer.innerHTML = html;
-            }
-        }
-
-        function switchTab(category, btnElement) {
-            if (btnElement) {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                btnElement.classList.add('active');
-            }
-            renderTabContent(category);
-        }
-
-        // --- 10. MODAL DETAIL PAKET & LIGHTBOX ---
-        const modalOverlay = document.getElementById('packageModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalPrice = document.getElementById('modalPrice');
-        const modalBenefits = document.getElementById('modalBenefits');
-        const modalWhatsAppBtn = document.getElementById('modalWhatsAppBtn');
-
-        function openModal(category, index) {
-            const data = window.firebasePackages[category][index];
-            const packageName = category === 'undangan' ? 'Digital Invitation' : `Paket ${data.name}`;
-            
-            modalTitle.innerText = packageName;
-            modalPrice.innerText = category === 'undangan' ? `Status: ${data.price}` : `Harga: ${data.price}`;
-            modalBenefits.innerHTML = '';
-            
-            if(data.benefits && Array.isArray(data.benefits)) {
-                data.benefits.forEach(benefit => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${benefit}`;
-                    modalBenefits.appendChild(li);
-                });
-            }
-
-            const whatsappNumber = '6285604613503';
-            const message = `Halo ARLENS.ID 👋🏻%0A%0ASaya ingin bertanya mengenai ketersediaan dan detail untuk layanan *${encodeURIComponent(packageName)}* pada acara saya.%0A%0AMohon infonya, terima kasih😇❣️`;
-            modalWhatsAppBtn.href = `https://wa.me/${whatsappNumber}?text=${message}`;
-
-            modalOverlay.classList.add('active');
-        }
-
-        function closeModal() {
-            modalOverlay.classList.remove('active');
-        }
-
-        const lightboxModal = document.getElementById('lightboxModal');
-        const lightboxImg = document.getElementById('lightboxImg');
-
-        function openLightbox(imgSrc) {
-            lightboxImg.src = imgSrc;
-            lightboxModal.classList.add('active');
-        }
-
-        function closeLightbox() {
-            lightboxModal.classList.remove('active');
-        }
-
-        // --- 11. WHATSAPP FORM SUBMISSION ---
+        // --- WHATSAPP FORM ---
         function sendToWhatsApp(e) {
             e.preventDefault();
             const nama = document.getElementById('nama').value;
             const alamat = document.getElementById('alamat').value;
-            const pilihanPaket = document.getElementById('pilihanPaket').value;
+            const paket = document.getElementById('pilihanPaket').value;
             const pesan = document.getElementById('pesan').value;
-
-            const whatsappNumber = '6285604613503';
-            const formattedText = `Halo ARLENS.ID,%0A%0ASaya ingin mengajukan pertanyaan / pemesanan dengan detail:%0A- *Nama*: ${encodeURIComponent(nama)}%0A- *Alamat*: ${encodeURIComponent(alamat)}%0A- *Paket*: ${encodeURIComponent(pilihanPaket)}%0A- *Pesan*: ${encodeURIComponent(pesan)}%0A%0AMohon info lebih lanjut. Terima kasih!`;
-            
-            window.open(`https://wa.me/${whatsappNumber}?text=${formattedText}`, '_blank');
+            window.open(`https://wa.me/6285604613503?text=${encodeURIComponent(`Halo ARLENS.ID,%0A%0ASaya ingin mengajukan pertanyaan / pemesanan dengan detail:%0A- *Nama*: ${nama}\%0A- *Alamat*:${alamat}%0A- *Paket*: ${paket}\%0A- *Pesan*:${pesan}%0A%0AMohon info lebih lanjut. Terima kasih!`)}`, '_blank');
         }
     </script>
 </body>

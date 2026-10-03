@@ -86,6 +86,7 @@
         .admin-table th { background: rgba(0,0,0,0.3); color: var(--accent-gold); font-weight: 700; }
         .admin-table td img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; background: #fff; }
         .category-header { background: rgba(229, 172, 49, 0.15) !important; color: var(--accent-gold); font-weight: 800; font-size: 1rem; text-transform: uppercase; }
+        .subcategory-header { background: rgba(183, 120, 92, 0.2) !important; color: var(--text-cream); font-weight: 700; font-size: 0.9rem; }
 
         /* --- INVOICE PRINT SECTION --- */
         #invoicePreview { background: #ffffff; color: #121d21; padding: 40px; border-radius: 8px; margin-top: 20px; display: none; }
@@ -143,7 +144,7 @@
         <!-- PANEL: DASHBOARD -->
         <div class="panel active" id="dashboard">
             <h2 class="page-title">Ikhtisar Admin</h2>
-            <p style="color: var(--text-muted); line-height: 1.6;">Selamat datang. Kelola pricelist, tentukan urutan paket, kelola portofolio, dan buat invoice secara terintegrasi.</p>
+            <p style="color: var(--text-muted); line-height: 1.6;">Selamat datang. Kelola pricelist terpisah (Dokumentasi, Photobooth, Undangan), tentukan urutan, portofolio, dan buat invoice secara terintegrasi.</p>
         </div>
 
         <!-- PANEL: KELOLA HARGA -->
@@ -151,23 +152,29 @@
             <h2 class="page-title">Kelola Pricelist & Produk</h2>
             <div class="grid-3">
                 <div class="form-group">
-                    <label>Pilih Kategori</label>
-                    <select class="form-control" id="kategoriLayanan">
+                    <label>Pilih Kategori Utama</label>
+                    <select class="form-control" id="kategoriLayanan" onchange="handleKategoriChange(this.value)">
                         <option value="dokumentasi">Dokumentasi</option>
                         <option value="photobooth">Photobooth</option>
                         <option value="undangan">Undangan Digital</option>
                     </select>
                 </div>
-                <div class="form-group"><label>Kode Paket (Tanpa Spasi)</label><input type="text" class="form-control" id="idPaket" placeholder="Contoh: qr_2jam"></div>
-                <div class="form-group">
-                    <label>Urutan Tampil (Angka)</label>
-                    <input type="number" class="form-control" id="urutanPaket" placeholder="1" value="1">
+                <div class="form-group" id="subKategoriContainer" style="display: none;">
+                    <label>Sub-Kategori Photobooth</label>
+                    <select class="form-control" id="subKategoriPhotobooth">
+                        <option value="qr_only">Paket QR Only</option>
+                        <option value="limited_print">Paket Limited Print</option>
+                        <option value="unlimited_print">Paket Unlimited Print</option>
+                        <option value="addon">Add-On / Tambahan</option>
+                    </select>
                 </div>
+                <div class="form-group"><label>Kode Paket (Tanpa Spasi)</label><input type="text" class="form-control" id="idPaket" placeholder="Contoh: qr_2jam"></div>
             </div>
-            
-            <div class="grid-2">
-                <div class="form-group"><label>Nama Paket</label><input type="text" class="form-control" id="namaPaket" placeholder="Contoh: QR Only - 2 Hours"></div>
-                <div class="form-group"><label>Deskripsi Singkat (Rekomendasi Acara)</label><input type="text" class="form-control" id="deskripsiPaket" placeholder="Contoh: Cocok untuk acara casual"></div>
+
+            <div class="grid-3">
+                <div class="form-group"><label>Urutan Tampil (Angka)</label><input type="number" class="form-control" id="urutanPaket" placeholder="1" value="1"></div>
+                <div class="form-group"><label>Nama Paket / Durasi</label><input type="text" class="form-control" id="namaPaket" placeholder="Contoh: 2 Hours atau 100 Print"></div>
+                <div class="form-group"><label>Deskripsi / Catatan Tambahan</label><input type="text" class="form-control" id="deskripsiPaket" placeholder="Contoh: Termasuk penyiapan 30-40 min"></div>
             </div>
             
             <div class="grid-2">
@@ -183,9 +190,9 @@
             <p id="statusSimpan" style="margin-top:10px; font-size:0.85rem; color:var(--accent-gold);"></p>
 
             <div style="margin-top: 40px;">
-                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; color: var(--accent-gold);">Daftar Paket Terkelompok Per Kategori</h3>
+                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; color: var(--accent-gold);">Daftar Pricelist Terpisah</h3>
                 <div style="overflow-x: auto;" id="containerTabelPricelist">
-                    <!-- Tabel akan dirender secara otomatis terpisah per kategori -->
+                    <!-- Tabel terpisah per kategori -->
                 </div>
             </div>
         </div>
@@ -230,7 +237,7 @@
                 </div>
 
                 <div class="form-group" style="margin-top: 25px; border-top: 1px solid var(--border-color); padding-top: 20px;">
-                    <label>Item Tambahan (Overtime, Flashdisk, Album, dll)</label>
+                    <label>Item Tambahan (Overtime, Tambahan Waktu, dll)</label>
                     <div id="customItemsList"></div>
                     <button type="button" class="btn btn-secondary" onclick="addCustomItemRow()"><i class="fa-solid fa-plus"></i> Tambah Charge Lain</button>
                 </div>
@@ -319,7 +326,17 @@
 
         document.getElementById('btnLogoutAction').addEventListener('click', (e) => { e.preventDefault(); signOut(auth); });
 
-        // --- LOAD & RENDER TABEL TERPISAH PER KATEGORI ---
+        // --- TAMPIL/SEMBUNYI SUB-KATEGORI PHOTOBOOTH ---
+        window.handleKategoriChange = function(val) {
+            const subContainer = document.getElementById('subKategoriContainer');
+            if(val === 'photobooth') {
+                subContainer.style.display = 'block';
+            } else {
+                subContainer.style.display = 'none';
+            }
+        }
+
+        // --- LOAD & RENDER TABEL TERPISAH PER KATEGORI & SUB-KATEGORI ---
         async function loadPricelistData() {
             try {
                 const qSnap = await getDocs(collection(db, "pricelist"));
@@ -341,21 +358,22 @@
                     }
                     data.priceValue = finalPriceVal;
                     data.order = data.order || 99;
+                    data.subkategori = data.subkategori || 'umum';
                     window.dbAllPackages.push({ id: docSnap.id, ...data });
                 });
 
-                // Urutkan data berdasarkan kategori & urutan
+                // Urutkan data berdasarkan Kategori & Urutan
                 window.dbAllPackages.sort((a, b) => {
                     if(a.kategori < b.kategori) return -1;
                     if(a.kategori > b.kategori) return 1;
                     return a.order - b.order;
                 });
 
-                // Kelompokkan unik berdasarkan kategori
-                const kategoriList = [...new Set(window.dbAllPackages.map(p => p.kategori))];
+                const kategoriList = ['dokumentasi', 'photobooth', 'undangan'];
 
                 kategoriList.forEach(kat => {
                     const paketsInKat = window.dbAllPackages.filter(p => p.kategori === kat);
+                    if(paketsInKat.length === 0) return;
                     
                     let tableHTML = `
                         <table class="admin-table">
@@ -364,9 +382,9 @@
                                     <th colspan="5" class="category-header"><i class="fa-solid fa-layer-group"></i> Kategori: ${kat.toUpperCase()}</th>
                                 </tr>
                                 <tr>
-                                    <th style="width: 80px;">Urutan</th>
-                                    <th>Nama Paket</th>
-                                    <th>Deskripsi</th>
+                                    <th style="width: 70px;">Urutan</th>
+                                    <th>Nama Paket / Item</th>
+                                    <th>Deskripsi / Catatan</th>
                                     <th>Harga</th>
                                     <th style="text-align: center; width: 120px;">Aksi</th>
                                 </tr>
@@ -374,20 +392,51 @@
                             <tbody>
                     `;
 
-                    paketsInKat.forEach(data => {
-                        tableHTML += `
-                            <tr>
-                                <td><strong>#${data.order}</strong></td>
-                                <td>${data.name}</td>
-                                <td style="color: var(--text-muted); font-size: 0.85rem;">${data.desc || '-'}</td>
-                                <td>Rp ${data.priceValue.toLocaleString('id-ID')}</td>
-                                <td style="text-align: center; white-space: nowrap;">
-                                    <button class="btn btn-edit" onclick="window.panggilEdit('${data.id}')"><i class="fa-solid fa-pen"></i></button>
-                                    <button class="btn btn-danger" onclick="window.hapusPaket('${data.id}')"><i class="fa-solid fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        `;
-                    });
+                    if(kat === 'photobooth') {
+                        // Kelompokkan photobooth berdasarkan subkategori
+                        const subKatMap = {
+                            'qr_only': 'Paket QR Only',
+                            'limited_print': 'Paket Limited Print',
+                            'unlimited_print': 'Paket Unlimited Print',
+                            'addon': 'Add-On / Tambahan'
+                        };
+
+                        Object.keys(subKatMap).forEach(subKey => {
+                            const subPakets = paketsInKat.filter(p => p.subkategori === subKey);
+                            if(subPakets.length > 0) {
+                                tableHTML += `<tr><td colspan="5" class="subcategory-header"><i class="fa-solid fa-angles-right"></i> ${subKatMap[subKey]}</td></tr>`;
+                                subPakets.forEach(data => {
+                                    tableHTML += `
+                                        <tr>
+                                            <td><strong>#${data.order}</strong></td>
+                                            <td>${data.name}</td>
+                                            <td style="color: var(--text-muted); font-size: 0.85rem;">${data.desc || '-'}</td>
+                                            <td>Rp ${data.priceValue.toLocaleString('id-ID')}</td>
+                                            <td style="text-align: center; white-space: nowrap;">
+                                                <button class="btn btn-edit" onclick="window.panggilEdit('${data.id}')"><i class="fa-solid fa-pen"></i></button>
+                                                <button class="btn btn-danger" onclick="window.hapusPaket('${data.id}')"><i class="fa-solid fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    `;
+                                });
+                            }
+                        });
+                    } else {
+                        paketsInKat.forEach(data => {
+                            tableHTML += `
+                                <tr>
+                                    <td><strong>#${data.order}</strong></td>
+                                    <td>${data.name}</td>
+                                    <td style="color: var(--text-muted); font-size: 0.85rem;">${data.desc || '-'}</td>
+                                    <td>Rp ${data.priceValue.toLocaleString('id-ID')}</td>
+                                    <td style="text-align: center; white-space: nowrap;">
+                                        <button class="btn btn-edit" onclick="window.panggilEdit('${data.id}')"><i class="fa-solid fa-pen"></i></button>
+                                        <button class="btn btn-danger" onclick="window.hapusPaket('${data.id}')"><i class="fa-solid fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    }
 
                     tableHTML += `</tbody></table>`;
                     container.innerHTML += tableHTML;
@@ -403,7 +452,11 @@
             const pkg = window.dbAllPackages.find(p => p.id === docId);
             if(pkg) {
                 document.getElementById('kategoriLayanan').value = pkg.kategori;
-                document.getElementById('idPaket').value = docId.replace(`${pkg.kategori}_`, '');
+                window.handleKategoriChange(pkg.kategori);
+                if(pkg.kategori === 'photobooth') {
+                    document.getElementById('subKategoriPhotobooth').value = pkg.subkategori || 'qr_only';
+                }
+                document.getElementById('idPaket').value = docId.split('_').slice(1).join('_');
                 document.getElementById('urutanPaket').value = pkg.order || 1;
                 document.getElementById('namaPaket').value = pkg.name;
                 document.getElementById('deskripsiPaket').value = pkg.desc || '';
@@ -433,6 +486,7 @@
         // --- SIMPAN PRICELIST ---
         document.getElementById('btnSimpanDB').addEventListener('click', async () => {
             const kategori = document.getElementById('kategoriLayanan').value;
+            const subkategori = kategori === 'photobooth' ? document.getElementById('subKategoriPhotobooth').value : 'umum';
             const idPaket = document.getElementById('idPaket').value.replace(/\s+/g, '').toLowerCase();
             const orderNum = parseInt(document.getElementById('urutanPaket').value) || 1;
             const namaPaket = document.getElementById('namaPaket').value;
@@ -445,8 +499,9 @@
             if (!idPaket || !namaPaket) return;
 
             try {
-                const docRef = doc(db, "pricelist", `${kategori}_${idPaket}`);
-                await setDoc(docRef, { kategori, order: orderNum, name: namaPaket, desc: deskripsi, price: hargaFormatted, priceValue: hargaNum, img: gambar, benefits: benefitsArray });
+                const docId = `${kategori}_${subkategori !== 'umum' ? subkategori + '_' : ''}${idPaket}`;
+                const docRef = doc(db, "pricelist", docId);
+                await setDoc(docRef, { kategori, subkategori, order: orderNum, name: namaPaket, desc: deskripsi, price: hargaFormatted, priceValue: hargaNum, img: gambar, benefits: benefitsArray });
                 loadPricelistData();
                 document.getElementById('statusSimpan').innerText = "Berhasil disimpan!";
                 
@@ -615,7 +670,7 @@
             let optionsHTML = '<option value="" data-price="0">-- Pilih Paket dari Pricelist --</option>';
             if (window.dbAllPackages && window.dbAllPackages.length > 0) {
                 window.dbAllPackages.forEach(pkg => {
-                    const displayName = `[${pkg.kategori.toUpperCase()}] ${pkg.name}`;
+                    const displayName = `[${pkg.kategori.toUpperCase()}] ${pkg.name} (${pkg.desc || ''})`;
                     optionsHTML += `<option value="${displayName}" data-price="${pkg.priceValue || 0}">${displayName}</option>`;
                 });
             }
@@ -629,7 +684,7 @@
         window.addCustomItemRow = function() {
             const container = document.getElementById('customItemsList');
             const div = document.createElement('div'); div.className = 'grid-invoice';
-            div.innerHTML = `<div class="form-group" style="margin-bottom:0;"><input type="text" class="form-control custom-name" placeholder="Misal: Denda Overtime / Flashdisk / Tambahan Waktu"></div><div class="form-group" style="margin-bottom:0;"><input type="number" class="form-control custom-price" placeholder="0" value="0"></div><button type="button" class="btn btn-danger" onclick="this.parentElement.remove()" style="height: 45px;"><i class="fa-solid fa-trash"></i></button>`;
+            div.innerHTML = `<div class="form-group" style="margin-bottom:0;"><input type="text" class="form-control custom-name" placeholder="Misal: Tambahan Waktu / Overtime / Flashdisk"></div><div class="form-group" style="margin-bottom:0;"><input type="number" class="form-control custom-price" placeholder="0" value="0"></div><button type="button" class="btn btn-danger" onclick="this.parentElement.remove()" style="height: 45px;"><i class="fa-solid fa-trash"></i></button>`;
             container.appendChild(div);
         }
     </script>

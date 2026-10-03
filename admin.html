@@ -87,9 +87,11 @@
         }
         .btn-primary { background: linear-gradient(135deg, var(--accent-copper), var(--accent-gold)); color: #121d21; }
         .btn-secondary { background: var(--bg-input); color: var(--text-cream); border: 1px solid var(--border-color); }
+        .btn-success { background: #2ecc71; color: #fff; padding: 6px 12px; font-size: 0.8rem; }
         .btn-danger { background: #e74c3c; color: #fff; padding: 6px 12px; font-size: 0.8rem; }
         .btn-edit { background: #3498db; color: #fff; padding: 6px 12px; font-size: 0.8rem; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
         .grid-invoice { display: grid; grid-template-columns: 2fr 1fr auto; gap: 10px; align-items: flex-end; margin-bottom: 10px; }
 
         .thumbnail-preview {
@@ -118,7 +120,7 @@
 
         @media print {
             body { background: #ffffff; color: #000; display: block; }
-            .sidebar, .page-title, .form-panel, .btn-print, #loginOverlay { display: none !important; }
+            .sidebar, .page-title, .form-panel, .btn-print, #loginOverlay, .nav-tabs-container { display: none !important; }
             .main-content { margin: 0; padding: 0; background: none; }
             .panel { border: none; padding: 0; margin: 0; box-shadow: none; }
             #invoicePreview { display: block !important; padding: 0; }
@@ -131,18 +133,10 @@
     <!-- LOGIN SCREEN -->
     <div id="loginOverlay">
         <div class="login-box">
-            <center>
-                <img src="https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw" alt="ARLENS Logo" style="max-width:140px; margin-bottom:20px;">
-            </center>
+            <center><img src="https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw" alt="ARLENS Logo" style="max-width:140px; margin-bottom:20px;"></center>
             <h2 style="text-align:center; margin-bottom:25px; color:var(--accent-gold);">Admin Login</h2>
-            <div class="form-group">
-                <label>Email Admin</label>
-                <input type="email" id="loginEmail" class="form-control" placeholder="admin@arlens.id">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" id="loginPassword" class="form-control" placeholder="Masukkan password">
-            </div>
+            <div class="form-group"><label>Email Admin</label><input type="email" id="loginEmail" class="form-control" placeholder="admin@arlens.id"></div>
+            <div class="form-group"><label>Password</label><input type="password" id="loginPassword" class="form-control" placeholder="Masukkan password"></div>
             <button id="btnLoginAction" class="btn btn-primary" style="width:100%; justify-content:center;">Masuk ke Dashboard</button>
             <p id="loginErrorMsg" style="color:#e74c3c; font-size:0.85rem; text-align:center; margin-top:15px; display:none;"></p>
         </div>
@@ -150,19 +144,16 @@
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
-        <div class="sidebar-header">
-            <img src="https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw" alt="ARLENS Admin">
-        </div>
+        <div class="sidebar-header"><img src="https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw" alt="ARLENS Admin"></div>
         <ul class="sidebar-menu">
             <li><a href="#" class="nav-btn active" data-target="dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
             <li><a href="#" class="nav-btn" data-target="kelola-harga"><i class="fa-solid fa-tags"></i> Kelola Pricelist</a></li>
             <li><a href="#" class="nav-btn" data-target="kelola-portofolio"><i class="fa-solid fa-images"></i> Kelola Portofolio</a></li>
-            <li><a href="#" class="nav-btn" data-target="buat-invoice"><i class="fa-solid fa-file-invoice-dollar"></i> Buat Invoice</a></li>
+            <li><a href="#" class="nav-btn" data-target="buat-invoice"><i class="fa-solid fa-file-invoice-dollar"></i> Buat Invoice Baru</a></li>
+            <li><a href="#" class="nav-btn" data-target="riwayat-invoice"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Invoice</a></li>
             <li style="margin-top: 30px;"><a href="#" id="btnLogoutAction" class="nav-btn" style="color:#b7785c;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
         </ul>
-        <div style="padding: 20px; text-align: center; font-size: 0.75rem; color: var(--text-muted);">
-            &copy; 2026 ARLENS.ID
-        </div>
+        <div style="padding: 20px; text-align: center; font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 ARLENS.ID</div>
     </aside>
 
     <!-- MAIN CONTENT -->
@@ -170,12 +161,13 @@
         <!-- PANEL: DASHBOARD -->
         <div class="panel active" id="dashboard">
             <h2 class="page-title">Ikhtisar Admin</h2>
-            <p style="color: var(--text-muted); line-height: 1.6;">Kelola paket pricelist, portfolio galeri, dan buat invoice profesional dengan multi-layanan serta tambahan biaya/overtime.</p>
+            <p style="color: var(--text-muted); line-height: 1.6;">Selamat datang. Semua data portofolio, pricelist, dan invoice tersinkronisasi otomatis dengan database cloud secara real-time.</p>
         </div>
 
         <!-- PANEL: KELOLA HARGA -->
         <div class="panel" id="kelola-harga">
             <h2 class="page-title">Kelola Pricelist & Produk</h2>
+            <!-- Sama seperti kode sebelumnya... -->
             <div class="grid-2">
                 <div class="form-group">
                     <label>Pilih Kategori Layanan</label>
@@ -185,30 +177,18 @@
                         <option value="undangan">Undangan Digital</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>ID / Kode Paket (Tanpa Spasi)</label>
-                    <input type="text" class="form-control" id="idPaket" placeholder="Contoh: premium">
-                </div>
+                <div class="form-group"><label>ID / Kode Paket (Tanpa Spasi)</label><input type="text" class="form-control" id="idPaket" placeholder="Contoh: premium"></div>
             </div>
-            <div class="form-group">
-                <label>Nama Paket / Produk</label>
-                <input type="text" class="form-control" id="namaPaket" placeholder="Contoh: PREMIUM">
-            </div>
+            <div class="form-group"><label>Nama Paket / Produk</label><input type="text" class="form-control" id="namaPaket" placeholder="Contoh: PREMIUM"></div>
             <div class="grid-2">
-                <div class="form-group">
-                    <label>Harga (Angka Saja, misal: 400000)</label>
-                    <input type="number" class="form-control" id="hargaPaketNum" placeholder="400000">
-                </div>
+                <div class="form-group"><label>Harga (Angka Saja, misal: 400000)</label><input type="number" class="form-control" id="hargaPaketNum" placeholder="400000"></div>
                 <div class="form-group">
                     <label>URL Gambar / Link Drive Produk</label>
                     <input type="text" class="form-control" id="gambarPaket" placeholder="https://..." oninput="updateThumbPreview(this.value)">
                     <img id="thumbPreview" src="https://via.placeholder.com/100?text=Preview" class="thumbnail-preview" alt="Preview">
                 </div>
             </div>
-            <div class="form-group">
-                <label>Benefit Paket (Pisahkan dengan tanda koma)</label>
-                <textarea class="form-control" id="benefitPaket" rows="3" placeholder="Benefit 1, Benefit 2"></textarea>
-            </div>
+            <div class="form-group"><label>Benefit Paket (Pisahkan dengan tanda koma)</label><textarea class="form-control" id="benefitPaket" rows="3" placeholder="Benefit 1, Benefit 2"></textarea></div>
             <button class="btn btn-primary" id="btnSimpanDB"><i class="fa-solid fa-cloud-arrow-up"></i> Simpan / Perbarui Paket</button>
             <p id="statusSimpan" style="margin-top:10px; font-size:0.85rem; color:var(--accent-gold);"></p>
 
@@ -216,24 +196,14 @@
                 <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; color: var(--accent-gold);">Daftar Paket di Database</h3>
                 <div style="overflow-x: auto;">
                     <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Gambar</th>
-                                <th>Kategori</th>
-                                <th>Nama Paket</th>
-                                <th>Harga</th>
-                                <th style="text-align: center;">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="pricelistTableBody">
-                            <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Memuat data...</td></tr>
-                        </tbody>
+                        <thead><tr><th>Gambar</th><th>Kategori</th><th>Nama Paket</th><th>Harga</th><th style="text-align: center;">Aksi</th></tr></thead>
+                        <tbody id="pricelistTableBody"><tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Memuat data...</td></tr></tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- PANEL: KELOLA PORTOFOLIO / GALERI -->
+        <!-- PANEL: KELOLA PORTOFOLIO -->
         <div class="panel" id="kelola-portofolio">
             <h2 class="page-title">Kelola Portofolio & Galeri Foto</h2>
             <div class="grid-2">
@@ -245,10 +215,7 @@
                         <option value="undangan">Undangan Digital</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>Nama Album / Event</label>
-                    <input type="text" class="form-control" id="portEventName" placeholder="Nama Event Acara">
-                </div>
+                <div class="form-group"><label>Nama Album / Event</label><input type="text" class="form-control" id="portEventName" placeholder="Nama Event Acara"></div>
             </div>
             <div class="form-group">
                 <label>Link Gambar Google Drive / URL Foto</label>
@@ -259,37 +226,38 @@
             <p id="statusPort" style="margin-top:10px; font-size:0.85rem; color:var(--accent-gold);"></p>
         </div>
 
-        <!-- PANEL: BUAT INVOICE (SINKRON OTOMATIS) -->
+        <!-- PANEL: BUAT INVOICE -->
         <div class="panel" id="buat-invoice">
-            <h2 class="page-title">Buat Invoice Pelanggan</h2>
-            <div class="form-panel">
-                <div class="grid-2">
-                    <div class="form-group"><label>Nama Pelanggan</label><input type="text" id="invNama" class="form-control" placeholder="Nama Pelanggan"></div>
+            <h2 class="page-title">Buat Invoice Pelanggan Baru</h2>
+            <div class="form-panel" id="formBuatInvoice">
+                <div class="grid-3">
+                    <div class="form-group"><label>Nama Pelanggan</label><input type="text" id="invNama" class="form-control" placeholder="Nama Customer"></div>
                     <div class="form-group"><label>Tanggal Acara</label><input type="date" id="invTanggal" class="form-control"></div>
+                    <div class="form-group"><label>No. WhatsApp (Awali 08/62)</label><input type="text" id="invWA" class="form-control" placeholder="08123456789"></div>
                 </div>
 
                 <div class="form-group">
-                    <label>Pilih Layanan dari Pricelist (Harga akan terisi otomatis)</label>
+                    <label>Pilih Layanan dari Pricelist</label>
                     <div id="selectedServicesList"></div>
-                    <button type="button" class="btn btn-secondary" onclick="addServiceRow()" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Tambah Layanan Lain</button>
+                    <button type="button" class="btn btn-secondary" onclick="addServiceRow()" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Tambah Layanan</button>
                 </div>
 
                 <div class="form-group" style="margin-top: 25px; border-top: 1px solid var(--border-color); padding-top: 20px;">
-                    <label>Item Tambahan / Charge (Denda Overtime, Flashdisk, Cetak Album, dll)</label>
+                    <label>Item Tambahan (Overtime, Flashdisk, dll)</label>
                     <div id="customItemsList"></div>
-                    <button type="button" class="btn btn-secondary" onclick="addCustomItemRow()"><i class="fa-solid fa-plus"></i> Tambah Charge / Item Lain</button>
+                    <button type="button" class="btn btn-secondary" onclick="addCustomItemRow()"><i class="fa-solid fa-plus"></i> Tambah Charge Lain</button>
                 </div>
 
                 <div style="margin-top: 30px; display: flex; gap: 10px;">
-                    <button class="btn btn-secondary" onclick="generateInvoice()"><i class="fa-solid fa-eye"></i> Preview Invoice</button>
-                    <button class="btn btn-primary btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> Cetak PDF / Print</button>
+                    <button class="btn btn-primary" onclick="simpanDanBuatInvoice()"><i class="fa-solid fa-save"></i> Simpan & Generate Invoice</button>
                 </div>
             </div>
 
+            <!-- INVOICE PREVIEW SECTION (DIGUNAKAN UNTUK PRINT) -->
             <div id="invoicePreview">
                 <div class="invoice-header">
                     <img src="https://lh3.googleusercontent.com/d/1MMh7YHURMFrp96Zz2XA3xnDtdybb9kKw" alt="ARLENS Logo" style="filter: invert(1);"> 
-                    <div><div class="invoice-title">INVOICE</div><p style="text-align: right; color: #4a555a;" id="printNoInv">INV/2026/001</p></div>
+                    <div><div class="invoice-title">INVOICE</div><p style="text-align: right; color: #4a555a; font-weight: bold;" id="printNoInv">INV/ARLens/2026/001</p></div>
                 </div>
                 <div class="invoice-details">
                     <div><h4>Diterbitkan Oleh:</h4><p><strong>ARLENS.ID</strong><br>Jombang, Jawa Timur<br>WA: +62 856-0461-3503</p></div>
@@ -308,6 +276,35 @@
                 </table>
                 <div class="invoice-total">TOTAL TAGIHAN: <span id="printTotal">Rp 0</span></div>
                 <p style="margin-top: 50px; text-align: center; font-size: 0.85rem; color: #a0aab0;">Terima kasih telah mempercayakan dokumentasi momen berharga Anda kepada ARLENS.ID.</p>
+                
+                <!-- Tombol Print yang disembunyikan saat cetak fisik -->
+                <div class="btn-print" style="margin-top: 30px; text-align: center;">
+                    <button class="btn btn-primary" onclick="window.print()"><i class="fa-solid fa-print"></i> Cetak / Download PDF</button>
+                    <button class="btn btn-secondary" onclick="tutupPreviewInvoice()"><i class="fa-solid fa-xmark"></i> Tutup Preview</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL: RIWAYAT INVOICE -->
+        <div class="panel" id="riwayat-invoice">
+            <h2 class="page-title">Riwayat Invoice Customer</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Daftar semua invoice yang telah di-generate. Anda bisa cetak ulang PDF atau kirim tagihan via WhatsApp ke pelanggan dari sini.</p>
+            
+            <div style="overflow-x: auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>No. Invoice</th>
+                            <th>Tanggal Acara</th>
+                            <th>Nama Customer</th>
+                            <th>Total Tagihan</th>
+                            <th style="text-align: center;">Aksi (Cetak / WA)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="riwayatTableBody">
+                        <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Memuat riwayat...</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>
@@ -316,7 +313,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, doc, setDoc, deleteDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, doc, setDoc, deleteDoc, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBnaFOFKMPXa683ByiYAW3a5p144RfOKcI",
@@ -333,182 +330,273 @@
         const db = getFirestore(app);
 
         window.dbAllPackages = [];
+        window.dbSemuaInvoice = []; // Variabel global simpan histori invoice
 
         const loginOverlay = document.getElementById('loginOverlay');
-        const btnLoginAction = document.getElementById('btnLoginAction');
-        const loginErrorMsg = document.getElementById('loginErrorMsg');
-        const btnLogoutAction = document.getElementById('btnLogoutAction');
-
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 loginOverlay.style.display = 'none';
                 loadPricelistData();
+                loadRiwayatInvoice();
             } else {
                 loginOverlay.style.display = 'flex';
             }
         });
 
-        btnLoginAction.addEventListener('click', () => {
+        document.getElementById('btnLoginAction').addEventListener('click', () => {
             const email = document.getElementById('loginEmail').value;
             const pass = document.getElementById('loginPassword').value;
             signInWithEmailAndPassword(auth, email, pass).catch(() => {
-                loginErrorMsg.style.display = 'block';
-                loginErrorMsg.innerText = "Gagal login! Periksa kembali email & password.";
+                document.getElementById('loginErrorMsg').style.display = 'block';
+                document.getElementById('loginErrorMsg').innerText = "Gagal login! Periksa email & password.";
             });
         });
 
-        btnLogoutAction.addEventListener('click', (e) => {
-            e.preventDefault();
-            signOut(auth);
+        document.getElementById('btnLogoutAction').addEventListener('click', (e) => {
+            e.preventDefault(); signOut(auth);
         });
 
+        // --- LOAD PRICELIST ---
         async function loadPricelistData() {
-            const tbody = document.getElementById('pricelistTableBody');
-            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Memuat data...</td></tr>`;
-            
             try {
-                const querySnapshot = await getDocs(collection(db, "pricelist"));
-                tbody.innerHTML = '';
-                window.dbAllPackages = [];
+                const qSnap = await getDocs(collection(db, "pricelist"));
+                const tbody = document.getElementById('pricelistTableBody');
+                tbody.innerHTML = ''; window.dbAllPackages = [];
                 
-                if (querySnapshot.empty) {
-                    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Belum ada paket tersimpan.</td></tr>`;
-                    return;
-                }
+                if (qSnap.empty) { tbody.innerHTML = `<tr><td colspan="5" style="text-align: center;">Belum ada paket.</td></tr>`; return; }
 
-                querySnapshot.forEach((documentSnap) => {
-                    const data = documentSnap.data();
-                    const docId = documentSnap.id;
-                    
-                    // FIX: Tarik harga angka dari data lama yang belum punya 'priceValue'
-                    let finalPriceValue = data.priceValue;
-                    if (finalPriceValue === undefined || finalPriceValue === null) {
+                qSnap.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    let finalPriceVal = data.priceValue;
+                    if (finalPriceVal == null) {
                         let numStr = String(data.price).replace(/[^0-9]/g, '');
-                        if (String(data.price).includes(',') && numStr.endsWith('00')) {
-                            numStr = numStr.slice(0, -2);
-                        }
-                        finalPriceValue = parseInt(numStr, 10) || 0;
+                        if(String(data.price).includes(',') && numStr.endsWith('00')) numStr = numStr.slice(0, -2);
+                        finalPriceVal = parseInt(numStr, 10) || 0;
                     }
-                    data.priceValue = finalPriceValue;
-
-                    window.dbAllPackages.push({ id: docId, ...data });
+                    data.priceValue = finalPriceVal;
+                    window.dbAllPackages.push({ id: docSnap.id, ...data });
                     
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td><img src="${data.img || ''}" alt="Thumb" onerror="this.src='https://via.placeholder.com/40'"></td>
                         <td><span style="text-transform: uppercase; font-weight: 700; font-size: 0.75rem; color: var(--accent-gold);">${data.kategori}</span></td>
                         <td>${data.name}</td>
-                        <td>${typeof data.price === 'number' ? 'Rp ' + data.price.toLocaleString('id-ID') : data.price}</td>
-                        <td style="text-align: center; white-space: nowrap;">
-                            <button class="btn btn-edit" onclick="window.editPricelist('${docId}', '${data.kategori}', '${data.name}', '${data.priceValue}', '${data.img}', '${(data.benefits || []).join(', ')}')"><i class="fa-solid fa-pen"></i> Edit</button>
-                            <button class="btn btn-danger" onclick="window.deletePricelist('${docId}')"><i class="fa-solid fa-trash"></i> Hapus</button>
+                        <td>Rp ${finalPriceVal.toLocaleString('id-ID')}</td>
+                        <td style="text-align: center;">
+                            <button class="btn btn-edit" onclick="window.editPricelist('${docSnap.id}', '${data.kategori}', '${data.name}', '${finalPriceVal}', '${data.img}', '${(data.benefits||[]).join(', ')}')"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn btn-danger" onclick="window.deletePricelist('${docSnap.id}')"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     `;
                     tbody.appendChild(tr);
                 });
 
-                // Render form pertama kali
-                if(document.getElementById('selectedServicesList').children.length === 0) {
-                    addServiceRow();
-                }
-                if(document.getElementById('customItemsList').children.length === 0) {
-                    addCustomItemRow();
-                }
-
-            } catch (e) {
-                console.error(e);
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #e74c3c;">Gagal memuat data dari database.</td></tr>`;
-            }
+                if(document.getElementById('selectedServicesList').children.length === 0) window.addServiceRow();
+                if(document.getElementById('customItemsList').children.length === 0) window.addCustomItemRow();
+            } catch (e) { console.error(e); }
         }
 
-        const btnSimpanDB = document.getElementById('btnSimpanDB');
-        const statusSimpan = document.getElementById('statusSimpan');
-
-        btnSimpanDB.addEventListener('click', async () => {
-            const kategori = document.getElementById('kategoriLayanan').value;
-            const idPaket = document.getElementById('idPaket').value.replace(/\s+/g, '').toLowerCase();
-            const namaPaket = document.getElementById('namaPaket').value;
-            const hargaNum = parseFloat(document.getElementById('hargaPaketNum').value) || 0;
-            const hargaFormatted = `Rp. ${hargaNum.toLocaleString('id-ID')},00`;
-            const gambar = document.getElementById('gambarPaket').value;
-            const benefitsArray = document.getElementById('benefitPaket').value.split(',').map(i => i.trim()).filter(i => i);
-
-            if (!idPaket || !namaPaket) {
-                statusSimpan.innerText = "❌ ID Paket dan Nama Paket wajib diisi!";
-                statusSimpan.style.color = "#e74c3c";
-                return;
-            }
-
+        // --- LOAD RIWAYAT INVOICE ---
+        window.loadRiwayatInvoice = async function() {
             try {
-                const docRef = doc(db, "pricelist", `${kategori}_${idPaket}`);
-                await setDoc(docRef, { kategori, name: namaPaket, price: hargaFormatted, priceValue: hargaNum, img: gambar, benefits: benefitsArray });
-                statusSimpan.innerText = "✅ Paket berhasil disimpan / diperbarui!";
-                statusSimpan.style.color = "#2ecc71";
-                loadPricelistData();
-                
-                // Update dropdown setelah save
-                document.getElementById('selectedServicesList').innerHTML = '';
-                addServiceRow();
+                const q = query(collection(db, "invoices"), orderBy("createdAt", "desc"));
+                const qSnap = await getDocs(q);
+                const tbody = document.getElementById('riwayatTableBody');
+                tbody.innerHTML = ''; window.dbSemuaInvoice = [];
 
-                setTimeout(() => statusSimpan.innerText = "", 3000);
-            } catch (e) {
-                statusSimpan.innerText = "❌ Gagal menyimpan data!";
-                statusSimpan.style.color = "#e74c3c";
-            }
-        });
-
-        window.editPricelist = function(docId, kategori, name, priceVal, img, benefits) {
-            document.getElementById('kategoriLayanan').value = kategori;
-            const idPart = docId.replace(`${kategori}_`, '');
-            document.getElementById('idPaket').value = idPart;
-            document.getElementById('namaPaket').value = name;
-            document.getElementById('hargaPaketNum').value = priceVal;
-            document.getElementById('gambarPaket').value = img;
-            document.getElementById('thumbPreview').src = img;
-            document.getElementById('benefitPaket').value = benefits;
-
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-            document.querySelector('[data-target="kelola-harga"]').classList.add('active');
-            document.getElementById('kelola-harga').classList.add('active');
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        };
-
-        window.deletePricelist = async function(docId) {
-            if (confirm(`Apakah Anda yakin ingin menghapus paket "${docId}" dari database?`)) {
-                try {
-                    await deleteDoc(doc(db, "pricelist", docId));
-                    alert("✅ Paket berhasil dihapus!");
-                    loadPricelistData();
-                } catch (e) {
-                    alert("❌ Gagal menghapus paket.");
+                if(qSnap.empty) {
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Belum ada invoice yang dibuat.</td></tr>`;
+                    return;
                 }
+
+                qSnap.forEach(docSnap => {
+                    const data = docSnap.data();
+                    data.id = docSnap.id; // simpan ID doc
+                    window.dbSemuaInvoice.push(data);
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong style="color:var(--accent-gold);">${data.invoiceNo}</strong></td>
+                        <td>${data.tanggal}</td>
+                        <td>${data.nama}</td>
+                        <td><strong>Rp ${Number(data.total).toLocaleString('id-ID')}</strong></td>
+                        <td style="text-align: center; white-space:nowrap;">
+                            <button class="btn btn-primary" onclick="window.cetakUlangInvoice('${data.id}')" title="Cetak PDF"><i class="fa-solid fa-print"></i> PDF</button>
+                            <button class="btn btn-success" onclick="window.kirimWA('${data.id}')" title="Kirim WhatsApp"><i class="fa-brands fa-whatsapp"></i> Kirim</button>
+                            <button class="btn btn-danger" onclick="window.hapusInvoice('${data.id}')"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (e) { console.error(e); }
+        }
+
+        // --- SIMPAN INVOICE BARU (CONTINUITY SYSTEM) ---
+        window.simpanDanBuatInvoice = async function() {
+            const nama = document.getElementById('invNama').value || 'Pelanggan Yth';
+            const tanggal = document.getElementById('invTanggal').value || '-';
+            let waRaw = document.getElementById('invWA').value || '';
+            let wa = waRaw.replace(/\D/g, ''); // Bersihkan karakter non-angka
+            if(wa.startsWith('0')) wa = '62' + wa.substring(1); // Ubah awalan 0 ke 62
+
+            let itemsData = [];
+            let totalSum = 0;
+
+            // Kumpulkan layanan pricelist
+            document.querySelectorAll('#selectedServicesList .grid-invoice').forEach(row => {
+                const name = row.querySelector('.service-select').value;
+                const price = parseFloat(row.querySelector('.service-price').value) || 0;
+                if(name && price > 0) {
+                    itemsData.push({ name: name, price: price });
+                    totalSum += price;
+                }
+            });
+
+            // Kumpulkan custom charge
+            document.querySelectorAll('#customItemsList .grid-invoice').forEach(row => {
+                const name = row.querySelector('.custom-name').value;
+                const price = parseFloat(row.querySelector('.custom-price').value) || 0;
+                if(name && price !== 0) {
+                    itemsData.push({ name: name, price: price });
+                    totalSum += price;
+                }
+            });
+
+            if(itemsData.length === 0) {
+                alert("Pilih minimal 1 paket layanan atau isi item tambahan!");
+                return;
+            }
+
+            // LOGIKA NOMOR INVOICE BERKELANJUTAN
+            const currentYear = new Date().getFullYear();
+            let maxSequence = 0;
+
+            // Cari sequence tertinggi di tahun ini
+            window.dbSemuaInvoice.forEach(inv => {
+                if(inv.year === currentYear && inv.sequence > maxSequence) {
+                    maxSequence = inv.sequence;
+                }
+            });
+
+            const nextSequence = maxSequence + 1;
+            const seqString = String(nextSequence).padStart(3, '0');
+            const newInvoiceNo = `INV/ARLens/${currentYear}/${seqString}`;
+
+            const invoicePayload = {
+                invoiceNo: newInvoiceNo,
+                year: currentYear,
+                sequence: nextSequence,
+                nama: nama,
+                tanggal: tanggal,
+                wa: wa,
+                items: itemsData,
+                total: totalSum,
+                createdAt: new Date().toISOString()
+            };
+
+            try {
+                // Simpan ke Firestore
+                await addDoc(collection(db, "invoices"), invoicePayload);
+                
+                // Segarkan tabel riwayat
+                await window.loadRiwayatInvoice();
+                
+                // Tampilkan Preview
+                window.renderTampilanInvoice(invoicePayload);
+                document.getElementById('formBuatInvoice').style.display = 'none';
+                document.getElementById('invoicePreview').style.display = 'block';
+
+                // Reset Form
+                document.getElementById('invNama').value = '';
+                document.getElementById('invTanggal').value = '';
+                document.getElementById('invWA').value = '';
+                document.getElementById('selectedServicesList').innerHTML = '';
+                document.getElementById('customItemsList').innerHTML = '';
+                window.addServiceRow(); window.addCustomItemRow();
+
+            } catch(e) {
+                alert("Gagal menyimpan invoice ke database!");
+                console.error(e);
             }
         };
 
-        const btnSimpanPort = document.getElementById('btnSimpanPort');
-        const statusPort = document.getElementById('statusPort');
-        btnSimpanPort.addEventListener('click', async () => {
-            const kategori = document.getElementById('portKategori').value;
-            const eventName = document.getElementById('portEventName').value;
-            const photoUrl = document.getElementById('portPhotoUrl').value;
-            if (!eventName || !photoUrl) {
-                statusPort.innerText = "❌ Nama Event dan Link Foto wajib diisi!";
-                statusPort.style.color = "#e74c3c";
-                return;
-            }
-            try {
-                await addDoc(collection(db, "portfolio"), { kategori, eventName, photoUrl, createdAt: new Date().toISOString() });
-                statusPort.innerText = "✅ Foto portofolio berhasil ditambahkan!";
-                statusPort.style.color = "#2ecc71";
-                document.getElementById('portPhotoUrl').value = '';
-                document.getElementById('portPreview').src = 'https://via.placeholder.com/100?text=Preview';
-                setTimeout(() => statusPort.innerText = "", 3000);
-            } catch (e) {
-                statusPort.innerText = "❌ Gagal menambah foto portofolio!";
-            }
-        });
+        // --- RENDER INVOICE UNTUK PRINT ---
+        window.renderTampilanInvoice = function(data) {
+            document.getElementById('printNoInv').innerText = data.invoiceNo;
+            document.getElementById('printNama').innerText = data.nama;
+            document.getElementById('printTanggal').innerText = data.tanggal;
+            
+            const tbody = document.getElementById('printTableBody');
+            tbody.innerHTML = '';
+            
+            const formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
 
+            data.items.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.name}</td>
+                    <td style="text-align: center;">1</td>
+                    <td style="text-align: right;">${formatter.format(item.price)}</td>
+                    <td style="text-align: right;">${formatter.format(item.price)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('printTotal').innerText = formatter.format(data.total);
+        };
+
+        // --- FUNGSI DARI TOMBOL DI TABEL RIWAYAT ---
+        window.cetakUlangInvoice = function(docId) {
+            const invoice = window.dbSemuaInvoice.find(inv => inv.id === docId);
+            if(invoice) {
+                // Pindah ke tab Buat Invoice untuk numpang nampilin preview
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+                document.querySelector('[data-target="buat-invoice"]').classList.add('active');
+                document.getElementById('buat-invoice').classList.add('active');
+                
+                document.getElementById('formBuatInvoice').style.display = 'none';
+                window.renderTampilanInvoice(invoice);
+                document.getElementById('invoicePreview').style.display = 'block';
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }
+        };
+
+        window.kirimWA = function(docId) {
+            const invoice = window.dbSemuaInvoice.find(inv => inv.id === docId);
+            if(invoice) {
+                if(!invoice.wa || invoice.wa === '') {
+                    alert("Nomor WA tidak diisi pada invoice ini.");
+                    return;
+                }
+                const formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+                
+                let textItems = '';
+                invoice.items.forEach(it => {
+                    textItems += `- ${it.name} : ${formatter.format(it.price)}\n`;
+                });
+
+                const pesan = `Halo kak *${invoice.nama}*,\nTerima kasih telah mempercayakan dokumentasi momen berharga Anda kepada ARLENS.ID.\n\nBerikut adalah rincian tagihan Anda:\n*No Invoice:* ${invoice.invoiceNo}\n*Tgl Acara:* ${invoice.tanggal}\n\n*Layanan dipesan:*\n${textItems}\n*TOTAL TAGIHAN: ${formatter.format(invoice.total)}*\n\nMohon untuk segera melakukan pembayaran. Jika ada pertanyaan, silakan balas pesan ini.\nTerima kasih 🙏`;
+
+                const url = `https://wa.me/${invoice.wa}?text=${encodeURIComponent(pesan)}`;
+                window.open(url, '_blank');
+            }
+        };
+
+        window.hapusInvoice = async function(docId) {
+            if(confirm("Yakin ingin menghapus riwayat invoice ini? Data tidak bisa dikembalikan.")) {
+                try {
+                    await deleteDoc(doc(db, "invoices", docId));
+                    window.loadRiwayatInvoice();
+                } catch(e) { alert("Gagal menghapus."); }
+            }
+        };
+
+        window.tutupPreviewInvoice = function() {
+            document.getElementById('invoicePreview').style.display = 'none';
+            document.getElementById('formBuatInvoice').style.display = 'block';
+        };
+
+        // --- SISTEM TABS NAVIGATION ---
         const navBtns = document.querySelectorAll('.nav-btn');
         const panels = document.querySelectorAll('.panel');
         navBtns.forEach(btn => {
@@ -521,40 +609,66 @@
                 document.getElementById(btn.getAttribute('data-target')).classList.add('active');
             });
         });
+
+        // Event listener simpan pricelist (tetap sama)
+        document.getElementById('btnSimpanDB').addEventListener('click', async () => {
+            const kategori = document.getElementById('kategoriLayanan').value;
+            const idPaket = document.getElementById('idPaket').value.replace(/\s+/g, '').toLowerCase();
+            const namaPaket = document.getElementById('namaPaket').value;
+            const hargaNum = parseFloat(document.getElementById('hargaPaketNum').value) || 0;
+            const hargaFormatted = `Rp. ${hargaNum.toLocaleString('id-ID')},00`;
+            const gambar = document.getElementById('gambarPaket').value;
+            const benefitsArray = document.getElementById('benefitPaket').value.split(',').map(i => i.trim()).filter(i => i);
+
+            if (!idPaket || !namaPaket) return;
+
+            try {
+                const docRef = doc(db, "pricelist", `${kategori}_${idPaket}`);
+                await setDoc(docRef, { kategori, name: namaPaket, price: hargaFormatted, priceValue: hargaNum, img: gambar, benefits: benefitsArray });
+                loadPricelistData();
+                document.getElementById('statusSimpan').innerText = "Berhasil disimpan!";
+                setTimeout(() => document.getElementById('statusSimpan').innerText = "", 2000);
+            } catch(e) {}
+        });
+        
+        document.getElementById('btnSimpanPort').addEventListener('click', async () => {
+            const kategori = document.getElementById('portKategori').value;
+            const eventName = document.getElementById('portEventName').value;
+            const photoUrl = document.getElementById('portPhotoUrl').value;
+            if (!eventName || !photoUrl) return;
+            try {
+                await addDoc(collection(db, "portfolio"), { kategori, eventName, photoUrl, createdAt: new Date().toISOString() });
+                document.getElementById('portPhotoUrl').value = '';
+                document.getElementById('portPreview').src = 'https://via.placeholder.com/100?text=Preview';
+                document.getElementById('statusPort').innerText = "Berhasil disimpan!";
+                setTimeout(() => document.getElementById('statusPort').innerText = "", 2000);
+            } catch(e) {}
+        });
+
     </script>
 
     <script>
-        function updateThumbPreview(url) {
-            document.getElementById('thumbPreview').src = url ? url : 'https://via.placeholder.com/100';
-        }
-        function updatePortPreview(url) {
-            document.getElementById('portPreview').src = url ? url : 'https://via.placeholder.com/100';
-        }
+        function updateThumbPreview(url) { document.getElementById('thumbPreview').src = url ? url : 'https://via.placeholder.com/100'; }
+        function updatePortPreview(url) { document.getElementById('portPreview').src = url ? url : 'https://via.placeholder.com/100'; }
 
-        // --- INVOICE BUILDER (OTOMATIS TERHUBUNG DENGAN HARGA DATABASE) ---
+        // --- UI INVOICE BUILDER FUNCTIONS ---
         window.addServiceRow = function() {
             const container = document.getElementById('selectedServicesList');
             const rowId = 'service_row_' + Date.now();
-            
             let optionsHTML = '<option value="" data-price="0">-- Pilih Paket dari Pricelist --</option>';
             if (window.dbAllPackages && window.dbAllPackages.length > 0) {
                 window.dbAllPackages.forEach(pkg => {
                     const priceVal = pkg.priceValue || 0;
-                    // Format Nama untuk Invoice tanpa harga di text dropdown
                     const displayName = `[${pkg.kategori.toUpperCase()}] ${pkg.name}`;
                     optionsHTML += `<option value="${displayName}" data-price="${priceVal}">${displayName}</option>`;
                 });
             }
-
             const div = document.createElement('div');
-            div.className = 'grid-invoice';
-            div.id = rowId;
+            div.className = 'grid-invoice'; div.id = rowId;
             div.innerHTML = `
                 <div class="form-group" style="margin-bottom:0;">
                     <label>Pilih Paket Layanan</label>
-                    <select class="form-control service-select" onchange="updateServicePrice(this)">
-                        ${optionsHTML}
-                    </select>
+                    <select class="form-control service-select" onchange="window.updateServicePrice(this)">${optionsHTML}</select>
                 </div>
                 <div class="form-group" style="margin-bottom:0;">
                     <label>Harga (Otomatis)</label>
@@ -569,21 +683,18 @@
             const selectedOption = selectEl.options[selectEl.selectedIndex];
             const priceVal = selectedOption.getAttribute('data-price') || 0;
             const row = selectEl.closest('.grid-invoice');
-            const priceInput = row.querySelector('.service-price');
-            priceInput.value = priceVal;
+            row.querySelector('.service-price').value = priceVal;
         }
 
         window.addCustomItemRow = function() {
             const container = document.getElementById('customItemsList');
             const rowId = 'custom_row_' + Date.now();
-
             const div = document.createElement('div');
-            div.className = 'grid-invoice';
-            div.id = rowId;
+            div.className = 'grid-invoice'; div.id = rowId;
             div.innerHTML = `
                 <div class="form-group" style="margin-bottom:0;">
                     <label>Nama Item / Charge / Lainnya</label>
-                    <input type="text" class="form-control custom-name" placeholder="Misal: Denda Overtime / Flashdisk / Transport">
+                    <input type="text" class="form-control custom-name" placeholder="Misal: Denda Overtime / Flashdisk">
                 </div>
                 <div class="form-group" style="margin-bottom:0;">
                     <label>Harga (Rp)</label>
@@ -592,71 +703,6 @@
                 <button type="button" class="btn btn-danger" onclick="document.getElementById('${rowId}').remove()" style="height: 45px;"><i class="fa-solid fa-trash"></i></button>
             `;
             container.appendChild(div);
-        }
-
-        window.generateInvoice = function() {
-            const nama = document.getElementById('invNama').value || 'Nama Pelanggan';
-            const tanggal = document.getElementById('invTanggal').value || '-';
-            
-            const tbody = document.getElementById('printTableBody');
-            tbody.innerHTML = '';
-            
-            let totalSum = 0;
-            const formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
-
-            // Ambil dari pilihan paket pricelist
-            const serviceRows = document.querySelectorAll('#selectedServicesList .grid-invoice');
-            serviceRows.forEach(row => {
-                const select = row.querySelector('.service-select');
-                const priceInput = row.querySelector('.service-price');
-                const serviceName = select.value;
-                const price = parseFloat(priceInput.value) || 0;
-
-                if (serviceName && price > 0) {
-                    totalSum += price;
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${serviceName}</td>
-                        <td style="text-align: center;">1</td>
-                        <td style="text-align: right;">${formatter.format(price)}</td>
-                        <td style="text-align: right;">${formatter.format(price)}</td>
-                    `;
-                    tbody.appendChild(tr);
-                }
-            });
-
-            // Ambil dari item custom / charge / denda
-            const customRows = document.querySelectorAll('#customItemsList .grid-invoice');
-            customRows.forEach(row => {
-                const nameInput = row.querySelector('.custom-name');
-                const priceInput = row.querySelector('.custom-price');
-                const itemName = nameInput.value;
-                const price = parseFloat(priceInput.value) || 0;
-
-                if (itemName && price !== 0) {
-                    totalSum += price;
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${itemName}</td>
-                        <td style="text-align: center;">1</td>
-                        <td style="text-align: right;">${formatter.format(price)}</td>
-                        <td style="text-align: right;">${formatter.format(price)}</td>
-                    `;
-                    tbody.appendChild(tr);
-                }
-            });
-
-            if (tbody.children.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #a0aab0;">Belum ada layanan atau item yang dipilih.</td></tr>`;
-            }
-
-            const randomNo = Math.floor(1000 + Math.random() * 9000);
-            document.getElementById('printNoInv').innerText = `INV/2026/${randomNo}`;
-            document.getElementById('printNama').innerText = nama;
-            document.getElementById('printTanggal').innerText = tanggal;
-            document.getElementById('printTotal').innerText = formatter.format(totalSum);
-
-            document.getElementById('invoicePreview').style.display = 'block';
         }
     </script>
 </body>

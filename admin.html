@@ -170,7 +170,7 @@
         <!-- PANEL: DASHBOARD -->
         <div class="panel active" id="dashboard">
             <h2 class="page-title">Ikhtisar Admin</h2>
-            <p style="color: var(--text-muted); line-height: 1.6;">Pricelist, portofolio, dan invoice kini terhubung otomatis dengan harga yang akurat sesuai database.</p>
+            <p style="color: var(--text-muted); line-height: 1.6;">Kelola paket pricelist, portfolio galeri, dan buat invoice profesional dengan multi-layanan serta tambahan biaya/overtime.</p>
         </div>
 
         <!-- PANEL: KELOLA HARGA -->
@@ -269,13 +269,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Pilih Layanan dari Pricelist (Harga otomatis sesuai database)</label>
+                    <label>Pilih Layanan dari Pricelist (Harga akan terisi otomatis)</label>
                     <div id="selectedServicesList"></div>
                     <button type="button" class="btn btn-secondary" onclick="addServiceRow()" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Tambah Layanan Lain</button>
                 </div>
 
                 <div class="form-group" style="margin-top: 25px; border-top: 1px solid var(--border-color); padding-top: 20px;">
-                    <label>Item Tambahan / Other / Charge (Flashdisk, Album, Transport, dll)</label>
+                    <label>Item Tambahan / Charge (Denda Overtime, Flashdisk, Cetak Album, dll)</label>
                     <div id="customItemsList"></div>
                     <button type="button" class="btn btn-secondary" onclick="addCustomItemRow()"><i class="fa-solid fa-plus"></i> Tambah Charge / Item Lain</button>
                 </div>
@@ -379,6 +379,18 @@
                 querySnapshot.forEach((documentSnap) => {
                     const data = documentSnap.data();
                     const docId = documentSnap.id;
+                    
+                    // FIX: Tarik harga angka dari data lama yang belum punya 'priceValue'
+                    let finalPriceValue = data.priceValue;
+                    if (finalPriceValue === undefined || finalPriceValue === null) {
+                        let numStr = String(data.price).replace(/[^0-9]/g, '');
+                        if (String(data.price).includes(',') && numStr.endsWith('00')) {
+                            numStr = numStr.slice(0, -2);
+                        }
+                        finalPriceValue = parseInt(numStr, 10) || 0;
+                    }
+                    data.priceValue = finalPriceValue;
+
                     window.dbAllPackages.push({ id: docId, ...data });
                     
                     const tr = document.createElement('tr');
@@ -388,13 +400,14 @@
                         <td>${data.name}</td>
                         <td>${typeof data.price === 'number' ? 'Rp ' + data.price.toLocaleString('id-ID') : data.price}</td>
                         <td style="text-align: center; white-space: nowrap;">
-                            <button class="btn btn-edit" onclick="window.editPricelist('${docId}', '${data.kategori}', '${data.name}', '${data.priceValue || 0}', '${data.img}', '${(data.benefits || []).join(', ')}')"><i class="fa-solid fa-pen"></i> Edit</button>
+                            <button class="btn btn-edit" onclick="window.editPricelist('${docId}', '${data.kategori}', '${data.name}', '${data.priceValue}', '${data.img}', '${(data.benefits || []).join(', ')}')"><i class="fa-solid fa-pen"></i> Edit</button>
                             <button class="btn btn-danger" onclick="window.deletePricelist('${docId}')"><i class="fa-solid fa-trash"></i> Hapus</button>
                         </td>
                     `;
                     tbody.appendChild(tr);
                 });
 
+                // Render form pertama kali
                 if(document.getElementById('selectedServicesList').children.length === 0) {
                     addServiceRow();
                 }
@@ -432,6 +445,11 @@
                 statusSimpan.innerText = "✅ Paket berhasil disimpan / diperbarui!";
                 statusSimpan.style.color = "#2ecc71";
                 loadPricelistData();
+                
+                // Update dropdown setelah save
+                document.getElementById('selectedServicesList').innerHTML = '';
+                addServiceRow();
+
                 setTimeout(() => statusSimpan.innerText = "", 3000);
             } catch (e) {
                 statusSimpan.innerText = "❌ Gagal menyimpan data!";
@@ -514,7 +532,7 @@
         }
 
         // --- INVOICE BUILDER (OTOMATIS TERHUBUNG DENGAN HARGA DATABASE) ---
-        function addServiceRow() {
+        window.addServiceRow = function() {
             const container = document.getElementById('selectedServicesList');
             const rowId = 'service_row_' + Date.now();
             
@@ -522,7 +540,9 @@
             if (window.dbAllPackages && window.dbAllPackages.length > 0) {
                 window.dbAllPackages.forEach(pkg => {
                     const priceVal = pkg.priceValue || 0;
-                    optionsHTML += `<option value="${pkg.name}" data-price="${priceVal}">[${pkg.kategori.toUpperCase()}] ${pkg.name} - ${pkg.price}</option>`;
+                    // Format Nama untuk Invoice tanpa harga di text dropdown
+                    const displayName = `[${pkg.kategori.toUpperCase()}] ${pkg.name}`;
+                    optionsHTML += `<option value="${displayName}" data-price="${priceVal}">${displayName}</option>`;
                 });
             }
 
@@ -538,14 +558,14 @@
                 </div>
                 <div class="form-group" style="margin-bottom:0;">
                     <label>Harga (Otomatis)</label>
-                    <input type="number" class="form-control service-price" value="0" readonly style="background: rgba(0,0,0,0.3); cursor: not-allowed;">
+                    <input type="number" class="form-control service-price" value="0" readonly style="background: rgba(0,0,0,0.3); cursor: not-allowed; color: var(--accent-gold); font-weight: bold;">
                 </div>
                 <button type="button" class="btn btn-danger" onclick="document.getElementById('${rowId}').remove()" style="height: 45px;"><i class="fa-solid fa-trash"></i></button>
             `;
             container.appendChild(div);
         }
 
-        function updateServicePrice(selectEl) {
+        window.updateServicePrice = function(selectEl) {
             const selectedOption = selectEl.options[selectEl.selectedIndex];
             const priceVal = selectedOption.getAttribute('data-price') || 0;
             const row = selectEl.closest('.grid-invoice');
@@ -553,7 +573,7 @@
             priceInput.value = priceVal;
         }
 
-        function addCustomItemRow() {
+        window.addCustomItemRow = function() {
             const container = document.getElementById('customItemsList');
             const rowId = 'custom_row_' + Date.now();
 
@@ -563,7 +583,7 @@
             div.innerHTML = `
                 <div class="form-group" style="margin-bottom:0;">
                     <label>Nama Item / Charge / Lainnya</label>
-                    <input type="text" class="form-control custom-name" placeholder="Misal: Flashdisk Custom / Extra Charge">
+                    <input type="text" class="form-control custom-name" placeholder="Misal: Denda Overtime / Flashdisk / Transport">
                 </div>
                 <div class="form-group" style="margin-bottom:0;">
                     <label>Harga (Rp)</label>
@@ -574,7 +594,7 @@
             container.appendChild(div);
         }
 
-        function generateInvoice() {
+        window.generateInvoice = function() {
             const nama = document.getElementById('invNama').value || 'Nama Pelanggan';
             const tanggal = document.getElementById('invTanggal').value || '-';
             
@@ -605,7 +625,7 @@
                 }
             });
 
-            // Ambil dari item custom / other / charge
+            // Ambil dari item custom / charge / denda
             const customRows = document.querySelectorAll('#customItemsList .grid-invoice');
             customRows.forEach(row => {
                 const nameInput = row.querySelector('.custom-name');
